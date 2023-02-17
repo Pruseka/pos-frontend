@@ -32,6 +32,7 @@ export const NAV_LINKS = [
    { label: 'Analytics', icon: IconPresentationAnalytics },
    { label: 'Contracts', icon: IconFileAnalytics },
    { label: 'Settings', icon: IconAdjustments },
+   { label: 'Settings', icon: IconAdjustments },
    {
       label: 'Security',
       icon: IconLock,

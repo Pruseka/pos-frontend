@@ -1,5 +1,5 @@
-import { NavbarNested } from '../modules/nav/components/navbar'
+import NavBarContainer from '../modules/nav/components/navbar-container'
 
 export default function App() {
-   return <NavbarNested />
+   return <NavBarContainer />
 }
