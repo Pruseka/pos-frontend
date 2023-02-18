@@ -1,3 +1,4 @@
+import { NavItemType } from './../../types/global'
 import {
    IconNotes,
    IconCalendarStats,
@@ -8,38 +9,37 @@ import {
    IconLock,
 } from '@tabler/icons-react'
 
-export const NAV_LINKS = [
-   { label: 'Dashboard', icon: IconGauge },
+export const NAV_LINKS: NavItemType[] = [
+   { label: 'Dashboard', icon: IconGauge, url: '/' },
    {
       label: 'Market news',
       icon: IconNotes,
       links: [
-         { label: 'Overview', link: '/' },
-         { label: 'Forecasts', link: '/' },
-         { label: 'Outlook', link: '/' },
-         { label: 'Real time', link: '/' },
+         { label: 'Overview', url: '/hello' },
+         { label: 'Forecasts', url: '/' },
+         { label: 'Outlook', url: '/' },
+         { label: 'Real time', url: '/' },
       ],
    },
    {
       label: 'Releases',
       icon: IconCalendarStats,
       links: [
-         { label: 'Upcoming releases', link: '/' },
-         { label: 'Previous releases', link: '/' },
-         { label: 'Releases schedule', link: '/' },
+         { label: 'Upcoming releases', url: '/upcoming-releases' },
+         { label: 'Previous releases', url: '/' },
+         { label: 'Releases schedule', url: '/' },
       ],
    },
-   { label: 'Analytics', icon: IconPresentationAnalytics },
-   { label: 'Contracts', icon: IconFileAnalytics },
-   { label: 'Settings', icon: IconAdjustments },
-   { label: 'Settings', icon: IconAdjustments },
+   { label: 'Analytics', icon: IconPresentationAnalytics, url: '/analytics' },
+   { label: 'Contracts', icon: IconFileAnalytics, url: '/contracts' },
+   { label: 'Settings', icon: IconAdjustments, url: '/settings' },
    {
       label: 'Security',
       icon: IconLock,
       links: [
-         { label: 'Enable 2FA', link: '/' },
-         { label: 'Change password', link: '/' },
-         { label: 'Recovery codes', link: '/' },
+         { label: 'Enable 2FA', url: '/' },
+         { label: 'Change password', url: '/' },
+         { label: 'Recovery codes', url: '/' },
       ],
    },
 ]

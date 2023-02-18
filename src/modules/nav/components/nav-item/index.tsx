@@ -1,36 +1,33 @@
 import { useState } from 'react'
-import { Group, Box, Collapse, ThemeIcon, Text, UnstyledButton } from '@mantine/core'
+import { Group, Box, Collapse, ThemeIcon, UnstyledButton } from '@mantine/core'
 import useStyles from './styles'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
-import type { Icon } from '@tabler/icons-react'
+import { useNavigate, NavLink } from 'react-router-dom'
+import { NavItemType } from '../../../../types/global'
 
-interface NavItemProps {
-   icon: Icon
-   label: string
-   initiallyOpened?: boolean
-   links?: { label: string; link: string }[]
-}
-
-const NavItem: React.FC<NavItemProps> = ({ icon: Icon, label, initiallyOpened, links }) => {
+const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    const { classes, theme } = useStyles()
    const hasLinks = Array.isArray(links)
-   const [opened, setOpened] = useState(initiallyOpened || false)
+   const [opened, setOpened] = useState(false)
    const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
+   const navigate = useNavigate()
    const items = (hasLinks ? links : []).map((link) => (
-      <Text<'a'>
-         component="a"
-         className={classes.link}
-         href={link.link}
-         key={link.label}
-         onClick={(event) => event.preventDefault()}
-      >
+      // need to add active state
+      <NavLink className={classes.link} to={link.url} key={link.label}>
          {link.label}
-      </Text>
+      </NavLink>
    ))
+
+   const handleNavigate = () => {
+      setOpened((o) => !o)
+      if (!hasLinks) {
+         navigate(url as string)
+      }
+   }
 
    return (
       <>
-         <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
+         <UnstyledButton onClick={handleNavigate} className={classes.control}>
             <Group position="apart" spacing={0}>
                <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <ThemeIcon variant="light" size={30}>
