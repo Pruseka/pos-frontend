@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { UsersTable } from '../modules/dashboard/table'
+import ErrorPage from '../pages/error'
 import Root from '../pages/root'
 
 const data = [
@@ -54,9 +55,23 @@ const data = [
 ]
 
 export const router = createBrowserRouter([
+   /**
+    * @errorPage
+    * stills need to page
+    */
    {
       path: '/',
       element: <Root />,
-      children: [{ index: true, element: <UsersTable data={data} /> }],
+      errorElement: <ErrorPage />,
+      children: [
+         {
+            errorElement: <ErrorPage />,
+            children: [
+               { index: true, element: <UsersTable data={data} /> },
+               { element: <UsersTable data={data} />, path: '/overview' },
+               { element: <UsersTable data={data} />, path: '/settings' },
+            ],
+         },
+      ],
    },
 ])

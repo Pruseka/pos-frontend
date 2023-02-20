@@ -2,7 +2,7 @@ import { Code, Group, Navbar } from '@mantine/core'
 import NavbarBody from '../navbar-body'
 import useStyles from './styles'
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
    const { classes } = useStyles()
 
    return (

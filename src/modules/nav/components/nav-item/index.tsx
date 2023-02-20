@@ -2,18 +2,23 @@ import { useState } from 'react'
 import { Group, Box, Collapse, ThemeIcon, UnstyledButton } from '@mantine/core'
 import useStyles from './styles'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
-import { useNavigate, NavLink } from 'react-router-dom'
+import { useNavigate, NavLink, useLocation } from 'react-router-dom'
 import { NavItemType } from '../../../../types/global'
 
 const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
-   const { classes, theme } = useStyles()
+   const { classes, theme, cx } = useStyles()
    const hasLinks = Array.isArray(links)
    const [opened, setOpened] = useState(false)
    const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
    const navigate = useNavigate()
+   const { pathname } = useLocation()
+   const isActiveLink = url === pathname
    const items = (hasLinks ? links : []).map((link) => (
-      // need to add active state
-      <NavLink className={classes.link} to={link.url} key={link.label}>
+      <NavLink
+         className={({ isActive }) => cx(classes.link, { [classes.linkActive]: isActive })}
+         to={link.url}
+         key={link.label}
+      >
          {link.label}
       </NavLink>
    ))
@@ -21,16 +26,19 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    const handleNavigate = () => {
       setOpened((o) => !o)
       if (!hasLinks) {
-         navigate(url as string)
+         navigate(url as string, { replace: true })
       }
    }
 
    return (
       <>
-         <UnstyledButton onClick={handleNavigate} className={classes.control}>
+         <UnstyledButton
+            onClick={handleNavigate}
+            className={cx(classes.control, { [classes.linkActive]: isActiveLink })}
+         >
             <Group position="apart" spacing={0}>
                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <ThemeIcon variant="light" size={30}>
+                  <ThemeIcon variant={`${isActiveLink ? 'filled' : 'light'}`} size={30}>
                      <Icon size={18} />
                   </ThemeIcon>
                   <Box ml="md">{label}</Box>

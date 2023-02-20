@@ -8,6 +8,7 @@ import {
    Anchor,
    ScrollArea,
    useMantineTheme,
+   Box,
 } from '@mantine/core'
 import { IconPencil, IconTrash } from '@tabler/icons-react'
 
@@ -66,19 +67,31 @@ export function UsersTable({ data }: UsersTableProps) {
    ))
 
    return (
-      <ScrollArea>
-         <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-            <thead>
-               <tr>
-                  <th>Employee</th>
-                  <th>Job title</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th />
-               </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-         </Table>
+      <ScrollArea sx={{ width: '100%' }}>
+         <Box p="md">
+            <Text
+               fz="lg"
+               fw={600}
+               sx={(theme) => ({
+                  padding: theme.spacing.xs,
+                  paddingBottom: theme.spacing.xl,
+               })}
+            >
+               Users Table
+            </Text>
+            <Table verticalSpacing="sm" sx={{ minWidth: 600 }}>
+               <thead>
+                  <tr>
+                     <th>Employee</th>
+                     <th>Job title</th>
+                     <th>Email</th>
+                     <th>Phone</th>
+                     <th />
+                  </tr>
+               </thead>
+               <tbody>{rows}</tbody>
+            </Table>
+         </Box>
       </ScrollArea>
    )
 }

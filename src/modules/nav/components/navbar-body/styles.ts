@@ -7,8 +7,6 @@ export default createStyles((theme) => ({
    },
 
    linksInner: {
-      paddingTop: theme.spacing.xl,
-      //   paddingBottom: 100
-      paddingBottom: theme.spacing.xl,
+      padding: `${theme.spacing.xl}px ${theme.spacing.sm}px`,
    },
 }))

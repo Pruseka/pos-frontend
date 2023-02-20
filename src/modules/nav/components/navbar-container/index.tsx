@@ -9,6 +9,12 @@ const NavBarContainer: React.FC = () => {
    const title = openedBurger ? 'Close Navigation' : 'Open Navigation'
    const { classes } = useStyles()
 
+   /**
+    * @context
+    * need to add useContext
+    * to close drawer after selecting navlinks
+    */
+
    const handleOpenNavigation = () => {
       setOpenedBurger(true)
       setOpenedDrawer(true)

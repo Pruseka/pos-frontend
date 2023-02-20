@@ -8,9 +8,10 @@ export default createStyles((theme) => ({
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       fontSize: theme.fontSizes.sm,
+      borderRadius: theme.radius.sm,
 
       '&:hover': {
-         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
+         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[1],
          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
       },
    },
@@ -29,6 +30,13 @@ export default createStyles((theme) => ({
       '&:hover': {
          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],
          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+      },
+   },
+
+   linkActive: {
+      '&, &:hover': {
+         backgroundColor: theme.fn.variant({ variant: 'filled', color: theme.primaryColor }).background,
+         color: theme.white,
       },
    },
 

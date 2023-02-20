@@ -15,10 +15,10 @@ export const NAV_LINKS: NavItemType[] = [
       label: 'Market news',
       icon: IconNotes,
       links: [
-         { label: 'Overview', url: '/hello' },
-         { label: 'Forecasts', url: '/' },
-         { label: 'Outlook', url: '/' },
-         { label: 'Real time', url: '/' },
+         { label: 'Overview', url: '/overview' },
+         { label: 'Forecasts', url: '/asdff' },
+         { label: 'Outlook', url: '/dfdf' },
+         { label: 'Real time', url: '/aasdd' },
       ],
    },
    {
@@ -26,8 +26,8 @@ export const NAV_LINKS: NavItemType[] = [
       icon: IconCalendarStats,
       links: [
          { label: 'Upcoming releases', url: '/upcoming-releases' },
-         { label: 'Previous releases', url: '/' },
-         { label: 'Releases schedule', url: '/' },
+         { label: 'Previous releases', url: '/ffdsf' },
+         { label: 'Releases schedule', url: '/fdgsdgsd' },
       ],
    },
    { label: 'Analytics', icon: IconPresentationAnalytics, url: '/analytics' },
@@ -37,9 +37,9 @@ export const NAV_LINKS: NavItemType[] = [
       label: 'Security',
       icon: IconLock,
       links: [
-         { label: 'Enable 2FA', url: '/' },
-         { label: 'Change password', url: '/' },
-         { label: 'Recovery codes', url: '/' },
+         { label: 'Enable 2FA', url: '/hhhh' },
+         { label: 'Change password', url: '/bbb' },
+         { label: 'Recovery codes', url: '/vvv' },
       ],
    },
 ]

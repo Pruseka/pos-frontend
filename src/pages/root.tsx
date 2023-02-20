@@ -4,11 +4,9 @@ import Navigation from '../modules/nav/templates/nav'
 
 export default function Root() {
    return (
-      <Flex direction={{ base: 'row' }} gap={{ base: 'md' }} justify={{ base: 'center' }}>
+      <Flex direction={{ base: 'row' }} gap={{ base: 'md' }} justify={{ base: 'left' }}>
          <Navigation />
-         <Box style={{ flex: 1 }}>
-            <Outlet />
-         </Box>
+         <Outlet />
       </Flex>
    )
 }
