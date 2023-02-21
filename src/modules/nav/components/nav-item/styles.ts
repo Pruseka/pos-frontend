@@ -5,6 +5,7 @@ export default createStyles((theme) => ({
       fontWeight: 500,
       display: 'block',
       width: '100%',
+      textDecoration: 'none',
       padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
       fontSize: theme.fontSizes.sm,

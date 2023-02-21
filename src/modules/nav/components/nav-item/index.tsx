@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Group, Box, Collapse, ThemeIcon, UnstyledButton } from '@mantine/core'
+import { Group, Collapse, ThemeIcon, UnstyledButton, Text, Flex } from '@mantine/core'
 import useStyles from './styles'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
-import { useNavigate, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { NavItemType } from '../../../../types/global'
 
 const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
@@ -10,7 +10,6 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    const hasLinks = Array.isArray(links)
    const [opened, setOpened] = useState(false)
    const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
-   const navigate = useNavigate()
    const { pathname } = useLocation()
    const isActiveLink = url === pathname
    const items = (hasLinks ? links : []).map((link) => (
@@ -23,40 +22,44 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
       </NavLink>
    ))
 
-   const handleNavigate = () => {
-      setOpened((o) => !o)
-      if (!hasLinks) {
-         navigate(url as string, { replace: true })
-      }
-   }
-
-   return (
-      <>
-         <UnstyledButton
-            onClick={handleNavigate}
-            className={cx(classes.control, { [classes.linkActive]: isActiveLink })}
-         >
-            <Group position="apart" spacing={0}>
-               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <ThemeIcon variant={`${isActiveLink ? 'filled' : 'light'}`} size={30}>
-                     <Icon size={18} />
-                  </ThemeIcon>
-                  <Box ml="md">{label}</Box>
-               </Box>
-               {hasLinks && (
+   if (hasLinks) {
+      return (
+         <>
+            <UnstyledButton
+               onClick={() => setOpened((o) => !o)}
+               className={cx(classes.control, { [classes.linkActive]: isActiveLink })}
+            >
+               <Group position="apart" spacing={0}>
+                  <Flex align="center">
+                     <ThemeIcon variant={`${isActiveLink ? 'filled' : 'light'}`} size={30}>
+                        <Icon size={18} />
+                     </ThemeIcon>
+                     <Text ml="md">{label}</Text>
+                  </Flex>
                   <ChevronIcon
                      className={classes.chevron}
                      size={14}
                      stroke={1.5}
                      style={{
-                        transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
+                        transform: opened ? `rotate(90deg)` : 'none',
                      }}
                   />
-               )}
-            </Group>
-         </UnstyledButton>
-         {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
-      </>
+               </Group>
+            </UnstyledButton>
+            <Collapse in={opened}>{items}</Collapse>
+         </>
+      )
+   }
+
+   return (
+      <NavLink to={url as string} className={cx(classes.control, { [classes.linkActive]: isActiveLink })}>
+         <Flex align="center">
+            <ThemeIcon variant={`${isActiveLink ? 'filled' : 'light'}`} size={30}>
+               <Icon size={18} />
+            </ThemeIcon>
+            <Text ml="md">{label}</Text>
+         </Flex>
+      </NavLink>
    )
 }
 
