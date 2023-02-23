@@ -4,9 +4,11 @@ import useStyles from './styles'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { NavItemType } from '../../../../types/global'
+import { useAuth } from '../../../../lib/contexts/auth-context'
 
 const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    const { classes, theme, cx } = useStyles()
+   const { closeDrawer } = useAuth()
    const hasLinks = Array.isArray(links)
    const [opened, setOpened] = useState(false)
    const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
@@ -17,6 +19,7 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
          className={({ isActive }) => cx(classes.link, { [classes.linkActive]: isActive })}
          to={link.url}
          key={link.label}
+         onClick={() => closeDrawer()}
       >
          {link.label}
       </NavLink>
@@ -52,7 +55,11 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    }
 
    return (
-      <NavLink to={url as string} className={cx(classes.control, { [classes.linkActive]: isActiveLink })}>
+      <NavLink
+         to={url as string}
+         onClick={() => closeDrawer()}
+         className={cx(classes.control, { [classes.linkActive]: isActiveLink })}
+      >
          <Flex align="center">
             <ThemeIcon variant={`${isActiveLink ? 'filled' : 'light'}`} size={30}>
                <Icon size={18} />

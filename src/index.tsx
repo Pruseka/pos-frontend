@@ -4,12 +4,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import reportWebVitals from './reportWebVitals'
 import { router } from './routes'
+import { AuthProvider } from './lib/contexts/auth-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
    <React.StrictMode>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-         <RouterProvider router={router} />
+         <AuthProvider>
+            <RouterProvider router={router} />
+         </AuthProvider>
       </MantineProvider>
    </React.StrictMode>
 )

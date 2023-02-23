@@ -1,77 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { UsersTable } from '../modules/dashboard/table'
+import CategoriesTable from '../modules/table/components/category-table'
 import ErrorPage from '../pages/error'
+import LoginPage from '../pages/login'
 import Root from '../pages/root'
 
-const data = [
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'Albert',
-      job: 'manager',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'James',
-      job: 'designer',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'Ryan',
-      job: 'manager',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'Jake',
-      job: 'engineer',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'Alfie',
-      job: 'manager',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-   {
-      avatar:
-         'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80',
-      name: 'Lily',
-      job: 'designer',
-      email: 'gg@gmail.com',
-      phone: '094242424',
-   },
-]
-
 export const router = createBrowserRouter([
-   /**
-    * @errorPage
-    * stills need to page
-    */
+   {
+      path: '/login',
+      element: <LoginPage />,
+   },
    {
       path: '/',
       element: <Root />,
       errorElement: <ErrorPage />,
       children: [
-         {
-            errorElement: <ErrorPage />,
-            children: [
-               { index: true, element: <UsersTable data={data} /> },
-               { element: <UsersTable data={data} />, path: '/overview' },
-               { element: <UsersTable data={data} />, path: '/settings' },
-            ],
-         },
+         { index: true, element: <CategoriesTable /> },
+         { path: '/settings', element: <CategoriesTable /> },
       ],
    },
 ])

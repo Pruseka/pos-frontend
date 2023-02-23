@@ -1,12 +1,10 @@
 import { Box, Burger, Drawer } from '@mantine/core'
 import NavBar from '../navbar'
-import { useState } from 'react'
 import useStyles from './styles'
+import { useAuth } from '../../../../lib/contexts/auth-context'
 
 const NavBarContainer: React.FC = () => {
-   const [openedDrawer, setOpenedDrawer] = useState(false)
-   const [openedBurger, setOpenedBurger] = useState(false)
-   const title = openedBurger ? 'Close Navigation' : 'Open Navigation'
+   const { openedBurger, openedDrawer, openDrawer, closeDrawer } = useAuth()
    const { classes } = useStyles()
 
    /**
@@ -15,31 +13,16 @@ const NavBarContainer: React.FC = () => {
     * to close drawer after selecting navlinks
     */
 
-   const handleOpenNavigation = () => {
-      setOpenedBurger(true)
-      setOpenedDrawer(true)
-   }
-
-   const handleCloseNavigation = () => {
-      setOpenedBurger(false)
-      setOpenedDrawer(false)
-   }
-
    return (
       <>
          <Box className={classes.container}>
             <NavBar />
          </Box>
          <Box className={classes.mobileContainer}>
-            <Burger
-               opened={openedBurger}
-               onClick={handleOpenNavigation}
-               title={title}
-               hidden={openedBurger}
-            />
+            <Burger opened={openedBurger} onClick={() => openDrawer()} />
             <Drawer
                opened={openedDrawer}
-               onClose={handleCloseNavigation}
+               onClose={() => closeDrawer()}
                className={classes.drawer}
                styles={(theme) => ({
                   drawer: { flexDirection: 'column' },
