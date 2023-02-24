@@ -1,5 +1,6 @@
 import { Code, Group, Navbar } from '@mantine/core'
 import NavbarBody from '../navbar-body'
+import NavbarFooter from '../navbar-footer'
 import useStyles from './styles'
 
 const NavBar: React.FC = () => {
@@ -14,6 +15,7 @@ const NavBar: React.FC = () => {
             </Group>
          </Navbar.Section>
          <NavbarBody />
+         <NavbarFooter />
       </Navbar>
    )
 }

@@ -6,6 +6,10 @@ import LoginForm from '../components/login-form'
 import { LOGIN } from '../../../api/urls'
 import { useAuth } from '../../../lib/contexts/auth-context'
 import type { Credentials } from '../../../api/user/mutations/login'
+import { STATUS } from '../../../lib/constants/status'
+import { showNotification } from '@mantine/notifications'
+import { IconCheck } from '@tabler/icons-react'
+import { MESSAGES } from '../../../lib/constants/message'
 
 const LoginTemplate: React.FC = () => {
    const { trigger, isMutating, reset } = useSWRMutation(LOGIN, loginMutation)
@@ -20,9 +24,23 @@ const LoginTemplate: React.FC = () => {
    }, [user, navigate, reset])
 
    const handleSubmit = async (values: Credentials) => {
-      const data = await trigger({ email: values.email, password: values.password })
-      const token = data?.data.data.token
-      signIn(token)
+      await trigger(
+         { email: values.email, password: values.password },
+         {
+            onSuccess: (data) => {
+               const token = data?.data.data.token
+               if (token) {
+                  signIn(token)
+                  showNotification({
+                     message: MESSAGES.LOGIN_SUCCESS,
+                     id: 'login-success',
+                     icon: <IconCheck />,
+                     color: 'teal',
+                  })
+               }
+            },
+         }
+      )
    }
 
    return <LoginForm handleSubmit={handleSubmit} loading={isMutating} />
