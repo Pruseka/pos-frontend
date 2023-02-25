@@ -2,15 +2,16 @@ import { NavItemType } from './../../types/global'
 import {
    IconNotes,
    IconCalendarStats,
-   IconGauge,
    IconPresentationAnalytics,
    IconFileAnalytics,
-   IconAdjustments,
    IconLock,
+   IconCategory,
+   IconFriends,
 } from '@tabler/icons-react'
 
 export const NAV_LINKS: NavItemType[] = [
-   { label: 'Dashboard', icon: IconGauge, url: '/' },
+   { label: 'Customer', icon: IconFriends, url: '/' },
+   { label: 'Category', icon: IconCategory, url: '/category' },
    {
       label: 'Market news',
       icon: IconNotes,
@@ -32,7 +33,7 @@ export const NAV_LINKS: NavItemType[] = [
    },
    { label: 'Analytics', icon: IconPresentationAnalytics, url: '/analytics' },
    { label: 'Contracts', icon: IconFileAnalytics, url: '/contracts' },
-   { label: 'Settings', icon: IconAdjustments, url: '/settings' },
+
    {
       label: 'Security',
       icon: IconLock,

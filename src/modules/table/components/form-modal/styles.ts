@@ -1,6 +1,9 @@
 import { createStyles } from '@mantine/core'
-export default createStyles((theme) => ({
+export default createStyles(() => ({
    label: {
+      textTransform: 'capitalize',
+   },
+   item: {
       textTransform: 'capitalize',
    },
    submitButton: {

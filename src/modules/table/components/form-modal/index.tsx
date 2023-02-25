@@ -1,23 +1,29 @@
 import { Button, Flex, NumberInput, Select, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { isNotEmpty, useForm } from '@mantine/form'
 import { Item } from '../pos-table'
 import useStyles from './styles'
 
 interface Props {
    forms: {
-      [key: string]: string | number | Date | string[]
+      [key: string]: string | number | Date | { title: string; values: { label: string; value: string }[] }
    }
-   item: Item
+   item: Item | null
    isEditing: boolean
+   loading: boolean
    updateRow: <T extends { [key: string]: unknown }>(values: T) => void
+   addRow: <T extends { [key: string]: unknown }>(values: T) => void
 }
 
-const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow }) => {
+const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow, addRow, loading }) => {
    const { classes } = useStyles()
 
    const mappedValues = Object.entries(forms).map(([k, v]) => {
       if (isEditing) {
-         return { [k]: item[k] }
+         const value = item?.[k]
+         if (typeof value === 'object' && 'isBadge' in value) {
+            return { [k]: value.value }
+         }
+         return { [k]: item?.[k] }
       }
       if (typeof v === 'string' || typeof v === 'object') {
          return { [k]: '' }
@@ -28,14 +34,22 @@ const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow }) => {
       if (v === '') return { [k]: null }
    })
 
+   const mappedValidators = Object.entries(forms).map(([k]) => {
+      return { [k]: isNotEmpty('Please fill the form') }
+   })
+
    const initialValues = Object.assign({}, ...mappedValues)
+
+   const validate = Object.assign({}, ...mappedValidators)
 
    const form = useForm({
       initialValues,
+      ...(isEditing ? {} : { validate }),
    })
 
    function handleSubmit<T extends { [key: string]: unknown }>(values: T) {
-      updateRow({ ...item, ...values })
+      console.log(values)
+      isEditing ? updateRow({ ...item, ...values }) : addRow({ ...values })
    }
 
    const inputs = Object.entries(forms).map(([k, v]) => {
@@ -45,7 +59,7 @@ const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow }) => {
                <TextInput
                   key={k}
                   label={k}
-                  py="sm"
+                  py="xs"
                   classNames={{ label: classes.label }}
                   {...form.getInputProps(k)}
                />
@@ -59,14 +73,23 @@ const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow }) => {
                   pattern="[0-9]*"
                   min={10}
                   max={100}
-                  py="sm"
-                  {...form.getInputProps(k)}
+                  py="xs"
                   classNames={{ label: classes.label }}
+                  {...form.getInputProps(k)}
                />
             )
          case 'object':
-            if (Array.isArray(v)) {
-               return <Select key={k} label={k} data={v} py="sm" classNames={{ label: classes.label }} />
+            if ('title' in v) {
+               return (
+                  <Select
+                     key={k}
+                     label={v.title}
+                     data={v.values}
+                     py="xs"
+                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                     {...form.getInputProps(k, { type: 'input' })}
+                  />
+               )
             }
       }
    })
@@ -76,7 +99,7 @@ const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow }) => {
          <Flex direction="column" gap={{ base: 'sm' }} py="md">
             {inputs}
          </Flex>
-         <Button type="submit" className={classes.submitButton}>
+         <Button type="submit" loading={loading} className={classes.submitButton}>
             Submit
          </Button>
       </form>
