@@ -6,6 +6,7 @@ export enum CustomerType {
 }
 
 export type GetAllCustomersData = {
+   customerId: string
    code: string
    name: string
    type: CustomerType

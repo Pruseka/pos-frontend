@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import Navigation from '../modules/nav/templates/nav'
 import { useEffect } from 'react'
 import { useAuth } from '../lib/contexts/auth-context'
+import NavigationHeader from '../modules/nav/components/nav-header'
+import { DRAWER_WIDTH } from '../lib/constants/layout'
 
 export default function Root() {
    const navigate = useNavigate()
@@ -18,13 +20,25 @@ export default function Root() {
    if (!user) return null
 
    return (
-      <Flex direction={{ base: 'row' }} justify={{ base: 'left' }}>
-         <Navigation />
-         <Box p="lg" sx={(theme) => ({ backgroundColor: theme.colors.gray[0], width: '100%' })}>
-            <Paper withBorder radius="md" p="xl">
-               <Outlet />
-            </Paper>
-         </Box>
+      <Flex direction="column">
+         <NavigationHeader />
+         <Flex direction={{ base: 'column', sm: 'row' }}>
+            <Navigation />
+            <Box
+               p={{ base: 'xs', sm: 'md' }}
+               sx={(theme) => ({
+                  backgroundColor: theme.colors.gray[0],
+                  width: '100%',
+                  [theme.fn.largerThan('sm')]: {
+                     width: `calc(100% - ${DRAWER_WIDTH}px)`,
+                  },
+               })}
+            >
+               <Paper withBorder radius="md" p={{ base: 'xs', xs: 'md' }}>
+                  <Outlet />
+               </Paper>
+            </Box>
+         </Flex>
       </Flex>
    )
 }

@@ -5,21 +5,28 @@ import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { NavItemType } from '../../../../types/global'
 import { useAuth } from '../../../../lib/contexts/auth-context'
+import { closeAllModals } from '@mantine/modals'
 
 const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    const { classes, theme, cx } = useStyles()
-   const { closeDrawer } = useAuth()
+   const { closeNavigation } = useAuth()
    const hasLinks = Array.isArray(links)
    const [opened, setOpened] = useState(false)
    const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft
    const { pathname } = useLocation()
    const isActiveLink = url === pathname
+
+   const handleClickLink = () => {
+      closeNavigation()
+      closeAllModals()
+   }
+
    const items = (hasLinks ? links : []).map((link) => (
       <NavLink
          className={({ isActive }) => cx(classes.link, { [classes.linkActive]: isActive })}
          to={link.url}
          key={link.label}
-         onClick={() => closeDrawer()}
+         onClick={handleClickLink}
       >
          {link.label}
       </NavLink>
@@ -57,7 +64,7 @@ const NavItem: React.FC<NavItemType> = ({ icon: Icon, label, links, url }) => {
    return (
       <NavLink
          to={url as string}
-         onClick={() => closeDrawer()}
+         onClick={handleClickLink}
          className={cx(classes.control, { [classes.linkActive]: isActiveLink })}
       >
          <Flex align="center">

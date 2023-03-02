@@ -1,4 +1,5 @@
 import { Code, Group, Navbar } from '@mantine/core'
+import { DRAWER_WIDTH } from '../../../../lib/constants/layout'
 import NavbarBody from '../navbar-body'
 import NavbarFooter from '../navbar-footer'
 import useStyles from './styles'
@@ -7,7 +8,7 @@ const NavBar: React.FC = () => {
    const { classes } = useStyles()
 
    return (
-      <Navbar width={{ sm: 300 }} p="md" pb={0}>
+      <Navbar width={{ sm: DRAWER_WIDTH }} p="md" pb={0} zIndex={10}>
          {/* need to split file navitems to reuse  */}
          <Navbar.Section className={classes.header}>
             <Group position="apart">

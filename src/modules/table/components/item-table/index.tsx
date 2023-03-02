@@ -1,67 +1,74 @@
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
-import { getAllCategories, GetAllCategoriesResponse } from '../../../../api/category/queries/getAllCategories'
-import PosTable from '../pos-table'
-import { updateCategoryMutation } from '../../../../api/category/mutations/updateCategory'
+import PosTable from './table'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck } from '@tabler/icons-react'
-import { addCategoryMutation } from '../../../../api/category/mutations/addCategory'
-import { getAllItems, GetAllItemsData } from '../../../../api/item/queries/getAllItems'
+import { getAllItems, GetAllItemsResponse } from '../../../../api/item/queries/getAllItems'
 import { addItemMutation } from '../../../../api/item/mutations/addItem'
-
-export type ItemActionFormType = Partial<NonNullable<GetAllItemsData>[0]>
+import { updateItemMutation } from '../../../../api/item/mutations/updateItem'
+import { getAllCategories, GetAllCategoriesResponse } from '../../../../api/category/queries/getAllCategories'
+import { updatePriceMutation } from '../../../../api/item/mutations/updatePrice'
 
 const ItemsTable: React.FC = () => {
-   //    const { data, isLoading, mutate: refetch } = useSWR<GetAllCategoriesResponse>('/item/all', getAllItems)
-   //    //    const { trigger: updateCategory } = useSWRMutation('/category', updateItemMutation)
-   //    const { trigger: addCategory } = useSWRMutation('/category', addItemMutation)
+   const { data, isLoading, mutate: refetch } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
+   const { data: categoriesData } = useSWR<GetAllCategoriesResponse>('/category/all', getAllCategories)
+   const { trigger: addItem, isMutating: addingItem } = useSWRMutation('/item', addItemMutation)
+   const { trigger: updateItem, isMutating: updatingItem } = useSWRMutation('/item', updateItemMutation)
+   const { trigger: updatePrice, isMutating: updatingPrice } = useSWRMutation(
+      '/item/price',
+      updatePriceMutation
+   )
 
-   //    const forms: ItemActionFormType = { name: '' }
+   const addRow = async (values: { [key: string]: unknown }) => {
+      await addItem(values as any, {
+         onSuccess: (data) =>
+            showNotification({
+               message: data.data.message,
+               icon: <IconCheck />,
+               color: 'teal',
+            }),
+      })
+   }
 
-   //    const addRow = async (values: { [key: string]: unknown }) => {
-   //       await addCategory(values as any, {
-   //          onSuccess: (data) =>
-   //             showNotification({
-   //                message: data.data.message,
-   //                icon: <IconCheck />,
-   //                color: 'teal',
-   //             }),
-   //       })
-   //    }
+   const updateRow = async (values: { [key: string]: unknown }) => {
+      await updateItem(values as any, {
+         onSuccess: (data) =>
+            showNotification({
+               message: data.data.message,
+               icon: <IconCheck />,
+               color: 'teal',
+            }),
+      })
+   }
 
-   //    const updateRow = async (values: { [key: string]: unknown }) => {
-   //       await updateCategory(values as any, {
-   //          onSuccess: (data) =>
-   //             showNotification({
-   //                message: data.data.message,
-   //                icon: <IconCheck />,
-   //                color: 'teal',
-   //             }),
-   //       })
-   //    }
+   const updateItemPrice = async (values: { [key: string]: unknown }) => {
+      await updatePrice(values as any, {
+         onSuccess: (data) =>
+            showNotification({
+               message: data.data.message,
+               icon: <IconCheck />,
+               color: 'teal',
+            }),
+      })
+   }
 
-   return <></>
+   const tableData = data?.data && data?.data.length > 0 ? data?.data : []
 
-   //    return (
-   //       <PosTable
-   //          data={data?.data}
-   //          loading={isLoading}
-   //          title="Category"
-   //          forms={forms}
-   //          updateRow={updateRow}
-   //          addRow={addRow}
-   //          refetch={refetch}
-   //          action={{ update: true, delete: true }}
-   //       />
-   //    )
+   return (
+      <PosTable
+         data={tableData}
+         categoriesData={categoriesData}
+         loading={isLoading}
+         formSubmitting={addingItem || updatingItem}
+         updatingPrice={updatingPrice}
+         title="Item"
+         updateRow={updateRow}
+         updatePrice={updateItemPrice}
+         addRow={addRow}
+         excludeFields={['itemId', 'createdAt', 'updatedAt']}
+         refetch={refetch as any}
+      />
+   )
 }
 
 export default ItemsTable
-
-// const categories =
-//       data && data?.data?.length > 0
-//          ? data.data.map((category) => ({
-//               value: category.categoryId,
-//               label: category.name,
-//            }))
-//          : []

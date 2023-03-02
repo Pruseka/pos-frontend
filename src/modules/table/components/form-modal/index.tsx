@@ -5,7 +5,12 @@ import useStyles from './styles'
 
 interface Props {
    forms: {
-      [key: string]: string | number | Date | { title: string; values: { label: string; value: string }[] }
+      [key: string]: {
+         title?: string
+         value: string | number | Date | { label: string; value: string }[]
+         addRequired: boolean
+         updateRequired: boolean
+      }
    }
    item: Item | null
    isEditing: boolean
@@ -14,46 +19,59 @@ interface Props {
    addRow: <T extends { [key: string]: unknown }>(values: T) => void
 }
 
-const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow, addRow, loading }) => {
+const FormModal: React.FC<Props> = ({ forms, item, isEditing, loading, updateRow, addRow }) => {
    const { classes } = useStyles()
 
+   // {
+   //    title: '',
+   //    value: '' | {label: '', value: ''}
+   // }
    const mappedValues = Object.entries(forms).map(([k, v]) => {
       if (isEditing) {
          const value = item?.[k]
          if (typeof value === 'object' && 'isBadge' in value) {
             return { [k]: value.value }
          }
+
          return { [k]: item?.[k] }
       }
-      if (typeof v === 'string' || typeof v === 'object') {
+      if (typeof v.value === 'string' || typeof v.value === 'object') {
          return { [k]: '' }
       }
-      if (typeof v === 'number') {
+      if (typeof v.value === 'number') {
          return { [k]: 0 }
       }
-      if (v === '') return { [k]: null }
+      if (v.value === null) return { [k]: null }
    })
 
-   const mappedValidators = Object.entries(forms).map(([k]) => {
-      return { [k]: isNotEmpty('Please fill the form') }
+   const mappedAddValidators = Object.entries(forms).map(([k, v]) => {
+      if (v.addRequired) {
+         return { [k]: isNotEmpty('Please fill the form') }
+      }
+   })
+
+   const mappedUpdateValidators = Object.entries(forms).map(([k, v]) => {
+      if (v.updateRequired) {
+         return { [k]: isNotEmpty('Please fill the form') }
+      }
    })
 
    const initialValues = Object.assign({}, ...mappedValues)
 
-   const validate = Object.assign({}, ...mappedValidators)
+   const addValidate = Object.assign({}, ...mappedAddValidators)
+   const updateValidate = Object.assign({}, ...mappedUpdateValidators)
 
    const form = useForm({
       initialValues,
-      ...(isEditing ? {} : { validate }),
+      ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
    function handleSubmit<T extends { [key: string]: unknown }>(values: T) {
-      console.log(values)
       isEditing ? updateRow({ ...item, ...values }) : addRow({ ...values })
    }
 
    const inputs = Object.entries(forms).map(([k, v]) => {
-      switch (typeof v) {
+      switch (typeof v.value) {
          case 'string':
             return (
                <TextInput
@@ -79,12 +97,12 @@ const FormModal: React.FC<Props> = ({ forms, item, isEditing, updateRow, addRow,
                />
             )
          case 'object':
-            if ('title' in v) {
+            if (Array.isArray(v.value)) {
                return (
                   <Select
                      key={k}
                      label={v.title}
-                     data={v.values}
+                     data={v.value}
                      py="xs"
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                      {...form.getInputProps(k, { type: 'input' })}

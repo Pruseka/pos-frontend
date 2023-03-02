@@ -4,14 +4,8 @@ import useStyles from './styles'
 import { useAuth } from '../../../../lib/contexts/auth-context'
 
 const NavBarContainer: React.FC = () => {
-   const { openedBurger, openedDrawer, openDrawer, closeDrawer } = useAuth()
+   const { openedDrawer, closeNavigation } = useAuth()
    const { classes } = useStyles()
-
-   /**
-    * @context
-    * need to add useContext
-    * to close drawer after selecting navlinks
-    */
 
    return (
       <>
@@ -19,10 +13,9 @@ const NavBarContainer: React.FC = () => {
             <NavBar />
          </Box>
          <Box className={classes.mobileContainer}>
-            <Burger opened={openedBurger} onClick={() => openDrawer()} />
             <Drawer
                opened={openedDrawer}
-               onClose={() => closeDrawer()}
+               onClose={closeNavigation}
                className={classes.drawer}
                styles={(theme) => ({
                   drawer: { flexDirection: 'column' },

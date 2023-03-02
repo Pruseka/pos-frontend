@@ -1,12 +1,12 @@
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 import { getAllCategories, GetAllCategoriesResponse } from '../../../../api/category/queries/getAllCategories'
-import PosTable from '../pos-table'
+import PosTable from './table'
 import { updateCategoryMutation } from '../../../../api/category/mutations/updateCategory'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck } from '@tabler/icons-react'
-import type { GetAllCategoriesData } from '../../../../api/category/queries/getAllCategories'
 import { addCategoryMutation } from '../../../../api/category/mutations/addCategory'
+import type { GetAllCategoriesData } from '../../../../api/category/queries/getAllCategories'
 
 export type CategoryActionFormType = Partial<NonNullable<GetAllCategoriesData>[0]>
 
@@ -24,8 +24,6 @@ const CategoriesTable: React.FC = () => {
       '/category',
       addCategoryMutation
    )
-
-   const forms: CategoryActionFormType = { name: '' }
 
    const addRow = async (values: { [key: string]: unknown }) => {
       await addCategory(values as any, {
@@ -49,17 +47,18 @@ const CategoriesTable: React.FC = () => {
       })
    }
 
+   const tableData = data?.data && data.data.length > 0 ? data.data : []
+
    return (
       <PosTable
-         data={data?.data}
+         data={tableData}
          loading={isLoading}
          title="Category"
          formSubmitting={addingCategory || updatingCategory}
-         forms={forms}
          updateRow={updateRow}
          addRow={addRow}
-         refetch={refetch}
-         action={{ update: true, delete: true }}
+         refetch={refetch as any}
+         excludeFields={['categoryId']}
       />
    )
 }

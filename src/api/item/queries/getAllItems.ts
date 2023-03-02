@@ -1,9 +1,9 @@
 import apiClient from '../../instance'
 
 export type GetAllItemsData = {
-   categoryId: string
-   name: string
    code: string
+   name: string
+   category: string
    itemId: string
    purchasingPrice?: number
    retailPrice?: number

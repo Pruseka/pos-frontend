@@ -1,4 +1,5 @@
 import { Flex, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
+import { closeAllModals } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck, IconLogout } from '@tabler/icons-react'
 import { MESSAGES } from '../../../../lib/constants/message'
@@ -11,6 +12,7 @@ const NavbarFooter: React.FC = () => {
 
    const handleSiginOut = () => {
       signOut()
+      closeAllModals()
       showNotification({
          message: MESSAGES.LOGOUT_SUCCESS,
          icon: <IconCheck />,

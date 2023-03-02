@@ -1,17 +1,18 @@
 import apiClient from '../../instance'
 
 export interface Args {
+   itemId: string
    code: string
    name: string
    categoryId: string
 }
 
-export async function addItemMutation(
+export async function updateItemMutation(
    url: string,
-   { arg: { code, name, categoryId } }: Readonly<{ arg: Args }>
+   { arg: { itemId, code, name, categoryId } }: Readonly<{ arg: Args }>
 ) {
-   console.log(code, name, categoryId)
-   return await apiClient.post(url, {
+   return await apiClient.put(url, {
+      itemId,
       code,
       name,
       categoryId,

@@ -1,18 +1,13 @@
-import {
-   CustomerType,
-   getAllCustomers,
-   GetAllCustomersData,
-   GetAllCustomersResponse,
-} from '../../../../api/customer/queries/getAllCustomers'
+import { getAllCustomers, GetAllCustomersResponse } from '../../../../api/customer/queries/getAllCustomers'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
-import PosTable from '../pos-table'
+import PosTable from './table'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck } from '@tabler/icons-react'
 import { updateCustomerMutation } from '../../../../api/customer/mutations/updateCustomer'
 import { addCustomerMutation } from '../../../../api/customer/mutations/addCustomer'
 
-export type CustomerActionFormType = Partial<NonNullable<GetAllCustomersData>[0]>
+// export type CustomerActionFormType = Partial<NonNullable<GetAllCustomersData>[0]>
 
 const CustomersTable: React.FC = () => {
    const {
@@ -28,21 +23,6 @@ const CustomersTable: React.FC = () => {
       '/customer',
       updateCustomerMutation
    )
-
-   const customerTypeValues = Object.values(CustomerType).map((type) => ({ label: type, value: type }))
-
-   const customerTypes = {
-      title: 'Customer Type',
-      values: customerTypeValues,
-   }
-
-   const forms: CustomerActionFormType = {
-      name: '',
-      address: '',
-      phone: '',
-      code: '',
-      type: customerTypes as any,
-   }
 
    const addRow = async (values: { [key: string]: unknown }) => {
       await addCustomer(values as any, {
@@ -66,25 +46,18 @@ const CustomersTable: React.FC = () => {
       })
    }
 
-   const tableData =
-      data?.data && data?.data.length > 0
-         ? data?.data.map((item) => {
-              const color = item.type === CustomerType.RETAIL ? 'teal' : 'blue'
-              return { ...item, type: { isBadge: true, color, value: item.type } }
-           })
-         : []
+   const tableData = data?.data && data?.data.length > 0 ? data?.data : []
 
    return (
       <PosTable
-         data={tableData as any}
+         data={tableData}
          loading={isLoading}
          formSubmitting={addingCustomer || updatingCustomer}
          title="Customer"
-         forms={forms}
          updateRow={updateRow}
          addRow={addRow}
-         refetch={refetch}
-         action={{ update: true, delete: true }}
+         excludeFields={['customerId', 'createdAt', 'updatedAt']}
+         refetch={refetch as any}
       />
    )
 }

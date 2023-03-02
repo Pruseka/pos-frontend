@@ -7,11 +7,13 @@ import {
    IconLock,
    IconCategory,
    IconFriends,
+   IconIceCream,
 } from '@tabler/icons-react'
 
 export const NAV_LINKS: NavItemType[] = [
    { label: 'Customer', icon: IconFriends, url: '/' },
    { label: 'Category', icon: IconCategory, url: '/category' },
+   { label: 'Item', icon: IconIceCream, url: '/item' },
    {
       label: 'Market news',
       icon: IconNotes,

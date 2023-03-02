@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
+import { useDisclosure } from '@mantine/hooks'
 
 type User = {
    userId: string
@@ -13,8 +14,8 @@ interface AuthContextInterface {
    openedDrawer: boolean
    openedBurger: boolean
    user: User | null
-   openDrawer: () => void
-   closeDrawer: () => void
+   openNavigation: () => void
+   closeNavigation: () => void
    signIn: (token: string) => void
    signOut: () => void
 }
@@ -22,8 +23,8 @@ interface AuthContextInterface {
 const AuthContext = createContext<AuthContextInterface | null>(null)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-   const [openedDrawer, setOpenedDrawer] = useState(false)
-   const [openedBurger, setOpenedBurger] = useState(false)
+   const [openedDrawer, { open: openDrawer, close: closeDrawer }] = useDisclosure(false)
+   const [openedBurger, { open: openBurger, close: closeBurger }] = useDisclosure(false)
    const [token, setToken] = useState(localStorage.getItem('token') || '')
    const [user, setUser] = useState<User | null>(null)
 
@@ -44,14 +45,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.removeItem('token')
    }
 
-   const openDrawer = () => {
-      setOpenedBurger(true)
-      setOpenedDrawer(true)
+   const openNavigation = () => {
+      openDrawer()
+      openBurger()
    }
 
-   const closeDrawer = () => {
-      setOpenedBurger(false)
-      setOpenedDrawer(false)
+   const closeNavigation = () => {
+      closeDrawer()
+      closeBurger()
    }
 
    useEffect(() => {
@@ -63,7 +64,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(null)
    }, [token])
 
-   const authCtx = { token, openedBurger, openedDrawer, openDrawer, closeDrawer, user, signIn, signOut }
+   const authCtx = {
+      token,
+      openedBurger,
+      openedDrawer,
+      openNavigation,
+      closeNavigation,
+      user,
+      signIn,
+      signOut,
+   }
 
    return <AuthContext.Provider value={authCtx}>{children}</AuthContext.Provider>
 }
