@@ -33,7 +33,6 @@ interface Props {
    isEditing: boolean
    loading: boolean
    newId: number
-   customerType: CustomerType
    updateRow: (values: Item) => void
    addRow: (values: Item) => void
    cancelUpdate: () => void
@@ -44,7 +43,6 @@ const InvoiceForm: React.FC<Props> = ({
    isEditing,
    loading,
    newId,
-   customerType,
    updateRow,
    addRow,
    cancelUpdate,

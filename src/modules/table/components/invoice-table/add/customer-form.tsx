@@ -1,46 +1,35 @@
 import useSWR from 'swr'
-import {
-   Badge,
-   Box,
-   Button,
-   Container,
-   Divider,
-   Flex,
-   NumberInput,
-   Paper,
-   Select,
-   Text,
-   TextInput,
-} from '@mantine/core'
-import { isNotEmpty, useForm, isInRange } from '@mantine/form'
-import { Item } from '.'
-import useStyles from './styles'
-import { getAllItems, GetAllItemsResponse } from '../../../../../api/item/queries/getAllItems'
+import { Autocomplete, Box, Button, Flex, Select, TextInput } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import { useEffect } from 'react'
-import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
+import {
+   CustomerType,
+   getAllCustomers,
+   GetAllCustomersResponse,
+} from '../../../../../api/customer/queries/getAllCustomers'
 import { InvoiceType } from '../../../../../api/invoice/queries/getInvoicesByDate'
+import useStyles from './styles'
 
 interface FormValues {
-   customerName: string
+   customer: string
    customerType: CustomerType
-   invoiceType: InvoiceType
+   type: InvoiceType
 }
-
-interface Props {
-   setCustomerType: React.Dispatch<React.SetStateAction<CustomerType>>
-}
-
-const CustomerForm: React.FC<Props> = ({ setCustomerType }) => {
+const CustomerForm: React.FC = () => {
    const { classes } = useStyles()
-   //    const { data: itemsData, isLoading } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
+   const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
+   const customers =
+      customersData?.data && customersData.data.length > 0
+         ? customersData?.data.map((customer) => ({ label: customer.name, value: customer.name }))
+         : []
 
    const customerTypes = Object.values(CustomerType).map((type) => ({ label: type, value: type }))
    const invoiceTypes = Object.values(InvoiceType).map((type) => ({ label: type, value: type }))
 
    const initialValues = {
-      customerName: '',
+      customer: '',
       customerType: CustomerType.RETAIL,
-      invoiceType: InvoiceType.CASH,
+      type: InvoiceType.CASH,
    }
 
    const form = useForm({
@@ -51,11 +40,15 @@ const CustomerForm: React.FC<Props> = ({ setCustomerType }) => {
    const handleSubmit = (values: FormValues) => {}
 
    useEffect(() => {
-      if (form.values.customerType) {
-         console.log(form.values.customerType)
-         setCustomerType(form.values.customerType)
+      if (form.values.customer) {
+         const customerName = form.values.customer
+         const existingCustomer = customersData?.data.find((customer) => customer.name === customerName)
+
+         if (existingCustomer) {
+            form.setValues({ customerType: existingCustomer.type })
+         }
       }
-   }, [setCustomerType, form.values.customerType])
+   }, [form.values.customer])
 
    return (
       <Box w="100%">
@@ -63,12 +56,13 @@ const CustomerForm: React.FC<Props> = ({ setCustomerType }) => {
             <Flex justify="center" align="center" sx={{ flex: 1 / 2 }}>
                <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
                   <Flex direction="column" gap={{ base: 'sm' }} py="md" w="100%">
-                     <TextInput
+                     <Autocomplete
                         label="Customer Name"
                         py="xs"
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label }}
-                        {...form.getInputProps('customerName')}
+                        data={customers}
+                        {...form.getInputProps('customer')}
                      />
                      <Flex gap="sm">
                         <Select
@@ -85,7 +79,7 @@ const CustomerForm: React.FC<Props> = ({ setCustomerType }) => {
                            py="xs"
                            sx={{ flex: 1 }}
                            classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                           {...form.getInputProps('invoiceType')}
+                           {...form.getInputProps('type')}
                         />
                      </Flex>
                   </Flex>

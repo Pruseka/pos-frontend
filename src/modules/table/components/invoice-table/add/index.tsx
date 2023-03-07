@@ -23,7 +23,6 @@ const AddInvoice: React.FC = () => {
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
    const [isEditing, setIsEditing] = useState(false)
-   const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.RETAIL)
 
    const backButton = (
       <Box pl="xl">
@@ -80,7 +79,7 @@ const AddInvoice: React.FC = () => {
    return (
       <Box p="xl" className={classes.container}>
          {backButton}
-         <CustomerForm setCustomerType={setCustomerType} />
+         <CustomerForm />
 
          <Flex
             direction={{ base: 'column-reverse', md: 'row' }}
@@ -103,7 +102,6 @@ const AddInvoice: React.FC = () => {
                isEditing={isEditing}
                item={selectedItem}
                loading={false}
-               customerType={customerType}
                updateRow={handleUpdateRow}
                newId={items.length > 0 ? items[items.length - 1].no + 1 : 1}
                cancelUpdate={cancelUpdate}
