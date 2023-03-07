@@ -11,13 +11,13 @@ export default function Root() {
    const navigate = useNavigate()
    const { user, token } = useAuth()
 
-   useEffect(() => {
-      if (!user && !token) {
-         navigate('/login', { replace: true })
-      }
-   }, [navigate, user, token])
+   // useEffect(() => {
+   //    if (!user && !token) {
+   //       navigate('/login', { replace: true })
+   //    }
+   // }, [navigate, user, token])
 
-   if (!user) return null
+   // if (!user) return null
 
    return (
       <Flex direction="column">

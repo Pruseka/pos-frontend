@@ -8,8 +8,8 @@ interface Props {
    item: Item | null
    isEditing: boolean
    loading: boolean
-   updateRow: <T extends { [key: string]: unknown }>(values: T) => void
-   addRow: <T extends { [key: string]: unknown }>(values: T) => void
+   updateRow: <T extends { [key: string]: unknown }>(values: T) => Promise<void>
+   addRow: <T extends { [key: string]: unknown }>(values: T) => Promise<void>
 }
 
 const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRow }) => {
@@ -45,8 +45,8 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
       ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
-   function handleSubmit<T extends { [key: string]: unknown }>(values: T) {
-      isEditing ? updateRow({ ...item, ...values }) : addRow({ ...values })
+   async function handleSubmit<T extends { [key: string]: unknown }>(values: T) {
+      isEditing ? await updateRow({ ...item, ...values }) : await addRow({ ...values })
    }
 
    return (
@@ -80,7 +80,7 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
                {...form.getInputProps('phone')}
             />
             <TextInput
-               label="Name"
+               label="Address"
                py="xs"
                classNames={{ label: classes.label }}
                {...form.getInputProps('address')}

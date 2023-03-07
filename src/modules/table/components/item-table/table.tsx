@@ -221,32 +221,40 @@ const PosTable: React.FC<TableProps> = ({
       )
 
    return (
-      <>
-         <Box p="md">
+      <Box p={{ base: 'sm', sm: 'xl' }}>
+         <Box pt={{ base: 'xs', xs: 'md' }}>
             <Text fw="bold" fz="xl" className={classes.title}>
                {title}
             </Text>
-            <Flex style={{ width: '100%' }} py="lg" justify="flex-end" align="end">
+            <Flex
+               className={classes.tableActions}
+               p="lg"
+               justify="flex-end"
+               align={{ xs: 'stretch', base: 'flex-start' }}
+               direction={{ xs: 'row', base: 'column-reverse' }}
+               gap={{ xs: 0, base: 'md' }}
+            >
                <TextInput
-                  icon={<IconSearch size={14} stroke={1.5} />}
-                  mx="md"
-                  sx={{ width: '300px' }}
-                  placeholder="Search By Item Name"
+                  icon={<IconSearch size={20} stroke={1.5} />}
+                  mx={{ base: 0, xs: 'md' }}
+                  className={classes.input}
+                  placeholder="Search By Customer Name"
                   defaultValue={q}
                   onChange={(e) => setQ(e.currentTarget.value)}
+                  size="md"
+                  radius="md"
                />
-               <Button onClick={() => setOpenEditForm(true)}>{`Add ${title}`}</Button>
+               <Button h={40} onClick={() => setOpenEditForm(true)}>{`Add ${title}`}</Button>
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>
-                  <Table miw={800} striped fontSize="sm" verticalSpacing="sm">
+                  <Table miw={800} fontSize="sm" withBorder verticalSpacing="md" className={classes.table}>
                      <thead key="head">
                         <tr>
-                           {columns.map((columnName, i) => {
+                           {columns.map((columnName) => {
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
                               }
-
                               return <th key={columnName}>{toSentenceCase(columnName)}</th>
                            })}
                            <th />
@@ -263,11 +271,11 @@ const PosTable: React.FC<TableProps> = ({
             )}
          </Box>
          {total > 1 && (
-            <Flex justify="flex-end" align="center" p="lg">
+            <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                <Pagination total={total} page={activePage} onChange={setActivePage} />
             </Flex>
          )}
-      </>
+      </Box>
    )
 }
 

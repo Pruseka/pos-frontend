@@ -38,7 +38,16 @@ export default createStyles((theme) => ({
    netAmountWrapper: {
       borderRadius: theme.radius.sm,
       backgroundColor: theme.colors.gray[0],
-      border: `1px solid ${theme.colors.gray[4]}`,
+      border: `1px solid ${theme.colors.gray[3]}`,
+   },
+   totalAmountWrapper: {
+      backgroundColor: theme.colors.gray[0],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      borderTop: 0,
+   },
+   roundedBottom: {
+      borderBottomLeftRadius: theme.radius.lg,
+      borderBottomRightRadius: theme.radius.lg,
    },
    actionButton: {
       width: 120,
@@ -55,5 +64,24 @@ export default createStyles((theme) => ({
       '&:hover': {
          textDecoration: 'underline',
       },
+   },
+   tableTop: {
+      width: '100%',
+      border: `1px solid ${theme.colors.gray[3]}`,
+
+      borderBottom: 0,
+      borderTopLeftRadius: theme.radius.lg,
+      borderTopRightRadius: theme.radius.lg,
+   },
+   table: {
+      [' thead']: {
+         background: theme.colors.gray[0],
+      },
+   },
+   paginationWrapper: {
+      border: `1px solid ${theme.colors.gray[3]}`,
+      borderTop: 0,
+      borderBottomLeftRadius: theme.radius.lg,
+      borderBottomRightRadius: theme.radius.lg,
    },
 }))

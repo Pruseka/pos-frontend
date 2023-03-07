@@ -1,7 +1,7 @@
-import useSWR from 'swr'
-import { Autocomplete, Box, Button, Flex, Select, TextInput } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { Autocomplete, Box, Button, Flex, Select } from '@mantine/core'
+import { isNotEmpty, useForm } from '@mantine/form'
 import { useEffect } from 'react'
+import useSWR from 'swr'
 import {
    CustomerType,
    getAllCustomers,
@@ -10,12 +10,17 @@ import {
 import { InvoiceType } from '../../../../../api/invoice/queries/getInvoicesByDate'
 import useStyles from './styles'
 
-interface FormValues {
+export interface FormValues {
    customer: string
    customerType: CustomerType
    type: InvoiceType
 }
-const CustomerForm: React.FC = () => {
+
+interface Props {
+   submitForm: (values: FormValues) => Promise<void>
+}
+
+const CustomerForm: React.FC<Props> = ({ submitForm }) => {
    const { classes } = useStyles()
    const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
    const customers =
@@ -34,10 +39,15 @@ const CustomerForm: React.FC = () => {
 
    const form = useForm({
       initialValues,
+      validate: {
+         customer: isNotEmpty('Customer Name must be filled'),
+      },
       //   ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
-   const handleSubmit = (values: FormValues) => {}
+   const handleSubmit = async (values: FormValues) => {
+      await submitForm(values)
+   }
 
    useEffect(() => {
       if (form.values.customer) {
@@ -52,9 +62,9 @@ const CustomerForm: React.FC = () => {
 
    return (
       <Box w="100%">
-         <Flex p="xl" direction={{ base: 'column', md: 'row' }}>
-            <Flex justify="center" align="center" sx={{ flex: 1 / 2 }}>
-               <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
+         <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
+            <Flex p="xl" direction={{ base: 'column', md: 'row' }}>
+               <Flex justify="center" align="center" sx={{ flex: 1 / 2 }}>
                   <Flex direction="column" gap={{ base: 'sm' }} py="md" w="100%">
                      <Autocomplete
                         label="Customer Name"
@@ -83,19 +93,19 @@ const CustomerForm: React.FC = () => {
                         />
                      </Flex>
                   </Flex>
-               </form>
-            </Flex>
-            <Flex py="md" sx={{ flex: 1 }} justify="flex-end" align="flex-end">
-               <Flex gap="md">
-                  <Button color="teal" variant="outline" className={classes.actionButton}>
-                     Discard
-                  </Button>
-                  <Button color="teal" className={classes.actionButton}>
-                     Save
-                  </Button>
+               </Flex>
+               <Flex py="md" sx={{ flex: 1 }} justify="flex-end" align="flex-end">
+                  <Flex gap="md">
+                     <Button variant="outline" className={classes.actionButton}>
+                        Discard
+                     </Button>
+                     <Button className={classes.actionButton} type="submit">
+                        Save
+                     </Button>
+                  </Flex>
                </Flex>
             </Flex>
-         </Flex>
+         </form>
       </Box>
    )
 }

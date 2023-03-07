@@ -1,7 +1,7 @@
 import { CustomerType } from '../../customer/queries/getAllCustomers'
 import apiClient from '../../instance'
 
-type Item = {
+export type Item = {
    itemId: string
    qty: number
 }

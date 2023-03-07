@@ -11,7 +11,7 @@ import { useState } from 'react'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 
 const InvoiceTable: React.FC = () => {
-   const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
+   const [value, setValue] = useState<DateRangePickerValue>([new Date(2023, 2, 2), new Date()])
    const dates: any = value.map((value) => value?.toISOString().split('T')[0])
 
    const { data, isLoading } = useSWR<GetAllInvoicesResponse>(
@@ -28,7 +28,7 @@ const InvoiceTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Invoice"
-         excludeFields={['invoiceId', 'createdBy', 'items']}
+         excludeFields={['invoiceId', 'createdBy', 'items', 'createdAt']}
       />
    )
 }

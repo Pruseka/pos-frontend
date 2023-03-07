@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Box, Button, Flex, Grid, Text, UnstyledButton } from '@mantine/core'
+import { useState } from 'react'
+import useSWRMutation from 'swr/mutation'
+import { Box, Flex, Text } from '@mantine/core'
 import { useHotkeys } from '@mantine/hooks'
-import InvoiceForm from './invoice-form'
-import PosTable from './table'
-import CustomerForm from './customer-form'
-import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
+import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
 import { NavLink } from 'react-router-dom'
-import { IconArrowNarrowLeft } from '@tabler/icons-react'
+import CustomerForm, { FormValues } from './customer-form'
+import InvoiceForm from './invoice-form'
 import useStyles from './styles'
+import PosTable from './table'
+import { createInvoiceMutation } from '../../../../../api/invoice/mutations/createInvoice'
+import { showNotification } from '@mantine/notifications'
 
 export type Item = {
    no: number
+   itemId: string
    code: string
    name: string
    qty: number
@@ -23,6 +26,10 @@ const AddInvoice: React.FC = () => {
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
    const [isEditing, setIsEditing] = useState(false)
+   const { trigger: createInvoice, isMutating: creatingInvoice } = useSWRMutation(
+      '/invoice',
+      createInvoiceMutation
+   )
 
    const backButton = (
       <Box pl="xl">
@@ -71,41 +78,58 @@ const AddInvoice: React.FC = () => {
       setIsEditing(false)
    }
 
+   const handleCreateInvoice = async (values: FormValues) => {
+      const mappedItems = items.map((item) => ({ itemId: item.itemId, qty: item.qty }))
+      await createInvoice(
+         { ...values, items: mappedItems },
+         {
+            onSuccess: (data) =>
+               showNotification({
+                  message: data.data.message,
+                  icon: <IconCheck />,
+                  color: 'teal',
+               }),
+         }
+      )
+   }
+
    useHotkeys([
       ['ctrl+Enter', () => console.log('saved')],
       ['alt+D', () => console.log('discard')],
    ])
 
    return (
-      <Box p="xl" className={classes.container}>
+      <Box p={{ base: 'xs', md: 'xl' }} className={classes.container}>
          {backButton}
-         <CustomerForm />
+         <Flex direction={{ base: 'column-reverse', md: 'column' }}>
+            <CustomerForm submitForm={handleCreateInvoice} />
 
-         <Flex
-            direction={{ base: 'column-reverse', md: 'row' }}
-            align={{ base: 'center', md: 'normal' }}
-            gap="xl"
-            p="xl"
-            w="100%"
-         >
-            <PosTable
-               data={items}
-               loading={false}
-               title="Items"
-               updateRow={handleSelectItem}
-               deleteRow={handleDeleteItem}
-               excludeFields={['itemId']}
-            />
+            <Flex
+               direction={{ base: 'column-reverse', md: 'row' }}
+               align={{ base: 'center', md: 'normal' }}
+               gap="xl"
+               p="xl"
+               w="100%"
+            >
+               <PosTable
+                  data={items}
+                  loading={false}
+                  title="Items"
+                  updateRow={handleSelectItem}
+                  deleteRow={handleDeleteItem}
+                  excludeFields={['itemId']}
+               />
 
-            <InvoiceForm
-               addRow={handleAddRow}
-               isEditing={isEditing}
-               item={selectedItem}
-               loading={false}
-               updateRow={handleUpdateRow}
-               newId={items.length > 0 ? items[items.length - 1].no + 1 : 1}
-               cancelUpdate={cancelUpdate}
-            />
+               <InvoiceForm
+                  addRow={handleAddRow}
+                  isEditing={isEditing}
+                  item={selectedItem}
+                  loading={false}
+                  updateRow={handleUpdateRow}
+                  newId={items.length > 0 ? items[items.length - 1].no + 1 : 1}
+                  cancelUpdate={cancelUpdate}
+               />
+            </Flex>
          </Flex>
       </Box>
    )

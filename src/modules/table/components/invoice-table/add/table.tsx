@@ -2,7 +2,6 @@ import {
    ActionIcon,
    Badge,
    Box,
-   Button,
    Flex,
    Group,
    Loader,
@@ -11,14 +10,10 @@ import {
    Table,
    Text,
 } from '@mantine/core'
-import { DateRangePicker } from '@mantine/dates'
 import { IconPackage, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { Item } from '.'
-import { GetAllInvoicesData } from '../../../../../api/invoice/queries/getInvoicesByDate'
-import { toSentenceCase } from '../../../../../helpers/conver-title'
-import { INVOICE_FORM_WIDTH } from '../../../../../lib/constants/layout'
-import { CustomerTypeBadges, Badge as CustomerBadge } from '../../customer-table/table'
+import { Badge as CustomerBadge, CustomerTypeBadges } from '../../customer-table/table'
 import useStyles from './styles'
 
 interface TableProps {
@@ -39,10 +34,10 @@ interface TableProps {
 }
 
 const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, deleteRow, excludeFields }) => {
-   const { classes } = useStyles()
+   const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
 
-   const rowsPerPage = 10
+   const rowsPerPage = 3
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
    const paginatedData = data.slice(startOffset, endOffset)
@@ -79,7 +74,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                }
 
                if (key === 'price' || key === 'netAmount') {
-                  return <td key={key}>{`${value.toLocaleString()} Ks`}</td>
+                  return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
                }
 
                if (value === '') return <td key={key}>-</td>
@@ -114,9 +109,9 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
             <Text fw="bold" fz="xl" className={classes.title}>
                {title}
             </Text>
-
+            <Box className={classes.tableTop} p="lg" />
             <ScrollArea>
-               <Table miw={800} striped fontSize="sm" verticalSpacing="sm">
+               <Table miw={800} withBorder fontSize="sm" verticalSpacing="sm" className={classes.table}>
                   <thead key="head">
                      <tr>
                         {columns.map((columnName) => {
@@ -150,17 +145,23 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                   )}
                </Table>
             </ScrollArea>
-            <Flex p="md" my="xl" className={classes.netAmountWrapper} justify="flex-end">
+            <Flex
+               p="md"
+               className={cx(classes.totalAmountWrapper, {
+                  [classes.roundedBottom]: !(total > 1),
+               })}
+               justify="flex-end"
+            >
                <Text color="dimmed" size="md" fw="bold">
                   Total Amount: {totalAmount.toLocaleString()} Ks
                </Text>
             </Flex>
+            {total > 1 && (
+               <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
+                  <Pagination total={total} page={activePage} onChange={setActivePage} />
+               </Flex>
+            )}
          </Box>
-         {total > 1 && (
-            <Flex justify="flex-end" align="center" p="lg">
-               <Pagination total={total} page={activePage} onChange={setActivePage} />
-            </Flex>
-         )}
       </Box>
    )
 }

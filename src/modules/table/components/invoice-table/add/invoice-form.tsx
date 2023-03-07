@@ -1,24 +1,11 @@
-import useSWR from 'swr'
-import {
-   Badge,
-   Box,
-   Button,
-   Container,
-   Divider,
-   Flex,
-   NumberInput,
-   Paper,
-   Select,
-   Text,
-   TextInput,
-} from '@mantine/core'
-import { isNotEmpty, useForm, isInRange } from '@mantine/form'
-import { Item } from '.'
-import useStyles from './styles'
-import { getAllItems, GetAllItemsResponse } from '../../../../../api/item/queries/getAllItems'
+import { Badge, Box, Button, Flex, NumberInput, Select, Text, TextInput } from '@mantine/core'
+import { isInRange, isNotEmpty, useForm } from '@mantine/form'
 import { useEffect } from 'react'
-import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
+import useSWR from 'swr'
+import { Item } from '.'
+import { getAllItems, GetAllItemsResponse } from '../../../../../api/item/queries/getAllItems'
 import { INVOICE_FORM_WIDTH } from '../../../../../lib/constants/layout'
+import useStyles from './styles'
 
 interface FormValues {
    itemId: string
@@ -82,6 +69,7 @@ const InvoiceForm: React.FC<Props> = ({
       isEditing && item
          ? updateRow({ ...item, ...values, netAmount })
          : addRow({ no: newId, ...values, netAmount })
+      //needs to fix(if item exist, the new item is added to existing one)
       form.reset()
    }
 
@@ -193,7 +181,7 @@ const InvoiceForm: React.FC<Props> = ({
                   </Text>
                </Box>
 
-               <Flex justify="flex-end" gap="sm">
+               <Flex justify="flex-end" py="xl" gap="sm">
                   {isEditing && (
                      <Button variant="light" onClick={handleCancelUpdate} className={classes.actionButton}>
                         Cancel
