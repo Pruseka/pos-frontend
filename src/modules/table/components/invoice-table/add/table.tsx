@@ -111,7 +111,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
             </Text>
             <Box className={classes.tableTop} p="lg" />
             <ScrollArea>
-               <Table miw={800} withBorder fontSize="sm" verticalSpacing="sm" className={classes.table}>
+               <Table miw={800} withBorder fontSize="sm" verticalSpacing="md" className={classes.table}>
                   <thead key="head">
                      <tr>
                         {columns.map((columnName) => {
