@@ -1,27 +1,39 @@
-import { NavItemType } from './../../types/global'
 import {
-   IconNotes,
    IconCalendarStats,
-   IconPresentationAnalytics,
+   IconChartHistogram,
+   IconCreditCard,
    IconFileAnalytics,
-   IconLock,
-   IconCategory,
-   IconFriends,
    IconIceCream,
+   IconLock,
+   IconPresentationAnalytics,
+   IconTag,
 } from '@tabler/icons-react'
+import { NavItemType } from './../../types/global'
 
 export const NAV_LINKS: NavItemType[] = [
-   { label: 'Customer', icon: IconFriends, url: '/' },
-   { label: 'Category', icon: IconCategory, url: '/category' },
-   { label: 'Item', icon: IconIceCream, url: '/item' },
    {
-      label: 'Market news',
-      icon: IconNotes,
+      label: 'Sales',
+      icon: IconChartHistogram,
       links: [
-         { label: 'Overview', url: '/overview' },
-         { label: 'Forecasts', url: '/asdff' },
-         { label: 'Outlook', url: '/dfdf' },
-         { label: 'Real time', url: '/aasdd' },
+         { label: 'Invoices', url: '/invoices' },
+         { label: 'Customers', url: '/' },
+      ],
+   },
+   {
+      label: 'Purchases',
+      icon: IconCreditCard,
+      links: [
+         { label: 'Supplies', url: '/supplies' },
+         { label: 'Supplier', url: '/supplier' },
+      ],
+   },
+   { label: 'Item', icon: IconIceCream },
+   {
+      label: 'Products',
+      icon: IconTag,
+      links: [
+         { label: 'Items', url: '/items' },
+         { label: 'Categories', url: '/categories' },
       ],
    },
    {

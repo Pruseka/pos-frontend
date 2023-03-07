@@ -14,7 +14,6 @@ interface Props {
 
 const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRow }) => {
    const { classes } = useStyles()
-
    const customerTypes = Object.values(CustomerType).map((type) => ({ label: type, value: type }))
 
    const initialValues = isEditing
@@ -57,6 +56,7 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
                label="Code"
                py="xs"
                classNames={{ label: classes.label }}
+               data-autoFocus
                {...form.getInputProps('code')}
             />
             <TextInput

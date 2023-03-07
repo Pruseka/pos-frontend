@@ -27,6 +27,7 @@ export default createStyles((theme) => ({
       fontSize: theme.fontSizes.sm,
       color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
       borderLeft: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[3]}`,
+      borderRadius: theme.radius.sm,
 
       '&:hover': {
          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[0],

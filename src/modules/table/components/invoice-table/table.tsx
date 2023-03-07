@@ -2,6 +2,7 @@ import { Badge, Box, Button, Flex, Group, Loader, Pagination, ScrollArea, Table,
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { IconPackage } from '@tabler/icons-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData } from '../../../../api/invoice/queries/getInvoicesByDate'
 import { toSentenceCase } from '../../../../helpers/conver-title'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
@@ -22,20 +23,20 @@ interface TableProps {
    //       }
    //    }
    excludeFields: string[]
-   date: JSX.Element
+   dateValue: DateRangePickerValue
+   setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, date }) => {
+const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes } = useStyles()
    const [activePage, setActivePage] = useState(1)
-
+   const navigate = useNavigate()
    const rowsPerPage = 3
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
    const paginatedData = data.slice(startOffset, endOffset)
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
-   const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
 
    const columns = Object.keys(data[0] || {})
 
@@ -94,12 +95,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <DateRangePicker
                      label="Book hotel"
                      placeholder="Pick dates range"
-                     value={value}
+                     value={dateValue}
                      mx="md"
                      sx={{ width: 300 }}
-                     onChange={setValue}
+                     onChange={setDate}
                   />
-                  <Button onClick={() => {}}>{`Add ${title}`}</Button>
+
+                  <Button
+                     onClick={() => {
+                        navigate('/invoices/add')
+                     }}
+                  >{`Add ${title}`}</Button>
                </Flex>
                {paginatedData.length > 0 ? (
                   <Table sx={{ minWidth: 600 }} striped fontSize="sm" verticalSpacing="sm">

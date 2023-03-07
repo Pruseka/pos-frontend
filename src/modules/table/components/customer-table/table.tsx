@@ -195,59 +195,57 @@ const PosTable: React.FC<TableProps> = ({
 
    return (
       <>
-         <>
-            <Box p={{ base: 'xs', xs: 'md' }}>
-               <Text fw="bold" fz="xl" className={classes.title}>
-                  {title}
-               </Text>
-               <Flex
-                  sx={{ width: '100%' }}
-                  py="lg"
-                  justify="flex-end"
-                  align={{ xs: 'flex-end', base: 'flex-start' }}
-                  direction={{ xs: 'row', base: 'column-reverse' }}
-                  gap={{ xs: 0, base: 'md' }}
-               >
-                  <TextInput
-                     icon={<IconSearch size={14} stroke={1.5} />}
-                     mx={{ base: 0, xs: 'md' }}
-                     style={{ width: '100%', maxWidth: 300 }}
-                     placeholder="Search By Customer Name"
-                     defaultValue={q}
-                     onChange={(e) => setQ(e.currentTarget.value)}
-                  />
-                  <Button onClick={() => setOpenActionForm(true)}>{`Add ${title}`}</Button>
-               </Flex>
-               {paginatedData.length > 0 ? (
-                  <ScrollArea>
-                     <Table miw={800} striped fontSize="sm" verticalSpacing="sm">
-                        <thead key="head">
-                           <tr>
-                              {columns.map((columnName) => {
-                                 if (excludeFields.find((field) => field === columnName)) {
-                                    return null
-                                 }
-                                 return <th key={columnName}>{toSentenceCase(columnName)}</th>
-                              })}
-                              <th />
-                           </tr>
-                        </thead>
-                        <tbody>{rows}</tbody>
-                     </Table>
-                  </ScrollArea>
-               ) : (
-                  <Flex direction="column" justify="center" align="center" className={classes.empty}>
-                     <IconPackage size={56} stroke={1.5} />
-                     <Text fz="md">No Data Found</Text>
-                  </Flex>
-               )}
-            </Box>
-            {total > 1 && (
-               <Flex justify="flex-end" align="center" p="lg">
-                  <Pagination total={total} page={activePage} onChange={setActivePage} />
+         <Box p={{ base: 'xs', xs: 'md' }}>
+            <Text fw="bold" fz="xl" className={classes.title}>
+               {title}
+            </Text>
+            <Flex
+               sx={{ width: '100%' }}
+               py="lg"
+               justify="flex-end"
+               align={{ xs: 'flex-end', base: 'flex-start' }}
+               direction={{ xs: 'row', base: 'column-reverse' }}
+               gap={{ xs: 0, base: 'md' }}
+            >
+               <TextInput
+                  icon={<IconSearch size={14} stroke={1.5} />}
+                  mx={{ base: 0, xs: 'md' }}
+                  style={{ width: '100%', maxWidth: 300 }}
+                  placeholder="Search By Customer Name"
+                  defaultValue={q}
+                  onChange={(e) => setQ(e.currentTarget.value)}
+               />
+               <Button onClick={() => setOpenActionForm(true)}>{`Add ${title}`}</Button>
+            </Flex>
+            {paginatedData.length > 0 ? (
+               <ScrollArea>
+                  <Table miw={800} striped fontSize="sm" verticalSpacing="sm">
+                     <thead key="head">
+                        <tr>
+                           {columns.map((columnName) => {
+                              if (excludeFields.find((field) => field === columnName)) {
+                                 return null
+                              }
+                              return <th key={columnName}>{toSentenceCase(columnName)}</th>
+                           })}
+                           <th />
+                        </tr>
+                     </thead>
+                     <tbody>{rows}</tbody>
+                  </Table>
+               </ScrollArea>
+            ) : (
+               <Flex direction="column" justify="center" align="center" className={classes.empty}>
+                  <IconPackage size={56} stroke={1.5} />
+                  <Text fz="md">No Data Found</Text>
                </Flex>
             )}
-         </>
+         </Box>
+         {total > 1 && (
+            <Flex justify="flex-end" align="center" p="lg">
+               <Pagination total={total} page={activePage} onChange={setActivePage} />
+            </Flex>
+         )}
       </>
    )
 }

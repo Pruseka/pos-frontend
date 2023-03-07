@@ -20,23 +20,14 @@ const InvoiceTable: React.FC = () => {
    )
 
    const tableData = data?.data && data?.data.length > 0 ? data?.data : []
-   console.log(tableData)
 
    return (
       <PosTable
          data={tableData}
          loading={isLoading}
-         date={
-            <DateRangePicker
-               label="Book hotel"
-               placeholder="Pick dates range"
-               value={value}
-               mx="md"
-               sx={{ width: 300 }}
-               onChange={setValue}
-            />
-         }
-         title="Customer"
+         dateValue={value}
+         setDate={setValue}
+         title="Invoice"
          excludeFields={['invoiceId', 'createdBy', 'items']}
       />
    )
