@@ -8,8 +8,12 @@ export default createStyles((theme) => ({
       backgroundColor: theme.white,
       border: `1px solid ${theme.colors.gray[4]}`,
       width: '100%',
+
       [theme.fn.largerThan('md')]: {
          width: `calc(100% - ${INVOICE_FORM_WIDTH}px)`,
+
+         paddingLeft: theme.spacing.lg,
+         paddingRight: theme.spacing.lg,
       },
    },
    label: {

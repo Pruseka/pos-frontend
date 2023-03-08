@@ -1,34 +1,68 @@
-import { getAllCustomers, GetAllCustomersResponse } from '../../../../api/customer/queries/getAllCustomers'
+import { DateRangePickerValue } from '@mantine/dates'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import useSWRMutation from 'swr/mutation'
-import PosTable from './table'
-import { showNotification } from '@mantine/notifications'
-import { IconCheck } from '@tabler/icons-react'
-import { updateCustomerMutation } from '../../../../api/customer/mutations/updateCustomer'
-import { addCustomerMutation } from '../../../../api/customer/mutations/addCustomer'
-import { GetAllInvoicesResponse, getInvoicesByDate } from '../../../../api/invoice/queries/getInvoicesByDate'
-import { useState } from 'react'
-import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
+import {
+   GetAllInvoicesData,
+   GetAllInvoicesResponse,
+   getInvoicesByDate,
+} from '../../../../api/invoice/queries/getInvoicesByDate'
+import PosTable, { PaymentTypes } from './table'
+
+export type PaymentTypeTab = {
+   type: string
+   count: number
+   color: string
+}
 
 const InvoiceTable: React.FC = () => {
-   const [value, setValue] = useState<DateRangePickerValue>([new Date(2023, 2, 2), new Date()])
+   const [tblData, setTblData] = useState<GetAllInvoicesData>([])
+   const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toISOString().split('T')[0])
 
+   const shouldRefetch = dates.every((d: any) => d !== undefined)
+   const unselectedDate = dates.every((d: any) => d === undefined)
+
    const { data, isLoading } = useSWR<GetAllInvoicesResponse>(
-      ['/invoice', ...dates],
+      shouldRefetch ? ['/invoice', ...dates] : null,
       ([url, from, to]: string[]) => getInvoicesByDate(url, from, to)
    )
 
-   const tableData = data?.data && data?.data.length > 0 ? data?.data : []
+   useEffect(() => {
+      const tableData =
+         data?.data && data?.data.length > 0
+            ? data?.data.map((d) => ({
+                 invoiceId: d.invoiceId,
+                 createdByName: d.createdByName,
+                 customer: d.customer,
+                 customerType: d.customerType,
+                 type: d.type,
+                 status: d.status,
+                 createdBy: d.createdBy,
+                 createdAt: d.createdAt,
+                 items: d.items,
+                 amount: d.amount,
+              }))
+            : []
+      if (unselectedDate || shouldRefetch) {
+         setTblData(tableData)
+      }
+   }, [data?.data, shouldRefetch, unselectedDate])
+
+   const paymentTypeTabs: PaymentTypeTab[] = Object.entries(PaymentTypes).map(([key, value]) => ({
+      type: key,
+      count: tblData.filter((tb) => tb.type === key).length,
+      color: value,
+   }))
 
    return (
       <PosTable
-         data={tableData}
+         data={tblData}
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
          title="Invoice"
-         excludeFields={['invoiceId', 'createdBy', 'items', 'createdAt']}
+         paymentTypeTabs={paymentTypeTabs}
+         excludeFields={['createdBy', 'items', 'createdAt']}
       />
    )
 }

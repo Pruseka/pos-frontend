@@ -59,7 +59,7 @@ const PosTable: React.FC<TableProps> = ({
    addRow,
    refetch,
 }) => {
-   const { classes } = useStyles()
+   const { classes, cx } = useStyles()
    const [isEditing, setIsEditing] = useState(false)
    const [openActionForm, setOpenActionForm] = useState(false)
    const [item, setItem] = useState<Item | null>(null)
@@ -200,7 +200,7 @@ const PosTable: React.FC<TableProps> = ({
                {title}
             </Text>
             <Flex
-               className={classes.tableActions}
+               className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
                justify="flex-end"
                align={{ xs: 'stretch', base: 'flex-start' }}

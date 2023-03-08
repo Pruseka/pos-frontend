@@ -27,6 +27,9 @@ export default createStyles((theme) => ({
       borderTopLeftRadius: theme.radius.lg,
       borderTopRightRadius: theme.radius.lg,
    },
+   borderBottom: {
+      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+   },
    table: {
       [' thead']: {
          background: theme.colors.gray[0],

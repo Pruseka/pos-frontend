@@ -29,7 +29,7 @@ export type GetAllInvoicesData = {
    amount: number
    createdBy: string
    createdAt: Date
-   item: Item[]
+   items: Item[]
 }[]
 
 export type GetAllInvoicesResponse = {
@@ -38,6 +38,7 @@ export type GetAllInvoicesResponse = {
 }
 
 export async function getInvoicesByDate(url: string, from: string, to: string) {
+   console.log('fetching')
    if (!from || !to) return
 
    const { data } = await apiClient.get(`${url}?from=${from}&to=${to}`)

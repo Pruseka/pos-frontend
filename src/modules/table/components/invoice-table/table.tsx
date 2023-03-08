@@ -12,14 +12,17 @@ import {
    ScrollArea,
    Table,
    Text,
+   TextInput,
 } from '@mantine/core'
-import { DateRangePickerValue } from '@mantine/dates'
-import { IconPackage, IconPlus } from '@tabler/icons-react'
+import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
+import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData } from '../../../../api/invoice/queries/getInvoicesByDate'
 import { toSentenceCase } from '../../../../helpers/conver-title'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
+import { useDebouncedState } from '@mantine/hooks'
+import { PaymentTypeTab } from '.'
 
 export type Item = Partial<GetAllInvoicesData[0]>
 
@@ -27,6 +30,7 @@ interface TableProps {
    data: Item[]
    loading: boolean
    title: string
+   paymentTypeTabs: PaymentTypeTab[]
    //    forms: {
    //       [key: string]: {
    //          title?: string
@@ -50,15 +54,27 @@ export const PaymentTypes = {
 
 export type PaymentBadge = keyof typeof PaymentTypes
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
-   const { classes } = useStyles()
+const PosTable: React.FC<TableProps> = ({
+   data,
+   loading,
+   title,
+   excludeFields,
+   dateValue,
+   paymentTypeTabs,
+   setDate,
+}) => {
+   const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
+   const [openedId, setOpenedId] = useState<string | null>(null)
+   const [q, setQ] = useDebouncedState('', 200)
+   const query = q.toLowerCase().trim()
+   const searchedData = data.filter((invoice) => invoice.customer?.toLowerCase().includes(query))
+
    const navigate = useNavigate()
    const rowsPerPage = 10
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
-   const paginatedData = data.slice(startOffset, endOffset)
-   const [openedId, setOpenedId] = useState<string | null>(null)
+   const paginatedData = searchedData.slice(startOffset, endOffset)
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
@@ -190,18 +206,43 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                {title}
             </Text>
             <Flex
-               className={classes.tableActions}
+               className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
-               justify="flex-end"
-               align={{ xs: 'stretch', base: 'flex-start' }}
-               direction={{ xs: 'row', base: 'column-reverse' }}
-               gap={{ xs: 0, base: 'md' }}
+               justify="space-between"
+               align={{ md: 'flex-end', base: 'flex-start' }}
+               direction={{ md: 'row', base: 'column' }}
+               gap={{ md: 'sm', base: 'md' }}
             >
-               <Button
-                  onClick={() => {
-                     navigate('/invoices/add')
-                  }}
-               >{`Add ${title}`}</Button>
+               <DateRangePicker
+                  placeholder="Pick dates range"
+                  value={dateValue}
+                  maxDate={new Date()}
+                  sx={{ maxWidth: 300, width: '100%' }}
+                  onChange={setDate}
+               />
+               <Flex
+                  direction={{ base: 'column', md: 'row' }}
+                  justify={{ md: 'flex-end' }}
+                  align={{ md: 'center' }}
+                  gap="sm"
+                  w="100%"
+                  sx={{ flex: 1 }}
+               >
+                  <TextInput
+                     icon={<IconSearch size={20} stroke={1.5} />}
+                     className={classes.input}
+                     placeholder="Search By Customer Name"
+                     defaultValue={q}
+                     onChange={(e) => setQ(e.currentTarget.value)}
+                     size="md"
+                     radius="md"
+                  />
+                  <Button
+                     onClick={() => {
+                        navigate('/invoices/add')
+                     }}
+                  >{`Add ${title}`}</Button>
+               </Flex>
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>

@@ -43,7 +43,9 @@ export default createStyles((theme) => ({
       borderTopLeftRadius: theme.radius.lg,
       borderTopRightRadius: theme.radius.lg,
    },
-
+   borderBottom: {
+      borderBottom: `1px solid ${theme.colors.gray[3]}`,
+   },
    paginationWrapper: {
       border: `1px solid ${theme.colors.gray[3]}`,
       borderTop: 0,

@@ -105,21 +105,12 @@ const AddInvoice: React.FC = () => {
             <CustomerForm submitForm={handleCreateInvoice} />
 
             <Flex
-               direction={{ base: 'column-reverse', md: 'row' }}
+               direction={{ base: 'column', md: 'row' }}
                align={{ base: 'center', md: 'normal' }}
                gap="xl"
                p="xl"
                w="100%"
             >
-               <PosTable
-                  data={items}
-                  loading={false}
-                  title="Items"
-                  updateRow={handleSelectItem}
-                  deleteRow={handleDeleteItem}
-                  excludeFields={['itemId']}
-               />
-
                <InvoiceForm
                   addRow={handleAddRow}
                   isEditing={isEditing}
@@ -128,6 +119,14 @@ const AddInvoice: React.FC = () => {
                   updateRow={handleUpdateRow}
                   newId={items.length > 0 ? items[items.length - 1].no + 1 : 1}
                   cancelUpdate={cancelUpdate}
+               />
+               <PosTable
+                  data={items}
+                  loading={false}
+                  title="Items"
+                  updateRow={handleSelectItem}
+                  deleteRow={handleDeleteItem}
+                  excludeFields={['itemId']}
                />
             </Flex>
          </Flex>
