@@ -8,8 +8,7 @@ const NavBar: React.FC = () => {
    const { classes } = useStyles()
 
    return (
-      <Navbar width={{ sm: DRAWER_WIDTH }} p="md" pb={0} zIndex={10}>
-         {/* need to split file navitems to reuse  */}
+      <Navbar width={{ md: DRAWER_WIDTH }} p="md" pb={0} zIndex={10}>
          <Navbar.Section className={classes.header}>
             <Group position="apart">
                <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>

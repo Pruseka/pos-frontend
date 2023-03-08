@@ -11,7 +11,7 @@ export enum Status {
    UNPAID = 'unpaid',
 }
 
-export enum InvoiceType {
+export enum PaymentType {
    CASH = 'cash',
    CREDIT = 'credit',
    RETURN = 'return',
@@ -24,7 +24,7 @@ export type GetAllInvoicesData = {
    createdByName: string
    customer: string
    customerType: CustomerType
-   type: InvoiceType
+   type: PaymentType
    status: Status
    amount: number
    createdBy: string
@@ -38,7 +38,6 @@ export type GetAllInvoicesResponse = {
 }
 
 export async function getInvoicesByDate(url: string, from: string, to: string) {
-   console.log('fetching')
    if (!from || !to) return
 
    const { data } = await apiClient.get(`${url}?from=${from}&to=${to}`)

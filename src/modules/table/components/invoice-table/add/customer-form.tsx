@@ -7,13 +7,13 @@ import {
    getAllCustomers,
    GetAllCustomersResponse,
 } from '../../../../../api/customer/queries/getAllCustomers'
-import { InvoiceType } from '../../../../../api/invoice/queries/getInvoicesByDate'
+import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
 import useStyles from './styles'
 
 export interface FormValues {
    customer: string
    customerType: CustomerType
-   type: InvoiceType
+   type: PaymentType
 }
 
 interface Props {
@@ -29,12 +29,12 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
          : []
 
    const customerTypes = Object.values(CustomerType).map((type) => ({ label: type, value: type }))
-   const invoiceTypes = Object.values(InvoiceType).map((type) => ({ label: type, value: type }))
+   const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
    const initialValues = {
       customer: '',
       customerType: CustomerType.RETAIL,
-      type: InvoiceType.CASH,
+      type: PaymentType.CASH,
    }
 
    const form = useForm({
@@ -85,7 +85,7 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
                         />
                         <Select
                            label="Payment Type"
-                           data={invoiceTypes}
+                           data={paymentTypes}
                            py="xs"
                            sx={{ flex: 1 }}
                            classNames={{ label: classes.label, item: classes.label, input: classes.label }}

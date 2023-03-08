@@ -3,8 +3,8 @@ import {
    IconChartHistogram,
    IconCreditCard,
    IconFileAnalytics,
-   IconIceCream,
    IconLock,
+   IconPackages,
    IconPresentationAnalytics,
    IconTag,
 } from '@tabler/icons-react'
@@ -15,8 +15,8 @@ export const NAV_LINKS: NavItemType[] = [
       label: 'Sales',
       icon: IconChartHistogram,
       links: [
-         { label: 'Invoices', url: '/invoices' },
-         { label: 'Customers', url: '/' },
+         { label: 'Invoices', url: '/' },
+         { label: 'Customers', url: '/customers' },
       ],
    },
    {
@@ -27,13 +27,21 @@ export const NAV_LINKS: NavItemType[] = [
          { label: 'Supplier', url: '/supplier' },
       ],
    },
-   { label: 'Item', icon: IconIceCream },
    {
       label: 'Products',
       icon: IconTag,
       links: [
          { label: 'Items', url: '/items' },
          { label: 'Categories', url: '/categories' },
+      ],
+   },
+   {
+      label: `Salesman's Stocks`,
+      icon: IconPackages,
+      links: [
+         { label: 'Closing Stocks', url: '/salesman/closing-stocks' },
+         { label: 'In Records', url: '/salesman/in-records' },
+         { label: 'Out Records', url: '/salesman/out-records' },
       ],
    },
    {

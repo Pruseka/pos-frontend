@@ -56,7 +56,6 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
                label="Code"
                py="xs"
                classNames={{ label: classes.label }}
-               data-autoFocus
                {...form.getInputProps('code')}
             />
             <TextInput

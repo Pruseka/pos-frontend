@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import useSWRMutation from 'swr/mutation'
 import { Box, Flex, Text } from '@mantine/core'
 import { useHotkeys } from '@mantine/hooks'
+import { showNotification } from '@mantine/notifications'
 import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import useSWRMutation from 'swr/mutation'
+import { createInvoiceMutation } from '../../../../../api/invoice/mutations/createInvoice'
 import CustomerForm, { FormValues } from './customer-form'
 import InvoiceForm from './invoice-form'
 import useStyles from './styles'
 import PosTable from './table'
-import { createInvoiceMutation } from '../../../../../api/invoice/mutations/createInvoice'
-import { showNotification } from '@mantine/notifications'
 
 export type Item = {
    no: number
@@ -33,7 +33,7 @@ const AddInvoice: React.FC = () => {
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/invoices" className={classes.backLink}>
+         <NavLink to="/" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />

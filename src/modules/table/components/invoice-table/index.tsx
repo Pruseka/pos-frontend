@@ -6,13 +6,7 @@ import {
    GetAllInvoicesResponse,
    getInvoicesByDate,
 } from '../../../../api/invoice/queries/getInvoicesByDate'
-import PosTable, { PaymentTypes } from './table'
-
-export type PaymentTypeTab = {
-   type: string
-   count: number
-   color: string
-}
+import PosTable from './table'
 
 const InvoiceTable: React.FC = () => {
    const [tblData, setTblData] = useState<GetAllInvoicesData>([])
@@ -48,12 +42,6 @@ const InvoiceTable: React.FC = () => {
       }
    }, [data?.data, shouldRefetch, unselectedDate])
 
-   const paymentTypeTabs: PaymentTypeTab[] = Object.entries(PaymentTypes).map(([key, value]) => ({
-      type: key,
-      count: tblData.filter((tb) => tb.type === key).length,
-      color: value,
-   }))
-
    return (
       <PosTable
          data={tblData}
@@ -61,7 +49,6 @@ const InvoiceTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Invoice"
-         paymentTypeTabs={paymentTypeTabs}
          excludeFields={['createdBy', 'items', 'createdAt']}
       />
    )

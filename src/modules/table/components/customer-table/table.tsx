@@ -14,7 +14,13 @@ import {
 } from '@mantine/core'
 import { useDebouncedState } from '@mantine/hooks'
 import { openModal, closeModal } from '@mantine/modals'
-import { IconPackage, IconPencil, IconSearch } from '@tabler/icons-react'
+import {
+   IconBuildingFactory2,
+   IconBuildingStore,
+   IconPackage,
+   IconPencil,
+   IconSearch,
+} from '@tabler/icons-react'
 import { useCallback, useEffect, useState } from 'react'
 import { GetAllCustomersData } from '../../../../api/customer/queries/getAllCustomers'
 import { toSentenceCase } from '../../../../helpers/conver-title'
@@ -43,8 +49,8 @@ interface TableProps {
 }
 
 export const CustomerTypeBadges = {
-   retail: 'teal',
-   wholesales: 'blue',
+   retail: <IconBuildingStore size={14} color="blue" />,
+   wholesales: <IconBuildingFactory2 size={14} color="teal" />,
 }
 
 export type Badge = keyof typeof CustomerTypeBadges
@@ -97,6 +103,8 @@ const PosTable: React.FC<TableProps> = ({
       },
       [refetch, title, updateRow]
    )
+
+   console.count('customer table')
 
    useEffect(() => {
       if (openActionForm) {
@@ -160,7 +168,12 @@ const PosTable: React.FC<TableProps> = ({
                if (key === 'type' && value in CustomerTypeBadges) {
                   return (
                      <td key={key}>
-                        <Badge color={CustomerTypeBadges?.[value as Badge]}>{value}</Badge>
+                        <Text>
+                           <Flex align="center" gap="xs">
+                              {CustomerTypeBadges?.[value as Badge]}
+                              {value}
+                           </Flex>
+                        </Text>
                      </td>
                   )
                }

@@ -7,17 +7,17 @@ export default createStyles((theme) => ({
 
    header: {
       display: 'flex',
-      justifyContent: 'flex-end',
       alignItems: 'center',
 
       height: '100%',
-      [theme.fn.smallerThan('sm')]: {
-         justifyContent: 'space-between',
+      justifyContent: 'space-between',
+      [theme.fn.largerThan('md')]: {
+         justifyContent: 'flex-end',
       },
    },
 
    burger: {
-      [theme.fn.largerThan('sm')]: {
+      [theme.fn.largerThan('md')]: {
          display: 'none',
       },
    },

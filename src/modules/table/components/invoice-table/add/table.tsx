@@ -20,14 +20,6 @@ interface TableProps {
    data: Item[]
    loading: boolean
    title: string
-   //    forms: {
-   //       [key: string]: {
-   //          title?: string
-   //          value: string | number | Date | { label: string; value: string }[]
-   //          addRequired: boolean
-   //          updateRequired: boolean
-   //       }
-   //    }
    excludeFields: string[]
    updateRow: (item: Item) => void
    deleteRow: (item: Item) => void
@@ -68,7 +60,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
                   return (
                      <td key={key}>
-                        <Badge color={CustomerTypeBadges?.[value as CustomerBadge]}>{value}</Badge>
+                        <Badge color={CustomerTypeBadges?.[value as CustomerBadge] as any}>{value}</Badge>
                      </td>
                   )
                }

@@ -1,18 +1,18 @@
 import { createStyles, MantineTheme } from '@mantine/core'
 
 const mqOnMobile = (theme: MantineTheme) => ({
-   display: 'none',
-   [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-      display: 'flex',
+   display: 'flex',
+   [theme.fn.largerThan('md')]: {
+      display: 'none',
    },
 })
 
 export default createStyles((theme) => ({
    container: {
-      display: 'flex',
+      display: 'none',
       flex: 1,
-      [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
-         display: 'none',
+      [theme.fn.largerThan('md')]: {
+         display: 'flex',
       },
    },
    header: {

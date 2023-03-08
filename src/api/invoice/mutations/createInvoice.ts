@@ -1,11 +1,11 @@
 import { CustomerType } from '../../customer/queries/getAllCustomers'
 import apiClient from '../../instance'
-import { InvoiceType, Item } from '../queries/getInvoicesByDate'
+import { PaymentType, Item } from '../queries/getInvoicesByDate'
 
 export interface Args {
    customer: string
    customerType: CustomerType
-   type: InvoiceType
+   type: PaymentType
    items: Item[]
 }
 

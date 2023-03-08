@@ -1,7 +1,7 @@
-import { Box, Burger, Drawer } from '@mantine/core'
+import { Box, Drawer } from '@mantine/core'
+import { useAuth } from '../../../../lib/contexts/auth-context'
 import NavBar from '../navbar'
 import useStyles from './styles'
-import { useAuth } from '../../../../lib/contexts/auth-context'
 
 const NavBarContainer: React.FC = () => {
    const { openedDrawer, closeNavigation } = useAuth()

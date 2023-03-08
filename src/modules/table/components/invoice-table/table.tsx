@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
    ActionIcon,
    Badge,
@@ -6,23 +5,23 @@ import {
    Button,
    Collapse,
    Flex,
-   Group,
    Loader,
    Pagination,
    ScrollArea,
+   Select,
    Table,
    Text,
    TextInput,
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
+import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetAllInvoicesData } from '../../../../api/invoice/queries/getInvoicesByDate'
+import { GetAllInvoicesData, PaymentType } from '../../../../api/invoice/queries/getInvoicesByDate'
 import { toSentenceCase } from '../../../../helpers/conver-title'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
-import { useDebouncedState } from '@mantine/hooks'
-import { PaymentTypeTab } from '.'
 
 export type Item = Partial<GetAllInvoicesData[0]>
 
@@ -30,7 +29,6 @@ interface TableProps {
    data: Item[]
    loading: boolean
    title: string
-   paymentTypeTabs: PaymentTypeTab[]
    //    forms: {
    //       [key: string]: {
    //          title?: string
@@ -52,23 +50,29 @@ export const PaymentTypes = {
    damage: 'red',
 }
 
-export type PaymentBadge = keyof typeof PaymentTypes
+export const StatusTypes = {
+   paid: 'teal',
+   unpaid: 'red',
+}
 
-const PosTable: React.FC<TableProps> = ({
-   data,
-   loading,
-   title,
-   excludeFields,
-   dateValue,
-   paymentTypeTabs,
-   setDate,
-}) => {
+export type PaymentBadge = keyof typeof PaymentTypes
+export type StatusPin = keyof typeof StatusTypes
+
+const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const [openedId, setOpenedId] = useState<string | null>(null)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
-   const searchedData = data.filter((invoice) => invoice.customer?.toLowerCase().includes(query))
+   const [typeFilter, setTypeFilter] = useState<string | null>(null)
+   const [salesmanFilter, setSalesmanFilter] = useState<string | null>(null)
+
+   const mappedSalesmen = data.map((d) => d.createdByName!)
+   const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
+
+   const searchedData = data
+      .filter((invoice) => invoice.customer?.toLowerCase().includes(query))
+      .filter((invoice) => (typeFilter ? invoice.type === typeFilter : invoice))
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -79,6 +83,7 @@ const PosTable: React.FC<TableProps> = ({
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = Object.keys(data[0] || {})
+   const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
    const c = ['Name', 'Qty', 'Price', 'Net Amount']
 
@@ -142,7 +147,12 @@ const PosTable: React.FC<TableProps> = ({
                   if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
                      return (
                         <td key={key}>
-                           <Badge color={CustomerTypeBadges?.[value as CustomerBadge]}>{value}</Badge>
+                           <Text>
+                              <Flex align="center" gap="xs">
+                                 {CustomerTypeBadges?.[value as CustomerBadge]}
+                                 {value}
+                              </Flex>
+                           </Text>
                         </td>
                      )
                   }
@@ -150,41 +160,41 @@ const PosTable: React.FC<TableProps> = ({
                   if (key === 'type' && typeof value === 'string' && value in PaymentTypes) {
                      return (
                         <td key={key}>
-                           <Flex align="center" gap="xs">
+                           <Badge color={PaymentTypes?.[value as PaymentType]}>{value}</Badge>
+                        </td>
+                     )
+                  }
+
+                  if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
+                     return (
+                        <td key={key}>
+                           <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
                               <Box
                                  sx={(theme) => ({
                                     borderRadius: '50%',
-                                    backgroundColor: theme.colors[PaymentTypes?.[value as PaymentBadge]][3],
+                                    backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
+                                    height: 6,
+                                    width: 6,
                                  })}
-                                 w={6}
-                                 h={6}
-                              />
+                              ></Box>
                               {value}
                            </Flex>
                         </td>
                      )
                   }
 
+                  if (key === 'amount') {
+                     return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
+                  }
+
                   if (value === '') return <td key={key}>-</td>
                   return <td key={key}>{`${value}`}</td>
                })}
 
-               <td>
-                  <Group spacing={0} position="right">
-                     {/* <ActionIcon onClick={() => openUpdateFormModal(item)}>
-                     <IconPencil size={16} stroke={1.5} />
-                  </ActionIcon> */}
-
-                     {/* {action?.delete && (
-                      <ActionIcon color="red">
-                         <IconTrash size={16} stroke={1.5} />
-                      </ActionIcon>
-                   )} */}
-                  </Group>
-               </td>
+               <td />
             </tr>
             <tr>
-               <td colSpan={8} style={{ padding: 0, border: 0 }}>
+               <td colSpan={9} style={{ padding: 0, border: 0 }}>
                   <Collapse in={openedId === item.invoiceId}>{childTable}</Collapse>
                </td>
             </tr>
@@ -208,25 +218,46 @@ const PosTable: React.FC<TableProps> = ({
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
-               justify="space-between"
-               align={{ md: 'flex-end', base: 'flex-start' }}
-               direction={{ md: 'row', base: 'column' }}
+               direction={{ base: 'column', xl: 'row' }}
                gap={{ md: 'sm', base: 'md' }}
             >
-               <DateRangePicker
-                  placeholder="Pick dates range"
-                  value={dateValue}
-                  maxDate={new Date()}
-                  sx={{ maxWidth: 300, width: '100%' }}
-                  onChange={setDate}
-               />
+               <Flex gap="sm" direction={{ base: 'column', xs: 'row' }} w="100%" sx={{ flex: 1 }}>
+                  <DateRangePicker
+                     placeholder="Pick dates range"
+                     value={dateValue}
+                     maxDate={new Date()}
+                     sx={{ flex: 1 }}
+                     onChange={setDate}
+                     size="md"
+                  />
+
+                  <Select
+                     data={paymentTypes}
+                     sx={{ flex: 1 / 2 }}
+                     size="md"
+                     value={typeFilter}
+                     onChange={setTypeFilter}
+                     allowDeselect
+                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                  />
+
+                  <Select
+                     data={salesmen}
+                     sx={{ flex: 1 / 2 }}
+                     size="md"
+                     value={salesmanFilter}
+                     onChange={setSalesmanFilter}
+                     allowDeselect
+                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                  />
+               </Flex>
+
                <Flex
-                  direction={{ base: 'column', md: 'row' }}
-                  justify={{ md: 'flex-end' }}
-                  align={{ md: 'center' }}
+                  direction={{ base: 'column', xs: 'row' }}
+                  align={{ xs: 'center' }}
                   gap="sm"
                   w="100%"
-                  sx={{ flex: 1 }}
+                  sx={{ flex: 3 / 4 }}
                >
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}
@@ -234,19 +265,21 @@ const PosTable: React.FC<TableProps> = ({
                      placeholder="Search By Customer Name"
                      defaultValue={q}
                      onChange={(e) => setQ(e.currentTarget.value)}
-                     size="md"
                      radius="md"
+                     size="md"
                   />
                   <Button
                      onClick={() => {
                         navigate('/invoices/add')
                      }}
+                     h={40}
+                     className={classes.addButton}
                   >{`Add ${title}`}</Button>
                </Flex>
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>
-                  <Table miw={800} fontSize="sm" withBorder verticalSpacing="md" className={classes.table}>
+                  <Table miw={1000} fontSize="sm" withBorder verticalSpacing="md" className={classes.table}>
                      <thead key="head">
                         <tr>
                            <th />
