@@ -24,7 +24,7 @@ export const NAV_LINKS: NavItemType[] = [
       icon: IconCreditCard,
       links: [
          { label: 'Supplies', url: '/supplies' },
-         { label: 'Supplier', url: '/supplier' },
+         { label: 'Supplier', url: '/suppliers' },
       ],
    },
    {

@@ -5,7 +5,7 @@ import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
-import { createInvoiceMutation } from '../../../../../api/invoice/mutations/createInvoice'
+import { provideSupplyMutation } from '../../../../../api/supply/mutations/provideSupply'
 import CustomerForm, { FormValues } from './customer-form'
 import InvoiceForm from './invoice-form'
 import useStyles from './styles'
@@ -21,14 +21,14 @@ export type Item = {
    netAmount: number
 }
 
-const AddInvoice: React.FC = () => {
+const AddSupply: React.FC = () => {
    const { classes } = useStyles()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
    const [isEditing, setIsEditing] = useState(false)
-   const { trigger: createInvoice, isMutating: creatingInvoice } = useSWRMutation(
-      '/invoice',
-      createInvoiceMutation
+   const { trigger: provideSupply, isMutating: providingProvideSupply } = useSWRMutation(
+      '/supply',
+      provideSupplyMutation
    )
 
    const backButton = (
@@ -45,26 +45,6 @@ const AddInvoice: React.FC = () => {
    )
 
    const handleAddRow = (item: Item) => {
-      const existingItemIndex = items.findIndex((it) => it.itemId === item.itemId)
-
-      if (existingItemIndex !== -1) {
-         setItems((prev) =>
-            prev.map((itm, i) => {
-               if (i === existingItemIndex) {
-                  const newQty = itm.qty + item.qty
-
-                  const newNetAmount = itm.netAmount + item.netAmount
-                  return {
-                     ...itm,
-                     qty: newQty,
-                     netAmount: newNetAmount,
-                  }
-               }
-               return itm
-            })
-         )
-         return
-      }
       setItems((prev) => [...prev, item])
    }
 
@@ -100,7 +80,7 @@ const AddInvoice: React.FC = () => {
 
    const handleCreateInvoice = async (values: FormValues) => {
       const mappedItems = items.map((item) => ({ itemId: item.itemId, qty: item.qty }))
-      await createInvoice(
+      await provideSupply(
          { ...values, items: mappedItems },
          {
             onSuccess: (data) =>
@@ -154,4 +134,4 @@ const AddInvoice: React.FC = () => {
    )
 }
 
-export default AddInvoice
+export default AddSupply

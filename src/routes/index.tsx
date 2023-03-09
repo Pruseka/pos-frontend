@@ -5,6 +5,8 @@ import InvoiceTable from '../modules/table/components/invoice-table'
 import AddInvoice from '../modules/table/components/invoice-table/add'
 import ItemsTable from '../modules/table/components/item-table'
 import SalesmanClosingStocksTable from '../modules/table/components/salesman-table/closing-stocks'
+import SuppliersTable from '../modules/table/components/supplier-table'
+import AddSupply from '../modules/table/components/supply-table/add'
 import ErrorPage from '../pages/error'
 import Layout from '../pages/layout'
 import LoginPage from '../pages/login'
@@ -27,6 +29,7 @@ export const router = createBrowserRouter([
             children: [
                { index: true, element: <InvoiceTable /> },
                { path: '/customers', element: <CustomersTable /> },
+               { path: '/suppliers', element: <SuppliersTable /> },
                { path: '/categories', element: <CategoriesTable /> },
                { path: '/items', element: <ItemsTable /> },
 
@@ -36,6 +39,10 @@ export const router = createBrowserRouter([
          {
             path: '/invoices/add',
             element: <AddInvoice />,
+         },
+         {
+            path: '/supplies/add',
+            element: <AddSupply />,
          },
       ],
    },
