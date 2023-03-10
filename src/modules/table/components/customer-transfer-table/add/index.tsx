@@ -5,11 +5,12 @@ import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
-import { provideSupplyMutation } from '../../../../../api/supply/mutations/provideSupply'
 import CustomerForm, { FormValues } from './customer-form'
 import InvoiceForm from './invoice-form'
 import useStyles from './styles'
 import PosTable from './table'
+import { transferSalesmanMutation } from '../../../../../api/transfer/mutations/transferSalesman'
+import { transferCustomerMutation } from '../../../../../api/customerTransfer/mutations/transferCustomer'
 
 export type Item = {
    no: number
@@ -17,27 +18,25 @@ export type Item = {
    code: string
    name: string
    qty: number
-   price: number
-   netAmount: number
 }
 
-const AddSupply: React.FC = () => {
+const TransferSalesman: React.FC = () => {
    const { classes } = useStyles()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
    const [isEditing, setIsEditing] = useState(false)
-   const { trigger: provideSupply, isMutating: providingProvideSupply } = useSWRMutation(
-      '/supply',
-      provideSupplyMutation
+   const { trigger: transferCustomer, isMutating: transferingSalesman } = useSWRMutation(
+      '/customer_transfer',
+      transferCustomerMutation
    )
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/supplies" className={classes.backLink}>
+         <NavLink to="/customer/transfers" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all supplies
+                  Back to all customer transfers
                </Flex>
             </Text>
          </NavLink>
@@ -52,12 +51,10 @@ const AddSupply: React.FC = () => {
             prev.map((itm, i) => {
                if (i === existingItemIndex) {
                   const newQty = itm.qty + item.qty
-                  const newNetAmount = itm.netAmount + item.netAmount
 
                   return {
                      ...itm,
                      qty: newQty,
-                     netAmount: newNetAmount,
                   }
                }
                return itm
@@ -98,9 +95,9 @@ const AddSupply: React.FC = () => {
       setIsEditing(false)
    }
 
-   const handleCreateInvoice = async (values: FormValues) => {
+   const handleCreateTransfer = async (values: FormValues) => {
       const mappedItems = items.map((item) => ({ itemId: item.itemId, qty: item.qty }))
-      await provideSupply(
+      await transferCustomer(
          { ...values, items: mappedItems },
          {
             onSuccess: (data) =>
@@ -122,7 +119,7 @@ const AddSupply: React.FC = () => {
       <Box p={{ base: 'xs', md: 'xl' }} className={classes.container}>
          {backButton}
          <Flex direction={{ base: 'column-reverse', md: 'column' }}>
-            <CustomerForm submitForm={handleCreateInvoice} disabledSaveButton={items.length === 0} />
+            <CustomerForm submitForm={handleCreateTransfer} disabledSaveButton={items.length === 0} />
 
             <Flex
                direction={{ base: 'column', md: 'row' }}
@@ -154,4 +151,4 @@ const AddSupply: React.FC = () => {
    )
 }
 
-export default AddSupply
+export default TransferSalesman

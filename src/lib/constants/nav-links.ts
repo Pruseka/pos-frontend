@@ -1,11 +1,9 @@
 import {
-   IconCalendarStats,
+   IconBuildingWarehouse,
    IconChartHistogram,
    IconCreditCard,
-   IconFileAnalytics,
-   IconLock,
+   IconHeadphones,
    IconPackages,
-   IconPresentationAnalytics,
    IconSend,
    IconTag,
    IconUsers,
@@ -55,5 +53,24 @@ export const NAV_LINKS: NavItemType[] = [
       ],
    },
 
-   { label: 'Users', icon: IconUsers, url: '/users' },
+   {
+      label: `Customer's Stocks`,
+      icon: IconUsers,
+      links: [
+         { label: 'Closing Stocks', url: '/customer/closing-stocks' },
+         { label: 'In Records', url: '/customer/in-records' },
+         { label: 'Out Records', url: '/customer/out-records' },
+      ],
+   },
+
+   { label: 'Users', icon: IconHeadphones, url: '/users' },
+   {
+      label: `Warehouse's Stocks`,
+      icon: IconBuildingWarehouse,
+      links: [
+         { label: 'Closing Stocks', url: '/warehouse/closing-stocks' },
+         { label: 'In Records', url: '/warehouse/in-records' },
+         { label: 'Out Records', url: '/warehouse/out-records' },
+      ],
+   },
 ]

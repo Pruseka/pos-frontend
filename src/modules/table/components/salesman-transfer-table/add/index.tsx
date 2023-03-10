@@ -31,7 +31,7 @@ const TransferSalesman: React.FC = () => {
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/transfers" className={classes.backLink}>
+         <NavLink to="/salesman/transfers" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
@@ -118,7 +118,7 @@ const TransferSalesman: React.FC = () => {
       <Box p={{ base: 'xs', md: 'xl' }} className={classes.container}>
          {backButton}
          <Flex direction={{ base: 'column-reverse', md: 'column' }}>
-            <UserForm submitForm={handleCreateInvoice} />
+            <UserForm submitForm={handleCreateInvoice} disabledSaveButton={items.length === 0} />
 
             <Flex
                direction={{ base: 'column', md: 'row' }}

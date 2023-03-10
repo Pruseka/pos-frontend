@@ -34,13 +34,7 @@ interface TableProps {
    //    }
    excludeFields: string[]
    dateValue: Date
-   userId: string | null
-   users: {
-      label: string
-      value: string
-   }[]
    setDate: React.Dispatch<React.SetStateAction<Date>>
-   setUserId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 export const PaymentTypes = {
@@ -59,17 +53,7 @@ export const StatusTypes = {
 export type PaymentBadge = keyof typeof PaymentTypes
 export type StatusPin = keyof typeof StatusTypes
 
-const PosTable: React.FC<TableProps> = ({
-   data,
-   loading,
-   title,
-   excludeFields,
-   dateValue,
-   setDate,
-   userId,
-   setUserId,
-   users,
-}) => {
+const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const rowsPerPage = 10
@@ -137,25 +121,13 @@ const PosTable: React.FC<TableProps> = ({
                direction={{ base: 'column', xl: 'row' }}
                gap={{ md: 'sm', base: 'md' }}
             >
-               <Flex gap="sm" align="center">
-                  <DatePicker
-                     placeholder="Pick dates range"
-                     value={dateValue}
-                     maxDate={new Date()}
-                     onChange={setDate as any}
-                     size="md"
-                  />
-                  <Select
-                     data={users}
-                     sx={{ flex: 1 / 2 }}
-                     size="md"
-                     value={userId}
-                     onChange={setUserId}
-                     allowDeselect
-                     searchable
-                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                  />
-               </Flex>
+               <DatePicker
+                  placeholder="Pick dates range"
+                  value={dateValue}
+                  maxDate={new Date()}
+                  onChange={setDate as any}
+                  size="md"
+               />
 
                <TextInput
                   icon={<IconSearch size={20} stroke={1.5} />}

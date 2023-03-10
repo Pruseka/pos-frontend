@@ -3,13 +3,15 @@ import { isNotEmpty, useForm } from '@mantine/form'
 import { openConfirmModal } from '@mantine/modals'
 import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
+import { getAllCustomers, GetAllCustomersResponse } from '../../../../../api/customer/queries/getAllCustomers'
+import { CustomerTransferType } from '../../../../../api/customerTransfer/queries/getTransfersByDate'
 import { TransferType } from '../../../../../api/transfer/queries/getTransfersByDate'
 import { getAllUsers, GetAllUsersResponse } from '../../../../../api/user/queries/getAllUsers'
 import useStyles from './styles'
 
 export interface FormValues {
-   userId: string
-   type: TransferType
+   customerId: string
+   type: CustomerTransferType
 }
 
 interface Props {
@@ -17,26 +19,29 @@ interface Props {
    disabledSaveButton: boolean
 }
 
-const UserForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
+const CustomerForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
    const navigate = useNavigate()
    const { classes } = useStyles()
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/all', getAllUsers)
+   const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
    const users =
-      usersData?.data && usersData.data.length > 0
-         ? usersData?.data.map((user) => ({ label: user.name, value: user.userId }))
+      customersData?.data && customersData.data.length > 0
+         ? customersData?.data.map((customer) => ({ label: customer.name, value: customer.customerId }))
          : []
 
-   const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
+   const customerTransferTypes = Object.values(CustomerTransferType).map((type) => ({
+      label: type,
+      value: type,
+   }))
 
    const initialValues = {
-      userId: '',
-      type: TransferType.FROM,
+      customerId: '',
+      type: CustomerTransferType.IN,
    }
 
    const form = useForm<FormValues>({
       initialValues,
       validate: {
-         userId: isNotEmpty('User must be filled'),
+         customerId: isNotEmpty('Customer must be filled'),
          type: isNotEmpty('Type must be filled'),
       },
       //   ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
@@ -69,12 +74,12 @@ const UserForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label }}
                         data={users}
-                        {...form.getInputProps('userId')}
+                        {...form.getInputProps('customerId')}
                      />
 
                      <Select
                         label="Type"
-                        data={transferTypes}
+                        data={customerTransferTypes}
                         py="xs"
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label, item: classes.label, input: classes.label }}
@@ -98,4 +103,4 @@ const UserForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
    )
 }
 
-export default UserForm
+export default CustomerForm

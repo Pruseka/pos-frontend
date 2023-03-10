@@ -29,6 +29,13 @@ import useStyles from './styles'
 
 export type Item = Partial<GetAllCustomersData[0]>
 
+export const CustomerTypeBadges = {
+   retail: <IconBuildingStore size={14} color="blue" />,
+   wholesales: <IconBuildingFactory2 size={14} color="teal" />,
+}
+
+export type Badge = keyof typeof CustomerTypeBadges
+
 interface TableProps {
    data: Item[]
    loading: boolean
@@ -47,13 +54,6 @@ interface TableProps {
    addRow: (values: { [key: string]: unknown }) => Promise<void>
    refetch: () => Promise<void>
 }
-
-export const CustomerTypeBadges = {
-   retail: <IconBuildingStore size={14} color="blue" />,
-   wholesales: <IconBuildingFactory2 size={14} color="teal" />,
-}
-
-export type Badge = keyof typeof CustomerTypeBadges
 
 const PosTable: React.FC<TableProps> = ({
    data,

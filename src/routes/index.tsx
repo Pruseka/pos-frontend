@@ -10,6 +10,8 @@ import SuppliersTable from '../modules/table/components/supplier-table'
 import SupplyTable from '../modules/table/components/supply-table'
 import AddSupply from '../modules/table/components/supply-table/add'
 import UsersTable from '../modules/table/components/user-table'
+import WarehouseClosingStocksTable from '../modules/table/components/warehouse-table/closing-stocks'
+import WarehouseInStocksTable from '../modules/table/components/warehouse-table/in-stocks'
 import ErrorPage from '../pages/error'
 import Layout from '../pages/layout'
 import LoginPage from '../pages/login'
@@ -38,6 +40,8 @@ export const router = createBrowserRouter([
                { path: '/items', element: <ItemsTable /> },
                { path: '/users', element: <UsersTable /> },
                { path: '/salesman/closing-stocks', element: <SalesmanClosingStocksTable /> },
+               { path: '/warehouse/closing-stocks', element: <WarehouseClosingStocksTable /> },
+               { path: '/warehouse/in-records', element: <WarehouseInStocksTable /> },
             ],
          },
          {

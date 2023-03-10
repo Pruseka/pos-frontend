@@ -1,17 +1,28 @@
 import { useState } from 'react'
 import useSWR from 'swr'
 import {
-   GetSalesmanClosingStockResponse,
+   GetSalesmanClosingStocksResponse,
    getSalesmanClosingStocks,
 } from '../../../../../api/salesman-stock/queries/getClosingStock'
+import {
+   getAllUsers,
+   GetAllUsersData,
+   GetAllUsersResponse,
+} from '../../../../../api/user/queries/getAllUsers'
 import PosTable from './table'
 
 const SalesmanClosingStocksTable: React.FC = () => {
    const [value, setValue] = useState(new Date())
-   const shouldRefetch = !!value
+   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/all', getAllUsers)
+   const users = usersData?.data
+      ? usersData.data.map((user) => ({ label: user.name, value: user.userId }))
+      : []
 
-   const { data, isLoading } = useSWR<GetSalesmanClosingStockResponse>(
-      shouldRefetch ? ['/stock/closing', value, '552df910-b1fa-11ed-8dfd-c930edf6a8de'] : null,
+   const [userId, setUserId] = useState<string | null>(null)
+
+   const shouldRefetch = !!(value && userId)
+   const { data, isLoading } = useSWR<GetSalesmanClosingStocksResponse>(
+      shouldRefetch ? ['/stock/closing', value, userId] : null,
       ([url, to, userId]: string[]) => getSalesmanClosingStocks(url, to, userId)
    )
 
@@ -21,6 +32,9 @@ const SalesmanClosingStocksTable: React.FC = () => {
       <PosTable
          data={tableData}
          loading={isLoading}
+         userId={userId}
+         users={users}
+         setUserId={setUserId}
          dateValue={value}
          setDate={setValue}
          title="Salesman Stocks"

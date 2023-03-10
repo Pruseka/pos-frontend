@@ -14,9 +14,10 @@ export interface FormValues {
 
 interface Props {
    submitForm: (values: FormValues) => Promise<void>
+   disabledSaveButton: boolean
 }
 
-const CustomerForm: React.FC<Props> = ({ submitForm }) => {
+const CustomerForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
    const navigate = useNavigate()
    const { classes } = useStyles()
    const { data: suppliersData } = useSWR<GetAllSuppliersResponse>('/supplier/all', getAllSuppliers)
@@ -85,7 +86,7 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
                      <Button variant="outline" className={classes.actionButton} onClick={handleDiscard}>
                         Discard
                      </Button>
-                     <Button className={classes.actionButton} type="submit">
+                     <Button className={classes.actionButton} type="submit" disabled={disabledSaveButton}>
                         Save
                      </Button>
                   </Flex>

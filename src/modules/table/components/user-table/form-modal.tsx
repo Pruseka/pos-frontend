@@ -1,4 +1,4 @@
-import { Button, Flex, TextInput } from '@mantine/core'
+import { Button, Flex, PasswordInput, TextInput } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
 import useStyles from './styles'
 import { Item } from './table'
@@ -6,6 +6,7 @@ import { Item } from './table'
 interface FormValues {
    name: string
    email: string
+   password: string
 }
 
 interface Props {
@@ -24,10 +25,12 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
          ? {
               name: item.name!,
               email: item.email!,
+              password: item.password!,
            }
          : {
               name: '',
               email: '',
+              password: '',
            }
 
    const addValidate = {
@@ -59,11 +62,18 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
                classNames={{ label: classes.label }}
                {...form.getInputProps('name')}
             />
+
             <TextInput
                label="Email"
                py="xs"
                classNames={{ label: classes.label }}
                {...form.getInputProps('email')}
+            />
+            <PasswordInput
+               label="Password"
+               py="xs"
+               classNames={{ label: classes.label }}
+               {...form.getInputProps('password')}
             />
          </Flex>
          <Button type="submit" loading={loading} className={classes.submitButton}>

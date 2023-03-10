@@ -16,11 +16,17 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetAllSuppliesData, SupplyType } from '../../../../api/supply/queries/getSupplyByDate'
-import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
+import { GetAllTransfersData, TransferType } from '../../../../api/transfer/queries/getTransfersByDate'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllSuppliesData[0]>
+export type Item = Partial<GetAllTransfersData[0]>
+
+export const TransferTypeBadges = {
+   to: 'blue',
+   from: 'teal',
+}
+
+export type Badge = keyof typeof TransferTypeBadges
 
 interface TableProps {
    data: Item[]
@@ -39,35 +45,16 @@ interface TableProps {
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
-export const SupplyTypes = {
-   cash: 'teal',
-   credit: 'orange',
-   return: 'blue',
-   cancel: 'gray',
-}
-
-export const StatusTypes = {
-   paid: 'teal',
-   unpaid: 'red',
-}
-
-export type SupplyTypeBadge = keyof typeof SupplyTypes
-export type StatusPin = keyof typeof StatusTypes
-
 const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
-   const [salesmanFilter, setSalesmanFilter] = useState<string | null>(null)
-
-   const mappedSalesmen = data.map((d) => d.createdByName!)
-   const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
 
    const searchedData = data
-      .filter((supply) => supply.supplier?.toLowerCase().includes(query))
-      .filter((supply) => (typeFilter ? supply.type === typeFilter : supply))
+      .filter((transfer) => transfer.user?.toLowerCase().includes(query))
+      .filter((transfer) => (typeFilter ? transfer.type === typeFilter : transfer))
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -78,51 +65,25 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Supply Id', 'Creator Name', 'Supplier', 'Type', 'Status', 'Amount']
-   const paymentTypes = Object.values(SupplyType).map((type) => ({ label: type, value: type }))
+   const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
 
    const rows = paginatedData.map((item) => {
       return (
-         <tr key={item.supplyId}>
+         <tr key={item.transferId}>
             {Object.entries(item).map(([key, value]) => {
                if (excludeFields.find((field) => field === key)) {
                   return null
                }
 
-               if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
+               if (key === 'customerType' && typeof value === 'string' && value in TransferTypeBadges) {
                   return (
                      <td key={key}>
                         <Text>
                            <Flex align="center" gap="xs">
-                              {CustomerTypeBadges?.[value as CustomerBadge]}
+                              {TransferTypeBadges?.[value as Badge]}
                               {value}
                            </Flex>
                         </Text>
-                     </td>
-                  )
-               }
-
-               if (key === 'type' && typeof value === 'string' && value in SupplyTypes) {
-                  return (
-                     <td key={key}>
-                        <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
-                     </td>
-                  )
-               }
-
-               if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
-                  return (
-                     <td key={key}>
-                        <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
-                           <Box
-                              sx={(theme) => ({
-                                 borderRadius: '50%',
-                                 backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
-                                 height: 6,
-                                 width: 6,
-                              })}
-                           ></Box>
-                           {value}
-                        </Flex>
                      </td>
                   )
                }
@@ -170,21 +131,11 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
 
                   <Select
-                     data={paymentTypes}
+                     data={transferTypes}
                      sx={{ flex: 1 / 2 }}
                      size="md"
                      value={typeFilter}
                      onChange={setTypeFilter}
-                     allowDeselect
-                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                  />
-
-                  <Select
-                     data={salesmen}
-                     sx={{ flex: 1 / 2 }}
-                     size="md"
-                     value={salesmanFilter}
-                     onChange={setSalesmanFilter}
                      allowDeselect
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />
@@ -200,7 +151,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}
                      className={classes.input}
-                     placeholder="Search By Customer Name"
+                     placeholder="Search By User Name"
                      defaultValue={q}
                      onChange={(e) => setQ(e.currentTarget.value)}
                      radius="md"

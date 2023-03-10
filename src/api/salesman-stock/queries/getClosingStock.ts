@@ -1,6 +1,6 @@
 import apiClient from '../../instance'
 
-export type GetSalesmanClosingStockData = {
+export type GetSalesmanClosingStocksData = {
    itemId: string
    code: string
    name: string
@@ -8,9 +8,9 @@ export type GetSalesmanClosingStockData = {
    qty: number
 }[]
 
-export type GetSalesmanClosingStockResponse = {
+export type GetSalesmanClosingStocksResponse = {
    status: string
-   data: GetSalesmanClosingStockData
+   data: GetSalesmanClosingStocksData
 }
 
 export async function getSalesmanClosingStocks(url: string, to: string, userId: string) {

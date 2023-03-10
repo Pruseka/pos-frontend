@@ -1,10 +1,5 @@
 import apiClient from '../../instance'
-import { Item } from '../queries/getInvoicesByDate'
-
-export enum TransferType {
-   FROM = 'from',
-   TO = 'to',
-}
+import { Item, TransferType } from '../queries/getTransfersByDate'
 
 export interface Args {
    userId: string

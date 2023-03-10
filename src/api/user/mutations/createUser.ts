@@ -6,8 +6,13 @@ export interface Args {
    password: string
 }
 
-export async function createUserMutation(url: string, { arg: { name } }: Readonly<{ arg: Args }>) {
+export async function createUserMutation(
+   url: string,
+   { arg: { name, email, password } }: Readonly<{ arg: Args }>
+) {
    return await apiClient.post(url, {
       name,
+      email,
+      password,
    })
 }
