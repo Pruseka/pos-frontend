@@ -13,35 +13,22 @@ import {
 } from '@mantine/core'
 import { useDebouncedState } from '@mantine/hooks'
 import { closeModal, openModal } from '@mantine/modals'
-import { IconCoin, IconPackage, IconPencil, IconSearch } from '@tabler/icons-react'
+import { IconPackage, IconPencil, IconSearch } from '@tabler/icons-react'
 import { useCallback, useEffect, useState } from 'react'
-import { GetAllCategoriesResponse } from '../../../../api/category/queries/getAllCategories'
-import { GetAllItemsData } from '../../../../api/item/queries/getAllItems'
+import { GetAllUsersData } from '../../../../api/user/queries/getAllUsers'
 import { toSentenceCase } from '../../../../helpers/conver-title'
 import FormModal from './form-modal'
-import PriceFormModal from './price-form-modal'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllItemsData[0]>
+export type Item = Partial<GetAllUsersData[0]>
 
 interface TableProps {
    data: Item[]
    loading: boolean
    formSubmitting: boolean
-   updatingPrice: boolean
    title: string
-   categoriesData: GetAllCategoriesResponse | undefined
-   //    forms: {
-   //       [key: string]: {
-   //          title?: string
-   //          value: string | number | Date | { label: string; value: string }[]
-   //          addRequired: boolean
-   //          updateRequired: boolean
-   //       }
-   //    }
    excludeFields: string[]
    updateRow: (values: { [key: string]: unknown }) => Promise<void>
-   updatePrice: (values: { [key: string]: unknown }) => Promise<void>
    addRow: (values: { [key: string]: unknown }) => Promise<void>
    refetch: () => Promise<void>
 }
@@ -49,20 +36,16 @@ interface TableProps {
 const PosTable: React.FC<TableProps> = ({
    data,
    loading,
-   categoriesData,
    formSubmitting,
    title,
    excludeFields,
    updateRow,
-   updatePrice,
-   updatingPrice,
    addRow,
    refetch,
 }) => {
    const { classes, cx } = useStyles()
    const [isEditing, setIsEditing] = useState(false)
    const [openEditForm, setOpenEditForm] = useState(false)
-   const [openEditPriceForm, setOpenEditPriceForm] = useState(false)
    const [item, setItem] = useState<Item | null>(null)
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
@@ -71,18 +54,12 @@ const PosTable: React.FC<TableProps> = ({
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
    const query = q.toLowerCase().trim()
-   const searchedData = data.filter((item) => item.name?.toLowerCase().includes(query))
+   const searchedData = data.filter((user) => user.name?.toLowerCase().includes(query))
    const paginatedData = searchedData.slice(startOffset, endOffset)
    const total = searchedData.length > 0 ? Math.ceil(searchedData.length / rowsPerPage) : 0
 
    const openUpdateFormModal = (item: Item) => {
       setOpenEditForm(true)
-      setIsEditing(true)
-      setItem(item)
-   }
-
-   const openUpdatePriceFormModal = (item: Item) => {
-      setOpenEditPriceForm(true)
       setIsEditing(true)
       setItem(item)
    }
@@ -105,15 +82,6 @@ const PosTable: React.FC<TableProps> = ({
       [refetch, title, updateRow]
    )
 
-   const handleUpdatePrice = useCallback(
-      async <T extends { [key: string]: unknown }>(values: T) => {
-         await updatePrice(values)
-         await refetch()
-         closeModal(`${title}-price`)
-      },
-      [refetch, title, updatePrice]
-   )
-
    useEffect(() => {
       if (openEditForm) {
          if (isEditing && item) {
@@ -123,7 +91,6 @@ const PosTable: React.FC<TableProps> = ({
                children: (
                   <FormModal
                      item={item}
-                     categoriesData={categoriesData}
                      isEditing={isEditing}
                      loading={formSubmitting}
                      updateRow={handleUpdate}
@@ -148,7 +115,6 @@ const PosTable: React.FC<TableProps> = ({
             children: (
                <FormModal
                   item={null}
-                  categoriesData={categoriesData}
                   isEditing={isEditing}
                   loading={formSubmitting}
                   updateRow={() => {}}
@@ -163,25 +129,7 @@ const PosTable: React.FC<TableProps> = ({
             },
          })
       }
-   }, [isEditing, item, handleUpdate, title, openEditForm, handleAdd, formSubmitting, categoriesData])
-
-   useEffect(() => {
-      if (openEditPriceForm && item) {
-         openModal({
-            title: 'Update Price',
-            modalId: `${title}-price`,
-            children: <PriceFormModal item={item} loading={updatingPrice} updatePrice={handleUpdatePrice} />,
-            centered: true,
-            size: 'sm',
-
-            onClose: () => {
-               setOpenEditPriceForm(false)
-               setIsEditing(false)
-               setItem(null)
-            },
-         })
-      }
-   }, [handleUpdatePrice, item, openEditPriceForm, title, updatingPrice])
+   }, [isEditing, item, handleUpdate, title, openEditForm, handleAdd, formSubmitting])
 
    const columns = Object.keys(data[0] || {})
 
@@ -201,10 +149,6 @@ const PosTable: React.FC<TableProps> = ({
                <Group spacing={10} position="right">
                   <ActionIcon onClick={() => openUpdateFormModal(item)}>
                      <IconPencil size={16} stroke={1.5} />
-                  </ActionIcon>
-
-                  <ActionIcon onClick={() => openUpdatePriceFormModal(item)}>
-                     <IconCoin size={16} stroke={1.5} />
                   </ActionIcon>
                </Group>
             </td>
@@ -237,7 +181,7 @@ const PosTable: React.FC<TableProps> = ({
                   icon={<IconSearch size={20} stroke={1.5} />}
                   mx={{ base: 0, xs: 'md' }}
                   className={classes.input}
-                  placeholder="Search By Customer Name"
+                  placeholder="Search By User Name"
                   defaultValue={q}
                   onChange={(e) => setQ(e.currentTarget.value)}
                   size="md"

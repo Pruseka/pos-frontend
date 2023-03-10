@@ -6,7 +6,9 @@ import {
    IconLock,
    IconPackages,
    IconPresentationAnalytics,
+   IconSend,
    IconTag,
+   IconUsers,
 } from '@tabler/icons-react'
 import { NavItemType } from './../../types/global'
 
@@ -28,6 +30,14 @@ export const NAV_LINKS: NavItemType[] = [
       ],
    },
    {
+      label: 'Transfers',
+      icon: IconSend,
+      links: [
+         { label: 'Salesman Transfers', url: '/salesman/transfers' },
+         { label: 'Customer Transfers', url: '/customer/transfers' },
+      ],
+   },
+   {
       label: 'Products',
       icon: IconTag,
       links: [
@@ -44,25 +54,6 @@ export const NAV_LINKS: NavItemType[] = [
          { label: 'Out Records', url: '/salesman/out-records' },
       ],
    },
-   {
-      label: 'Releases',
-      icon: IconCalendarStats,
-      links: [
-         { label: 'Upcoming releases', url: '/upcoming-releases' },
-         { label: 'Previous releases', url: '/ffdsf' },
-         { label: 'Releases schedule', url: '/fdgsdgsd' },
-      ],
-   },
-   { label: 'Analytics', icon: IconPresentationAnalytics, url: '/analytics' },
-   { label: 'Contracts', icon: IconFileAnalytics, url: '/contracts' },
 
-   {
-      label: 'Security',
-      icon: IconLock,
-      links: [
-         { label: 'Enable 2FA', url: '/hhhh' },
-         { label: 'Change password', url: '/bbb' },
-         { label: 'Recovery codes', url: '/vvv' },
-      ],
-   },
+   { label: 'Users', icon: IconUsers, url: '/users' },
 ]

@@ -1,12 +1,5 @@
 import apiClient from '../../instance'
-import { Item } from '../queries/getInvoicesByDate'
-
-export enum SupplyType {
-   CASH = 'cash',
-   CREDIT = 'credit',
-   RETURN = 'return',
-   CANCEL = 'cancel',
-}
+import { Item, SupplyType } from '../queries/getSupplyByDate'
 
 export interface Args {
    supplier: string

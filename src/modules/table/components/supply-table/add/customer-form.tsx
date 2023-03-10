@@ -1,19 +1,10 @@
 import { Autocomplete, Box, Button, Flex, Select } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
-import { useEffect } from 'react'
+import { openConfirmModal } from '@mantine/modals'
+import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
-import {
-   CustomerType,
-   getAllCustomers,
-   GetAllCustomersResponse,
-} from '../../../../../api/customer/queries/getAllCustomers'
-import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
-import {
-   getAllSuppliers,
-   GetAllSuppliersData,
-   GetAllSuppliersResponse,
-} from '../../../../../api/supplier/queries/getAllSuppliers'
-import { SupplyType } from '../../../../../api/supply/mutations/provideSupply'
+import { getAllSuppliers, GetAllSuppliersResponse } from '../../../../../api/supplier/queries/getAllSuppliers'
+import { SupplyType } from '../../../../../api/supply/queries/getSupplyByDate'
 import useStyles from './styles'
 
 export interface FormValues {
@@ -26,6 +17,7 @@ interface Props {
 }
 
 const CustomerForm: React.FC<Props> = ({ submitForm }) => {
+   const navigate = useNavigate()
    const { classes } = useStyles()
    const { data: suppliersData } = useSWR<GetAllSuppliersResponse>('/supplier/all', getAllSuppliers)
    const customers =
@@ -45,11 +37,21 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
       validate: {
          supplier: isNotEmpty('Customer Name must be filled'),
       },
-      //   ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
    const handleSubmit = async (values: FormValues) => {
       await submitForm(values)
+   }
+
+   const handleDiscard = () => {
+      openConfirmModal({
+         title: 'Are you sure want to discard?',
+         centered: true,
+         labels: { confirm: 'Discard Changes', cancel: 'Cancel Discard' },
+         confirmProps: { color: 'red' },
+         onCancel: () => console.log('Cancel'),
+         onConfirm: () => navigate('/'),
+      })
    }
 
    return (
@@ -80,7 +82,7 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
                </Flex>
                <Flex py="md" sx={{ flex: 1 }} justify="flex-end" align="flex-end">
                   <Flex gap="md">
-                     <Button variant="outline" className={classes.actionButton}>
+                     <Button variant="outline" className={classes.actionButton} onClick={handleDiscard}>
                         Discard
                      </Button>
                      <Button className={classes.actionButton} type="submit">

@@ -11,7 +11,6 @@ interface FormValues {
    itemId: string
    code: string
    name: string
-   price: number
    qty: number
 }
 
@@ -35,7 +34,7 @@ const InvoiceForm: React.FC<Props> = ({
    cancelUpdate,
 }) => {
    const { classes } = useStyles()
-   const { data: itemsData, isLoading } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
+   const { data: itemsData } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
 
    const items =
       itemsData?.data && itemsData.data.length > 0
@@ -46,7 +45,6 @@ const InvoiceForm: React.FC<Props> = ({
       itemId: '',
       code: '',
       name: '',
-      price: 0,
       qty: 0,
    }
    const addValidate = {
@@ -63,12 +61,8 @@ const InvoiceForm: React.FC<Props> = ({
       ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
-   const netAmount = (form.values.price || 0) * (form.values.qty || 0)
-
    function handleSubmit(values: FormValues) {
-      isEditing && item
-         ? updateRow({ ...item, ...values, netAmount })
-         : addRow({ no: newId, ...values, netAmount })
+      isEditing && item ? updateRow({ ...item, ...values }) : addRow({ no: newId, ...values })
       //needs to fix(if item exist, the new item is added to existing one)
       form.reset()
    }
@@ -81,9 +75,7 @@ const InvoiceForm: React.FC<Props> = ({
    useEffect(() => {
       if (isEditing && item) {
          form.setValues({
-            code: item.code,
             name: item.name,
-            price: item.price,
             qty: item.qty,
          })
       }
@@ -94,8 +86,6 @@ const InvoiceForm: React.FC<Props> = ({
          const item = itemsData?.data.find((item) => item.name === form.values.name)
          form.setValues({
             code: item?.code,
-            // price: customerType === CustomerType.RETAIL ? item?.retailPrice : item?.wholesalesPrice,
-            price: item?.purchasingPrice,
             itemId: item?.itemId,
          })
       }
@@ -120,7 +110,7 @@ const InvoiceForm: React.FC<Props> = ({
             <form onSubmit={form.onSubmit(handleSubmit)} className={classes.form}>
                <Flex align="center" gap="sm">
                   <Text size="xl" fw="bold">
-                     Supply
+                     Transfer Item
                   </Text>
                   {isEditing && <Badge>Editing</Badge>}
                </Flex>
@@ -148,24 +138,6 @@ const InvoiceForm: React.FC<Props> = ({
 
                   <Flex align="center" gap="md">
                      <NumberInput
-                        label="Price"
-                        py="xs"
-                        disabled
-                        sx={{ flex: 1 }}
-                        classNames={{ label: classes.label }}
-                        step={1}
-                        min={0}
-                        hideControls
-                        rightSection={<Text fz="sm">Ks</Text>}
-                        parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-                        formatter={(value: any) =>
-                           !Number.isNaN(parseFloat(value))
-                              ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-                              : ''
-                        }
-                        {...form.getInputProps('price')}
-                     />
-                     <NumberInput
                         label="Qty"
                         py="xs"
                         sx={{ flex: 1 }}
@@ -176,11 +148,6 @@ const InvoiceForm: React.FC<Props> = ({
                      />
                   </Flex>
                </Flex>
-               <Box p="xl" my="md" className={classes.netAmountWrapper}>
-                  <Text color="dimmed" size="md" fw="bold">
-                     Net Amount: {netAmount.toLocaleString()} Ks
-                  </Text>
-               </Box>
 
                <Flex justify="flex-end" py="xl" gap="sm">
                   {isEditing && (

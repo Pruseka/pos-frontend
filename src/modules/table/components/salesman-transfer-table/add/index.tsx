@@ -2,15 +2,14 @@ import { Box, Flex, Text } from '@mantine/core'
 import { useHotkeys } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
-import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
-import { createInvoiceMutation } from '../../../../../api/invoice/mutations/createInvoice'
-import CustomerForm, { FormValues } from './customer-form'
-import InvoiceForm, { invoiceFormItem } from './invoice-form'
+import UserForm, { FormValues } from './user-form'
+import InvoiceForm from './invoice-form'
 import useStyles from './styles'
 import PosTable from './table'
+import { transferSalesmanMutation } from '../../../../../api/transfer/mutations/transferSalesman'
 
 export type Item = {
    no: number
@@ -18,53 +17,43 @@ export type Item = {
    code: string
    name: string
    qty: number
-   price: { retail: number; wholesales: number }
-   netAmount: number
 }
 
-const AddInvoice: React.FC = () => {
+const TransferSalesman: React.FC = () => {
    const { classes } = useStyles()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
-
-   const [customerType, setCustomerType] = useState<CustomerType>(CustomerType.RETAIL)
    const [isEditing, setIsEditing] = useState(false)
-   const { trigger: createInvoice, isMutating: creatingInvoice } = useSWRMutation(
-      '/invoice',
-      createInvoiceMutation
+   const { trigger: transferSalesman, isMutating: transferingSalesman } = useSWRMutation(
+      '/transfer',
+      transferSalesmanMutation
    )
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/" className={classes.backLink}>
+         <NavLink to="/transfers" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all invoices
+                  Back to all salesman transfers
                </Flex>
             </Text>
          </NavLink>
       </Box>
    )
 
-   const handleAddRow = (item: invoiceFormItem) => {
+   const handleAddRow = (item: Item) => {
       const existingItemIndex = items.findIndex((it) => it.itemId === item.itemId)
-      const netAmount =
-         customerType === CustomerType.RETAIL
-            ? item.price.retail * item.qty
-            : item.price.wholesales * item.qty
 
       if (existingItemIndex !== -1) {
          setItems((prev) =>
             prev.map((itm, i) => {
                if (i === existingItemIndex) {
-                  const newQty = itm.qty + item.qty!
+                  const newQty = itm.qty + item.qty
 
-                  const newNetAmount = itm.netAmount + netAmount
                   return {
                      ...itm,
                      qty: newQty,
-                     netAmount: newNetAmount,
                   }
                }
                return itm
@@ -72,19 +61,13 @@ const AddInvoice: React.FC = () => {
          )
          return
       }
-      setItems((prev) => [...prev, { ...item, netAmount }])
+      setItems((prev) => [...prev, item])
    }
 
-   const handleUpdateRow = (item: invoiceFormItem) => {
+   const handleUpdateRow = (item: Item) => {
       const newItems = items.map((it) => {
          if (it.no === item.no) {
-            return {
-               ...item,
-               netAmount:
-                  customerType === CustomerType.RETAIL
-                     ? item.price.retail * item.qty
-                     : item.price.wholesales * item.qty,
-            }
+            return item
          }
          return it
       })
@@ -113,8 +96,8 @@ const AddInvoice: React.FC = () => {
 
    const handleCreateInvoice = async (values: FormValues) => {
       const mappedItems = items.map((item) => ({ itemId: item.itemId, qty: item.qty }))
-      await createInvoice(
-         { ...values, customerType, items: mappedItems },
+      await transferSalesman(
+         { ...values, items: mappedItems },
          {
             onSuccess: (data) =>
                showNotification({
@@ -126,20 +109,6 @@ const AddInvoice: React.FC = () => {
       )
    }
 
-   useEffect(() => {
-      if (customerType) {
-         setItems((prev) =>
-            prev.map((item) => ({
-               ...item,
-               netAmount:
-                  customerType === CustomerType.RETAIL
-                     ? item.price.retail * item.qty
-                     : item.price.wholesales * item.qty,
-            }))
-         )
-      }
-   }, [customerType])
-
    useHotkeys([
       ['ctrl+Enter', () => console.log('saved')],
       ['alt+D', () => console.log('discard')],
@@ -149,12 +118,7 @@ const AddInvoice: React.FC = () => {
       <Box p={{ base: 'xs', md: 'xl' }} className={classes.container}>
          {backButton}
          <Flex direction={{ base: 'column-reverse', md: 'column' }}>
-            <CustomerForm
-               submitForm={handleCreateInvoice}
-               customerType={customerType}
-               setCustomerType={setCustomerType}
-               disabledSaveButton={items.length === 0}
-            />
+            <UserForm submitForm={handleCreateInvoice} />
 
             <Flex
                direction={{ base: 'column', md: 'row' }}
@@ -166,7 +130,6 @@ const AddInvoice: React.FC = () => {
                <InvoiceForm
                   addRow={handleAddRow}
                   isEditing={isEditing}
-                  customerType={customerType}
                   item={selectedItem}
                   loading={false}
                   updateRow={handleUpdateRow}
@@ -177,10 +140,9 @@ const AddInvoice: React.FC = () => {
                   data={items}
                   loading={false}
                   title="Items"
-                  customerType={customerType}
                   updateRow={handleSelectItem}
                   deleteRow={handleDeleteItem}
-                  excludeFields={['itemId', 'retailPrice', 'wholesalesPrice']}
+                  excludeFields={['itemId']}
                />
             </Flex>
          </Flex>
@@ -188,4 +150,4 @@ const AddInvoice: React.FC = () => {
    )
 }
 
-export default AddInvoice
+export default TransferSalesman

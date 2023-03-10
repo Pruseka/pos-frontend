@@ -1,6 +1,7 @@
-import { Box, Flex, Group, Loader, Pagination, ScrollArea, Table, Text } from '@mantine/core'
+import { Box, Flex, Group, Loader, Pagination, ScrollArea, Table, Text, TextInput } from '@mantine/core'
 import { DatePicker } from '@mantine/dates'
-import { IconPackage } from '@tabler/icons-react'
+import { useDebouncedState } from '@mantine/hooks'
+import { IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { GetSalesmanClosingStockData } from '../../../../../api/salesman-stock/queries/getClosingStock'
 import { toSentenceCase } from '../../../../../helpers/conver-title'
@@ -45,11 +46,14 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const rowsPerPage = 10
+   const [q, setQ] = useDebouncedState('', 200)
+   const query = q.toLowerCase().trim()
+   const searchedData = data.filter((item) => item.name?.toLowerCase().includes(query))
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
-   const paginatedData = data.slice(startOffset, endOffset)
+   const paginatedData = searchedData.slice(startOffset, endOffset)
 
-   const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
+   const total = searchedData.length > 0 ? Math.ceil(searchedData.length / rowsPerPage) : 0
 
    const columns = Object.keys(data[0] || {})
 
@@ -102,6 +106,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
+               justify="space-between"
                direction={{ base: 'column', xl: 'row' }}
                gap={{ md: 'sm', base: 'md' }}
             >
@@ -111,6 +116,16 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   maxDate={new Date()}
                   onChange={setDate as any}
                   size="md"
+               />
+               <TextInput
+                  icon={<IconSearch size={20} stroke={1.5} />}
+                  mx={{ base: 0, xs: 'md' }}
+                  className={classes.input}
+                  placeholder="Search By Supplier Name"
+                  defaultValue={q}
+                  onChange={(e) => setQ(e.currentTarget.value)}
+                  size="md"
+                  radius="md"
                />
             </Flex>
             {paginatedData.length > 0 ? (

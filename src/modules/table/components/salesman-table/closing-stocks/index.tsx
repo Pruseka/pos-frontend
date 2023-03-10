@@ -23,7 +23,7 @@ const SalesmanClosingStocksTable: React.FC = () => {
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
-         title="Invoice"
+         title="Salesman Stocks"
          excludeFields={['itemId']}
       />
    )

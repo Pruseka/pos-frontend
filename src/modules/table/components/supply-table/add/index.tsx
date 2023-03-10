@@ -33,11 +33,11 @@ const AddSupply: React.FC = () => {
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/" className={classes.backLink}>
+         <NavLink to="/supplies" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all invoices
+                  Back to all supplies
                </Flex>
             </Text>
          </NavLink>
@@ -45,6 +45,26 @@ const AddSupply: React.FC = () => {
    )
 
    const handleAddRow = (item: Item) => {
+      const existingItemIndex = items.findIndex((it) => it.itemId === item.itemId)
+
+      if (existingItemIndex !== -1) {
+         setItems((prev) =>
+            prev.map((itm, i) => {
+               if (i === existingItemIndex) {
+                  const newQty = itm.qty + item.qty
+                  const newNetAmount = itm.netAmount + item.netAmount
+
+                  return {
+                     ...itm,
+                     qty: newQty,
+                     netAmount: newNetAmount,
+                  }
+               }
+               return itm
+            })
+         )
+         return
+      }
       setItems((prev) => [...prev, item])
    }
 

@@ -1,6 +1,8 @@
-import { Autocomplete, Box, Button, Flex, Select } from '@mantine/core'
+import { Autocomplete, Box, Button, Flex, Select, Text } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
+import { openConfirmModal } from '@mantine/modals'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 import {
    CustomerType,
@@ -12,16 +14,19 @@ import useStyles from './styles'
 
 export interface FormValues {
    customer: string
-   customerType: CustomerType
    type: PaymentType
 }
 
 interface Props {
+   customerType: CustomerType
+   disabledSaveButton: boolean
    submitForm: (values: FormValues) => Promise<void>
+   setCustomerType: React.Dispatch<React.SetStateAction<CustomerType>>
 }
 
-const CustomerForm: React.FC<Props> = ({ submitForm }) => {
+const CustomerForm: React.FC<Props> = ({ submitForm, customerType, setCustomerType, disabledSaveButton }) => {
    const { classes } = useStyles()
+   const navigate = useNavigate()
    const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
    const customers =
       customersData?.data && customersData.data.length > 0
@@ -33,7 +38,6 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
 
    const initialValues = {
       customer: '',
-      customerType: CustomerType.RETAIL,
       type: PaymentType.CASH,
    }
 
@@ -49,16 +53,27 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
       await submitForm(values)
    }
 
+   const handleDiscard = () => {
+      openConfirmModal({
+         title: 'Are you sure want to discard?',
+         centered: true,
+         labels: { confirm: 'Discard Changes', cancel: 'Cancel Discard' },
+         confirmProps: { color: 'red' },
+         onCancel: () => console.log('Cancel'),
+         onConfirm: () => navigate('/'),
+      })
+   }
+
    useEffect(() => {
       if (form.values.customer) {
          const customerName = form.values.customer
          const existingCustomer = customersData?.data.find((customer) => customer.name === customerName)
 
          if (existingCustomer) {
-            form.setValues({ customerType: existingCustomer.type })
+            setCustomerType(existingCustomer.type)
          }
       }
-   }, [form.values.customer])
+   }, [customersData?.data, form.values.customer, setCustomerType])
 
    return (
       <Box w="100%">
@@ -78,10 +93,11 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
                         <Select
                            label="Customer Type"
                            data={customerTypes}
+                           value={customerType}
+                           onChange={setCustomerType as any}
                            py="xs"
                            sx={{ flex: 1 }}
                            classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                           {...form.getInputProps('customerType')}
                         />
                         <Select
                            label="Payment Type"
@@ -96,10 +112,10 @@ const CustomerForm: React.FC<Props> = ({ submitForm }) => {
                </Flex>
                <Flex py="md" sx={{ flex: 1 }} justify="flex-end" align="flex-end">
                   <Flex gap="md">
-                     <Button variant="outline" className={classes.actionButton}>
+                     <Button variant="outline" className={classes.actionButton} onClick={handleDiscard}>
                         Discard
                      </Button>
-                     <Button className={classes.actionButton} type="submit">
+                     <Button className={classes.actionButton} type="submit" disabled={disabledSaveButton}>
                         Save
                      </Button>
                   </Flex>

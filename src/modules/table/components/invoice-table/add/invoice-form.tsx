@@ -3,6 +3,7 @@ import { isInRange, isNotEmpty, useForm } from '@mantine/form'
 import { useEffect } from 'react'
 import useSWR from 'swr'
 import { Item } from '.'
+import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
 import { getAllItems, GetAllItemsResponse } from '../../../../../api/item/queries/getAllItems'
 import { INVOICE_FORM_WIDTH } from '../../../../../lib/constants/layout'
 import useStyles from './styles'
@@ -11,17 +12,21 @@ interface FormValues {
    itemId: string
    code: string
    name: string
+   retailPrice: number
+   wholesalesPrice: number
    price: number
    qty: number
 }
 
+export type invoiceFormItem = Omit<Item, 'netAmount'>
 interface Props {
-   item: Item | null
+   item: invoiceFormItem | null
    isEditing: boolean
    loading: boolean
    newId: number
-   updateRow: (values: Item) => void
-   addRow: (values: Item) => void
+   customerType: CustomerType
+   updateRow: (values: invoiceFormItem) => void
+   addRow: (values: invoiceFormItem) => void
    cancelUpdate: () => void
 }
 
@@ -33,6 +38,7 @@ const InvoiceForm: React.FC<Props> = ({
    updateRow,
    addRow,
    cancelUpdate,
+   customerType,
 }) => {
    const { classes } = useStyles()
    const { data: itemsData, isLoading } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
@@ -46,6 +52,8 @@ const InvoiceForm: React.FC<Props> = ({
       itemId: '',
       code: '',
       name: '',
+      retailPrice: 0,
+      wholesalesPrice: 0,
       price: 0,
       qty: 0,
    }
@@ -67,8 +75,17 @@ const InvoiceForm: React.FC<Props> = ({
 
    function handleSubmit(values: FormValues) {
       isEditing && item
-         ? updateRow({ ...item, ...values, netAmount })
-         : addRow({ no: newId, ...values, netAmount })
+         ? updateRow({
+              ...item,
+              ...values,
+              price: { retail: values.retailPrice, wholesales: values.wholesalesPrice },
+           })
+         : addRow({
+              no: newId,
+              ...values,
+              price: { retail: values.retailPrice, wholesales: values.wholesalesPrice },
+           })
+
       //needs to fix(if item exist, the new item is added to existing one)
       form.reset()
    }
@@ -80,26 +97,27 @@ const InvoiceForm: React.FC<Props> = ({
 
    useEffect(() => {
       if (isEditing && item) {
+         // other fields will set automatically because of useEffect
          form.setValues({
-            code: item.code,
             name: item.name,
-            price: item.price,
             qty: item.qty,
          })
       }
    }, [isEditing, item])
 
    useEffect(() => {
-      if (form.values.name) {
-         const item = itemsData?.data.find((item) => item.name === form.values.name)
+      if (form.values.name && itemsData?.data) {
+         const item = itemsData.data.find((item) => item.name === form.values.name)
+
          form.setValues({
             code: item?.code,
-            // price: customerType === CustomerType.RETAIL ? item?.retailPrice : item?.wholesalesPrice,
-            price: item?.retailPrice,
+            retailPrice: item?.retailPrice,
+            wholesalesPrice: item?.wholesalesPrice,
+            price: customerType === CustomerType.RETAIL ? item?.retailPrice : item?.wholesalesPrice,
             itemId: item?.itemId,
          })
       }
-   }, [itemsData?.data, form.values.name])
+   }, [itemsData?.data, form.values.name, customerType])
 
    useEffect(() => {
       if (!item) {
@@ -141,6 +159,7 @@ const InvoiceForm: React.FC<Props> = ({
                         py="xs"
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                        searchable
                         {...form.getInputProps('name')}
                      />
                   </Flex>

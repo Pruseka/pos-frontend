@@ -13,6 +13,7 @@ import {
 import { IconPackage, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { Item } from '.'
+import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../../customer-table/table'
 import useStyles from './styles'
 
@@ -21,11 +22,20 @@ interface TableProps {
    loading: boolean
    title: string
    excludeFields: string[]
+   customerType: CustomerType
    updateRow: (item: Item) => void
    deleteRow: (item: Item) => void
 }
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, deleteRow, excludeFields }) => {
+const PosTable: React.FC<TableProps> = ({
+   data,
+   loading,
+   title,
+   customerType,
+   updateRow,
+   deleteRow,
+   excludeFields,
+}) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
 
@@ -37,6 +47,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['No', 'Code', 'Name', 'Price', 'Qty', 'Net Amount']
+
+   const currentRows = ['netAmount']
+   const numberRows = [...currentRows, 'no', 'qty']
+   const numberColumns = ['No', 'Price', 'Qty', 'Net Amount']
    const totalAmount = data
       .map((item) => +item.netAmount)
       .reduce((previous, current) => previous + current, 0)
@@ -65,12 +79,24 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                   )
                }
 
-               if (key === 'price' || key === 'netAmount') {
-                  return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
+               if (key === 'price' && typeof value !== 'string' && typeof value !== 'number') {
+                  return (
+                     <td key={key} className={classes.number}>{`${(customerType === CustomerType.RETAIL
+                        ? value.retail
+                        : value.wholesales
+                     ).toLocaleString()} Ks`}</td>
+                  )
                }
 
                if (value === '') return <td key={key}>-</td>
-               return <td key={key}>{`${value}`}</td>
+               return (
+                  <td
+                     key={key}
+                     className={cx({
+                        [classes.number]: numberRows.includes(key),
+                     })}
+                  >{`${value} ${currentRows.includes(key) ? 'Ks' : ''}`}</td>
+               )
             })}
 
             <td>
@@ -110,7 +136,16 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                            if (excludeFields.find((field) => field === columnName)) {
                               return null
                            }
-                           return <th key={columnName}>{columnName}</th>
+                           return (
+                              <th
+                                 key={columnName}
+                                 {...(numberColumns.includes(columnName)
+                                    ? { style: { textAlign: 'right' } }
+                                    : {})}
+                              >
+                                 {columnName}
+                              </th>
+                           )
                         })}
                         <th />
                      </tr>
