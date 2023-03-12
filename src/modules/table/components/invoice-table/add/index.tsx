@@ -1,4 +1,5 @@
 import { Box, Flex, Text } from '@mantine/core'
+import { useNavigate } from 'react-router-dom'
 import { useHotkeys } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
@@ -24,6 +25,7 @@ export type Item = {
 
 const AddInvoice: React.FC = () => {
    const { classes } = useStyles()
+   const navigate = useNavigate()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
 
@@ -116,12 +118,14 @@ const AddInvoice: React.FC = () => {
       await createInvoice(
          { ...values, customerType, items: mappedItems },
          {
-            onSuccess: (data) =>
+            onSuccess: (data) => {
                showNotification({
                   message: data.data.message,
                   icon: <IconCheck />,
                   color: 'teal',
-               }),
+               })
+               // navigate(`${}`)
+            },
          }
       )
    }

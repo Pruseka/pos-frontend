@@ -1,8 +1,10 @@
 import {
+   ActionIcon,
    Badge,
    Box,
    Button,
    Flex,
+   Group,
    Loader,
    Pagination,
    ScrollArea,
@@ -13,10 +15,11 @@ import {
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { IconPackage, IconSearch } from '@tabler/icons-react'
+import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetAllSuppliesData, SupplyType } from '../../../../api/supply/queries/getSupplyByDate'
+import { TransferItemList } from '../../../../api/transfer/queries/getTransfersByDate'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
 
@@ -77,7 +80,11 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Salesman', 'Supplier', 'Type', 'Amount']
+   const columns = ['Supply Id', 'Salesman', 'Type', 'Supplier', 'Amount']
+   const currencyRows = ['amount']
+   const numberRows = [...currencyRows]
+   const numberColumns = ['Amount']
+
    const paymentTypes = Object.values(SupplyType).map((type) => ({ label: type, value: type }))
 
    const totalAmount = data.reduce((previousAmount, item) => {
@@ -93,6 +100,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
             return previousAmount
       }
    }, 0)
+
+   const handleViewSupply = (item: Item) => {
+      navigate(`/supplies/view/${item.supplyId}`)
+   }
 
    const rows = paginatedData.map((item) => {
       return (
@@ -146,10 +157,23 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                }
 
                if (value === '') return <td key={key}>-</td>
-               return <td key={key}>{`${value}`}</td>
+               return (
+                  <td
+                     key={key}
+                     className={cx({
+                        [classes.number]: numberRows.includes(key),
+                     })}
+                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+               )
             })}
 
-            <td />
+            <td>
+               <Group spacing={0} position="right">
+                  <ActionIcon onClick={() => handleViewSupply(item)}>
+                     <IconEye size={16} stroke={1.5} />
+                  </ActionIcon>
+               </Group>
+            </td>
          </tr>
       )
    })
@@ -245,7 +269,16 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                                     </th>
                                  )
                               }
-                              return <th key={columnName}>{columnName}</th>
+                              return (
+                                 <th
+                                    key={columnName}
+                                    {...(numberColumns.includes(columnName)
+                                       ? { style: { textAlign: 'right' } }
+                                       : {})}
+                                 >
+                                    {columnName}
+                                 </th>
+                              )
                            })}
                            <th />
                         </tr>
@@ -259,17 +292,19 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
-            <Flex
-               p="md"
-               className={cx(classes.totalAmountWrapper, {
-                  [classes.roundedBottom]: !(total > 1),
-               })}
-               justify="flex-end"
-            >
-               <Text color="dimmed" size="md" fw="bold">
-                  Total Amount: {totalAmount.toLocaleString()} Ks
-               </Text>
-            </Flex>
+            {paginatedData.length > 0 && (
+               <Flex
+                  p="md"
+                  className={cx(classes.totalAmountWrapper, {
+                     [classes.roundedBottom]: !(total > 1),
+                  })}
+                  justify="flex-end"
+               >
+                  <Text color="dimmed" size="md" fw="bold">
+                     Total Amount: {totalAmount.toLocaleString()} Ks
+                  </Text>
+               </Flex>
+            )}
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />

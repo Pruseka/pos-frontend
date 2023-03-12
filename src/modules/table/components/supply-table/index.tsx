@@ -47,7 +47,7 @@ const SupplyTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Supply"
-         excludeFields={['items']}
+         excludeFields={['items', 'createdAt']}
       />
    )
 }

@@ -15,8 +15,8 @@ interface Props {
    categoriesData: GetAllCategoriesResponse | undefined
    isEditing: boolean
    loading: boolean
-   updateRow: <T extends { [key: string]: unknown }>(values: T) => void
-   addRow: <T extends { [key: string]: unknown }>(values: T) => void
+   updateRow: <T extends { [key: string]: unknown }>(values: T) => Promise<void>
+   addRow: <T extends { [key: string]: unknown }>(values: T) => Promise<void>
 }
 
 const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRow, categoriesData }) => {
@@ -45,7 +45,6 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
               name: '',
               category: '',
            }
-   console.log(initialValues)
    const addValidate = {
       code: isNotEmpty('Code must be filled'),
       name: isNotEmpty('Name must be filled'),
@@ -58,15 +57,15 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
       ...(isEditing ? { validate: updateValidate } : { validate: addValidate }),
    })
 
-   function handleSubmit(values: FormValues) {
+   async function handleSubmit(values: FormValues) {
       isEditing
-         ? updateRow({
+         ? await updateRow({
               itemId: item?.itemId,
               categoryId: values.category,
               code: values.code,
               name: values.name,
            })
-         : addRow({ categoryId: values.category, code: values.code, name: values.name })
+         : await addRow({ categoryId: values.category, code: values.code, name: values.name })
    }
 
    return (

@@ -18,9 +18,6 @@ export default createStyles((theme) => ({
 
    input: {
       flex: 1,
-      [theme.fn.largerThan('xl')]: {
-         maxWidth: 300,
-      },
    },
 
    empty: {

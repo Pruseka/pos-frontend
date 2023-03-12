@@ -57,7 +57,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Creator Name', 'Supplier', 'Type', 'Status', 'Amount']
+   const columns = ['Customer Transfer Id', 'Type', 'Customer', 'Salesman']
    const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
 
    const rows = paginatedData.map((item) => {

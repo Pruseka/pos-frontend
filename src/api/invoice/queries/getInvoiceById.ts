@@ -1,5 +1,6 @@
 import { CustomerType } from '../../customer/queries/getAllCustomers'
 import apiClient from '../../instance'
+import { PaymentType } from './getInvoicesByDate'
 
 export type Item = {
    itemId: string
@@ -9,14 +10,6 @@ export type Item = {
    qty: number
    price: number
    amount: number
-}
-
-export enum PaymentType {
-   CASH = 'cash',
-   CREDIT = 'credit',
-   RETURN = 'return',
-   CANCEL = 'cancel',
-   DAMAGE = 'damage',
 }
 
 export type GetInvoiceData = {

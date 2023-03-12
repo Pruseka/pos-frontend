@@ -212,30 +212,15 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   size="md"
                />
 
-               <Flex
-                  direction={{ base: 'column', xs: 'row' }}
-                  align={{ xs: 'center' }}
-                  gap="sm"
-                  w="100%"
-                  sx={{ flex: 3 / 4 }}
-               >
-                  <TextInput
-                     icon={<IconSearch size={20} stroke={1.5} />}
-                     className={classes.input}
-                     placeholder="Search By Item Name"
-                     defaultValue={q}
-                     onChange={(e) => setQ(e.currentTarget.value)}
-                     radius="md"
-                     size="md"
-                  />
-                  <Button
-                     onClick={() => {
-                        navigate('/supplies/add')
-                     }}
-                     h={40}
-                     className={classes.addButton}
-                  >{`Add ${title}`}</Button>
-               </Flex>
+               <TextInput
+                  icon={<IconSearch size={20} stroke={1.5} />}
+                  className={classes.input}
+                  placeholder="Search By Item Name"
+                  defaultValue={q}
+                  onChange={(e) => setQ(e.currentTarget.value)}
+                  radius="md"
+                  size="md"
+               />
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>

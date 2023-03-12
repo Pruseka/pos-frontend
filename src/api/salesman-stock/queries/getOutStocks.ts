@@ -1,10 +1,11 @@
 import apiClient from '../../instance'
-import { TransferType } from '../../transfer/queries/getTransfersByDate'
+import { PaymentType } from '../../invoice/queries/getInvoicesByDate'
 
 export type OutStocksList = {
-   transferItemId: string
-   transferId: string
-   type: TransferType
+   customer: string
+   invoiceItemId: string
+   invoiceId: string
+   type: PaymentType
    qty: number
    createdAt: Date
 }[]
@@ -23,7 +24,7 @@ export type GetSalesmanOutStocksResponse = {
    data: GetSalesmanOutStocksData
 }
 
-export async function getSalesmanInStocks(url: string, from: string, to: string, userId: string) {
+export async function getSalesmanOutStocks(url: string, from: string, to: string, userId: string) {
    const { data } = await apiClient.get(`${url}?from=${from}&to=${to}&userId=${userId}`)
    return data
 }

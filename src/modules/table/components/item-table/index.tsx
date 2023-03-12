@@ -42,6 +42,7 @@ const ItemsTable: React.FC = () => {
    }
 
    const updateItemPrice = async (values: { [key: string]: unknown }) => {
+      console.log('update', values)
       await updatePrice(values as any, {
          onSuccess: (data) =>
             showNotification({

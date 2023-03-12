@@ -21,6 +21,10 @@ import CustomerTransfersTable from '../modules/table/components/customer-transfe
 import AddTransferCustomer from '../modules/table/components/customer-transfer-table/add'
 import WarehouseOutStocksTable from '../modules/table/components/warehouse-table/out-stocks'
 import SalesmanInStocksTable from '../modules/table/components/salesman-table/in-stocks'
+import ViewInvoice from '../modules/table/components/invoice-table/view'
+import SalesmanOutStocksTable from '../modules/table/components/salesman-table/out-stocks'
+import CreditInvoiceTable from '../modules/table/components/invoice-table/credit'
+import ViewSupply from '../modules/table/components/supply-table/view'
 
 export const router = createBrowserRouter([
    {
@@ -38,6 +42,7 @@ export const router = createBrowserRouter([
             errorElement: <ErrorPage />,
             children: [
                { index: true, element: <InvoiceTable /> },
+               { path: '/invoices/credit', element: <CreditInvoiceTable /> },
                { path: '/supplies', element: <SupplyTable /> },
                { path: '/customers', element: <CustomersTable /> },
                { path: '/suppliers', element: <SuppliersTable /> },
@@ -47,15 +52,24 @@ export const router = createBrowserRouter([
                { path: '/salesman/transfers', element: <TransfersTable /> },
                { path: '/customer/transfers', element: <CustomerTransfersTable /> },
                { path: '/salesman/closing-stocks', element: <SalesmanClosingStocksTable /> },
-               { path: '/salesman/in-records', element: <SalesmanInStocksTable /> },
+               { path: '/salesman/transfer-records', element: <SalesmanInStocksTable /> },
+               { path: '/salesman/sale-records', element: <SalesmanOutStocksTable /> },
                { path: '/warehouse/closing-stocks', element: <WarehouseClosingStocksTable /> },
-               { path: '/warehouse/in-records', element: <WarehouseInStocksTable /> },
-               { path: '/warehouse/out-records', element: <WarehouseOutStocksTable /> },
+               { path: '/warehouse/supply-records', element: <WarehouseInStocksTable /> },
+               { path: '/warehouse/transfer-records', element: <WarehouseOutStocksTable /> },
             ],
          },
          {
             path: '/invoices/add',
             element: <AddInvoice />,
+         },
+         {
+            path: '/invoices/view/:invoiceId',
+            element: <ViewInvoice />,
+         },
+         {
+            path: '/supplies/view/:supplyId',
+            element: <ViewSupply />,
          },
          {
             path: '/supplies/add',

@@ -18,11 +18,14 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetSalesmanInStocksData, InStocksList } from '../../../../../api/salesman-stock/queries/getInStocks'
-import { TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
+import {
+   GetSalesmanOutStocksData,
+   OutStocksList,
+} from '../../../../../api/salesman-stock/queries/getOutStocks'
+import { PaymentBadge, PaymentTypes } from '../closing-stocks/table'
 import useStyles from './styles'
 
-export type Item = Partial<GetSalesmanInStocksData[0]>
+export type Item = Partial<GetSalesmanOutStocksData[0]>
 
 interface TableProps {
    data: Item[]
@@ -47,30 +50,15 @@ interface TableProps {
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
-export const SupplyTypes = {
-   cash: 'teal',
-   credit: 'orange',
-   return: 'blue',
-   cancel: 'gray',
-}
-
-export const StatusTypes = {
-   paid: 'teal',
-   unpaid: 'red',
-}
-
-export type SupplyTypeBadge = keyof typeof SupplyTypes
-export type StatusPin = keyof typeof StatusTypes
-
 const PosTable: React.FC<TableProps> = ({
    data,
    loading,
    title,
    excludeFields,
    dateValue,
+   users,
    userId,
    setUserId,
-   users,
    setDate,
 }) => {
    const { classes, cx } = useStyles()
@@ -90,10 +78,10 @@ const PosTable: React.FC<TableProps> = ({
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Type', 'Qty']
-   const childExcludeColumns = ['transferId', 'transferItemId', 'createdAt']
+   const childColumns = ['User', 'Type', 'Qty']
+   const childExcludeColumns = ['invoiceId', 'invoiceItemId', 'createdAt']
 
-   const getChildRows = (list: InStocksList) => {
+   const getChildRows = (list: OutStocksList) => {
       return list.map((li) => (
          <tr key={Math.random().toString()}>
             <td />
@@ -101,10 +89,11 @@ const PosTable: React.FC<TableProps> = ({
                if (childExcludeColumns.find((field) => field === key)) {
                   return null
                }
-               if (key === 'type' && typeof value === 'string' && value in SupplyTypes) {
+
+               if (key === 'type' && typeof value === 'string' && value in PaymentTypes) {
                   return (
                      <td key={key}>
-                        <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
+                        <Badge color={PaymentTypes?.[value as PaymentBadge]}>{value}</Badge>
                      </td>
                   )
                }
@@ -116,7 +105,7 @@ const PosTable: React.FC<TableProps> = ({
    }
    const childColumnsElement = childColumns.map((column) => <th key={column}>{column}</th>)
 
-   const getChildTable = (list: InStocksList) => (
+   const getChildTable = (list: OutStocksList) => (
       <>
          <Table className={classes.childTable} verticalSpacing="sm">
             <thead>
@@ -153,32 +142,6 @@ const PosTable: React.FC<TableProps> = ({
                {Object.entries(item).map(([key, value]) => {
                   if (excludeFields.find((field) => field === key)) {
                      return null
-                  }
-
-                  if (key === 'type' && typeof value === 'string' && value in SupplyTypes) {
-                     return (
-                        <td key={key}>
-                           <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
-                        </td>
-                     )
-                  }
-
-                  if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
-                     return (
-                        <td key={key}>
-                           <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
-                              <Box
-                                 sx={(theme) => ({
-                                    borderRadius: '50%',
-                                    backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
-                                    height: 6,
-                                    width: 6,
-                                 })}
-                              ></Box>
-                              {value}
-                           </Flex>
-                        </td>
-                     )
                   }
 
                   if (key === 'amount') {
@@ -240,6 +203,7 @@ const PosTable: React.FC<TableProps> = ({
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />
                </Flex>
+
                <Flex w="100%" sx={{ flex: 3 / 4 }}>
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}

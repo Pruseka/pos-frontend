@@ -34,7 +34,7 @@ const WarehouseInStocksTable: React.FC = () => {
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
-         title="In Records"
+         title="Supply Records"
          excludeFields={['itemId', 'list', 'createdAt']}
       />
    )

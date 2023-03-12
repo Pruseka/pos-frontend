@@ -73,7 +73,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['User', 'Type', 'Qty']
+   const childColumns = ['Type', 'User', 'Qty']
    const childExcludeColumns = ['transferId', 'transferItemId', 'createdAt']
 
    const getChildRows = (list: TransfersList) => {
@@ -112,6 +112,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
          </Table>
       </>
    )
+
+   const sortChildColumns = (list: TransfersList) => {
+      return list.map((li) => ({
+         type: li.type,
+         user: li.user,
+         qty: li.qty,
+         transferId: li.transferId,
+         transferItemId: li.transferItemId,
+         createdAt: li.createdAt,
+      }))
+   }
 
    const rows = paginatedData.map((item) => {
       return (
@@ -176,7 +187,9 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
             </tr>
             <tr>
                <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedItemId === item.itemId}>{getChildTable(item.list!)}</Collapse>
+                  <Collapse in={openedItemId === item.itemId}>
+                     {getChildTable(sortChildColumns(item.list!))}
+                  </Collapse>
                </td>
             </tr>
          </React.Fragment>
@@ -211,30 +224,15 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   size="md"
                />
 
-               <Flex
-                  direction={{ base: 'column', xs: 'row' }}
-                  align={{ xs: 'center' }}
-                  gap="sm"
-                  w="100%"
-                  sx={{ flex: 3 / 4 }}
-               >
-                  <TextInput
-                     icon={<IconSearch size={20} stroke={1.5} />}
-                     className={classes.input}
-                     placeholder="Search By Item Name"
-                     defaultValue={q}
-                     onChange={(e) => setQ(e.currentTarget.value)}
-                     radius="md"
-                     size="md"
-                  />
-                  <Button
-                     onClick={() => {
-                        navigate('/supplies/add')
-                     }}
-                     h={40}
-                     className={classes.addButton}
-                  >{`Add ${title}`}</Button>
-               </Flex>
+               <TextInput
+                  icon={<IconSearch size={20} stroke={1.5} />}
+                  className={classes.input}
+                  placeholder="Search By Item Name"
+                  defaultValue={q}
+                  onChange={(e) => setQ(e.currentTarget.value)}
+                  radius="md"
+                  size="md"
+               />
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>

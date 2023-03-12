@@ -1,9 +1,7 @@
 import {
    ActionIcon,
-   Badge,
    Box,
    Button,
-   Collapse,
    Flex,
    Group,
    Loader,
@@ -16,53 +14,55 @@ import {
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { IconEye, IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import { IconCoins, IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-   GetAllTransfersData,
-   TransferItemList,
-   TransferType,
-} from '../../../../api/transfer/queries/getTransfersByDate'
+import { GetAllCreditInvoicesData } from '../../../../../api/invoice/queries/getCreditInvoiceByDate'
+import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
+import { Status } from '../../../../../api/transfer/queries/getTransfersByDate'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllTransfersData[0]>
-
-export const TransferTypeBadges = {
-   to: 'blue',
-   from: 'teal',
-}
-
-export type Badge = keyof typeof TransferTypeBadges
+export type Item = Partial<GetAllCreditInvoicesData[0]>
 
 interface TableProps {
    data: Item[]
    loading: boolean
    title: string
-   //    forms: {
-   //       [key: string]: {
-   //          title?: string
-   //          value: string | number | Date | { label: string; value: string }[]
-   //          addRequired: boolean
-   //          updateRequired: boolean
-   //       }
-   //    }
    excludeFields: string[]
    dateValue: DateRangePickerValue
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
+   updateInvoice: (invoiceId: string) => Promise<void>
 }
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
+export const StatusTypes = {
+   paid: 'teal',
+   unpaid: 'red',
+}
+
+export type StatusPin = keyof typeof StatusTypes
+
+const PosTable: React.FC<TableProps> = ({
+   data,
+   loading,
+   title,
+   excludeFields,
+   dateValue,
+   updateInvoice,
+   setDate,
+}) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
-   const [openedItemId, setOpenedItemId] = useState<string | null>(null)
+   const [salesmanFilter, setSalesmanFilter] = useState<string | null>(null)
 
-   const searchedData = data
-      .filter((transfer) => transfer.user?.toLowerCase().includes(query))
-      .filter((transfer) => (typeFilter ? transfer.type === typeFilter : transfer))
+   const mappedSalesmen = data.map((d) => d.createdBy!)
+   const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
+
+   const searchedData = data.filter((invoice) => invoice.customer?.toLowerCase().includes(query))
+
+   const totalAmount = data.reduce((prev, currItm) => prev + +currItm.amount!, 0)
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -72,109 +72,66 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
-   const columns = ['User', 'Type', 'Salesman']
-   const childColumns = ['Code', 'Name', 'Category', 'Qty']
-   const childExcludeColumns = ['itemId']
-   const childNumberRows = ['qty']
-   const childNumberColumns = ['Amount', 'Qty']
+   const columns = ['Invoice Id', 'Customer', 'Status', 'Salesman', 'Received By', 'Received At', 'Amount']
 
-   const getChildRows = (list: TransferItemList) => {
-      return list.map((li) => (
-         <tr key={Math.random().toString()}>
-            <td />
-            {Object.entries(li).map(([key, value]) => {
-               if (childExcludeColumns.find((field) => field === key)) {
-                  return null
-               }
+   const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
-               return (
-                  <td
-                     key={key}
-                     className={cx({
-                        [classes.number]: childNumberRows.includes(key),
-                     })}
-                  >{`${value}`}</td>
-               )
-            })}
-         </tr>
-      ))
+   const handlePayInvoice = async (item: Item) => {
+      await updateInvoice(item.invoiceId!.toString())
    }
-   const childColumnsElement = childColumns.map((column) => {
-      return (
-         <th key={column} {...(childNumberColumns.includes(column) ? { style: { textAlign: 'right' } } : {})}>
-            {column}
-         </th>
-      )
-   })
-
-   const getChildTable = (list: TransferItemList) => (
-      <>
-         <Table className={classes.childTable} verticalSpacing="sm">
-            <thead>
-               <tr>
-                  <th />
-                  {childColumnsElement}
-               </tr>
-            </thead>
-            <tbody>{getChildRows(list)}</tbody>
-         </Table>
-      </>
-   )
 
    const rows = paginatedData.map((item) => {
       return (
-         <React.Fragment key={item.transferId}>
-            <tr>
-               <td colSpan={0}>
-                  <ActionIcon
-                     onClick={() => {
-                        setOpenedItemId((prev) => (prev === item.transferId ? null : item.transferId!))
-                     }}
-                  >
-                     <IconPlus
-                        size={16}
-                        stroke={1.5}
-                        style={{
-                           transform: openedItemId === item.transferId ? `rotate(45deg)` : 'none',
-                           transition: 'all 0.1s linear',
-                        }}
-                     />
-                  </ActionIcon>
+         <tr key={item.invoiceId}>
+            {Object.entries(item).map(([key, value]) => {
+               if (excludeFields.find((field) => field === key)) {
+                  return null
+               }
+
+               if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
+                  return (
+                     <td key={key}>
+                        <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
+                           <Box
+                              sx={(theme) => ({
+                                 borderRadius: '50%',
+                                 backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
+                                 height: 6,
+                                 width: 6,
+                              })}
+                           ></Box>
+                           {value}
+                        </Flex>
+                     </td>
+                  )
+               }
+
+               if (key === 'amount') {
+                  return <td key={key} style={{ textAlign: 'right' }}>{`${value!.toLocaleString()} Ks`}</td>
+               }
+
+               if (value === '' || value === null) return <td key={key}>-</td>
+               return <td key={key}>{`${value}`}</td>
+            })}
+
+            {item.status === Status.UNPAID ? (
+               <td>
+                  <Group spacing={0} position="right">
+                     <ActionIcon onClick={() => handlePayInvoice(item)}>
+                        <IconCoins size={16} stroke={1.5} />
+                     </ActionIcon>
+
+                     {/* {action?.delete && (
+                      <ActionIcon color="red">
+                         <IconTrash size={16} stroke={1.5} />
+                      </ActionIcon>
+                   )} */}
+                  </Group>
                </td>
-
-               {Object.entries(item).map(([key, value]) => {
-                  if (excludeFields.find((field) => field === key)) {
-                     return null
-                  }
-
-                  if (key === 'customerType' && typeof value === 'string' && value in TransferTypeBadges) {
-                     return (
-                        <td key={key}>
-                           <Text>
-                              <Flex align="center" gap="xs">
-                                 {TransferTypeBadges?.[value as Badge]}
-                                 {value}
-                              </Flex>
-                           </Text>
-                        </td>
-                     )
-                  }
-
-                  if (key === 'amount') {
-                     return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
-                  }
-
-                  if (value === '') return <td key={key}>-</td>
-                  return <td key={key}>{`${value}`}</td>
-               })}
-            </tr>
-            <tr>
-               <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedItemId === item.transferId}>{getChildTable(item.items!)}</Collapse>
-               </td>
-            </tr>
-         </React.Fragment>
+            ) : (
+               <td />
+            )}
+         </tr>
       )
    })
 
@@ -208,11 +165,21 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
 
                   <Select
-                     data={transferTypes}
+                     data={paymentTypes}
                      sx={{ flex: 1 / 2 }}
                      size="md"
                      value={typeFilter}
                      onChange={setTypeFilter}
+                     allowDeselect
+                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                  />
+
+                  <Select
+                     data={salesmen}
+                     sx={{ flex: 1 / 2 }}
+                     size="md"
+                     value={salesmanFilter}
+                     onChange={setSalesmanFilter}
                      allowDeselect
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />
@@ -228,7 +195,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}
                      className={classes.input}
-                     placeholder="Search By User Name"
+                     placeholder="Search By Customer Name"
                      defaultValue={q}
                      onChange={(e) => setQ(e.currentTarget.value)}
                      radius="md"
@@ -236,7 +203,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
                   <Button
                      onClick={() => {
-                        navigate('/salesman/transfers/add')
+                        navigate('/invoices/add')
                      }}
                      h={40}
                      className={classes.addButton}
@@ -248,20 +215,14 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Table miw={1000} fontSize="sm" withBorder verticalSpacing="md" className={classes.table}>
                      <thead key="head">
                         <tr>
-                           <th />
                            {columns.map((columnName) => {
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
                               }
-                              if (columnName === 'Amount') {
-                                 return (
-                                    <th key={columnName} style={{ textAlign: 'right' }}>
-                                       {columnName}
-                                    </th>
-                                 )
-                              }
+
                               return <th key={columnName}>{columnName}</th>
                            })}
+                           <th />
                         </tr>
                      </thead>
                      <tbody>{rows}</tbody>
@@ -273,6 +234,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
+            <Flex
+               p="md"
+               className={cx(classes.totalAmountWrapper, {
+                  [classes.roundedBottom]: !(total > 1),
+               })}
+               justify="flex-end"
+            >
+               <Text color="dimmed" size="md" fw="bold">
+                  Total Amount: {totalAmount.toLocaleString()} Ks
+               </Text>
+            </Flex>
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />

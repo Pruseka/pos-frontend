@@ -64,21 +64,21 @@ const UserForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
                <Flex justify="center" align="center" sx={{ flex: 1 / 2 }}>
                   <Flex direction="column" gap={{ base: 'sm' }} py="md" w="100%">
                      <Select
-                        label="User Name"
-                        py="xs"
-                        sx={{ flex: 1 }}
-                        classNames={{ label: classes.label }}
-                        data={users}
-                        {...form.getInputProps('userId')}
-                     />
-
-                     <Select
                         label="Type"
                         data={transferTypes}
                         py="xs"
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                         {...form.getInputProps('type')}
+                     />
+
+                     <Select
+                        label="User Name"
+                        py="xs"
+                        sx={{ flex: 1 }}
+                        classNames={{ label: classes.label }}
+                        data={users}
+                        {...form.getInputProps('userId')}
                      />
                   </Flex>
                </Flex>

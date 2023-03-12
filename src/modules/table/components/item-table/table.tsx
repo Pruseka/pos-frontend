@@ -166,7 +166,7 @@ const PosTable: React.FC<TableProps> = ({
                      isEditing={isEditing}
                      loading={formSubmitting}
                      updateRow={handleUpdate}
-                     addRow={() => {}}
+                     addRow={async () => {}}
                   />
                ),
                centered: true,
@@ -190,7 +190,7 @@ const PosTable: React.FC<TableProps> = ({
                   categoriesData={categoriesData}
                   isEditing={isEditing}
                   loading={formSubmitting}
-                  updateRow={() => {}}
+                  updateRow={async () => {}}
                   addRow={handleAdd}
                />
             ),

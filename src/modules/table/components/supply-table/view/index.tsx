@@ -1,31 +1,27 @@
 import { Box, Flex, Text } from '@mantine/core'
 import { useHotkeys } from '@mantine/hooks'
 import { IconArrowNarrowLeft } from '@tabler/icons-react'
-import { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import useSWR from 'swr'
-import { getInvoiceById, GetInvoiceResponse, Item } from '../../../../../api/invoice/queries/getInvoiceById'
-import CustomerForm from './customer-form'
+import { getSupplyById, GetSupplyResponse } from '../../../../../api/supply/queries/getSupplyById'
 import useStyles from './styles'
+import SupplierForm from './supplier-form'
 import PosTable from './table'
 
-const ViewInvoice: React.FC = () => {
+const ViewSupply: React.FC = () => {
    const { classes } = useStyles()
-   const [items, setItems] = useState<Item[]>([])
-   const { invoiceId } = useParams()
-   console.log('params', invoiceId)
-   const { data, isLoading } = useSWR<GetInvoiceResponse>(
-      ['/invoice', invoiceId],
-      ([url, invoiceId]: string[]) => getInvoiceById(url, invoiceId)
+   const { supplyId } = useParams()
+   const { data, isLoading } = useSWR<GetSupplyResponse>(['/supply', supplyId], ([url, supplyId]: string[]) =>
+      getSupplyById(url, supplyId)
    )
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/" className={classes.backLink}>
+         <NavLink to="/supplies" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all invoices
+                  Back to all supplies
                </Flex>
             </Text>
          </NavLink>
@@ -45,11 +41,7 @@ const ViewInvoice: React.FC = () => {
       <Box p={{ base: 'xs', md: 'xl' }} className={classes.container}>
          {backButton}
          <Flex direction={{ base: 'column-reverse', md: 'column' }}>
-            <CustomerForm
-               customer={data.data.customer}
-               customerType={data.data.customerType}
-               type={data.data.type}
-            />
+            <SupplierForm supplier={data.data.supplier} type={data.data.type} />
 
             <Flex
                direction={{ base: 'column', md: 'row' }}
@@ -61,7 +53,7 @@ const ViewInvoice: React.FC = () => {
                <PosTable
                   data={data?.data.items}
                   loading={false}
-                  title="Items"
+                  title="Supplies"
                   excludeFields={['itemId', 'retailPrice', 'wholesalesPrice']}
                />
             </Flex>
@@ -70,4 +62,4 @@ const ViewInvoice: React.FC = () => {
    )
 }
 
-export default ViewInvoice
+export default ViewSupply

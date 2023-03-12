@@ -12,7 +12,7 @@ interface FormValues {
 interface Props {
    item: Item
    loading: boolean
-   updatePrice: <T extends { [key: string]: unknown }>(values: T) => void
+   updatePrice: <T extends { [key: string]: unknown }>(values: T) => Promise<void>
 }
 
 const PriceFormModal: React.FC<Props> = ({ item, loading, updatePrice }) => {

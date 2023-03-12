@@ -40,7 +40,7 @@ const TransfersTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Transfer"
-         excludeFields={['transferId', 'createdBy', 'userId', 'items', 'createdAt']}
+         excludeFields={['transferId', 'userId', 'items', 'createdAt']}
       />
    )
 }

@@ -48,8 +48,8 @@ export const NAV_LINKS: NavItemType[] = [
       icon: IconPackages,
       links: [
          { label: 'Closing Stocks', url: '/salesman/closing-stocks' },
-         { label: 'In Records', url: '/salesman/in-records' },
-         { label: 'Out Records', url: '/salesman/out-records' },
+         { label: 'Transfer Records', url: '/salesman/transfer-records' },
+         { label: 'Sale Records', url: '/salesman/sale-records' },
       ],
    },
 
@@ -69,8 +69,8 @@ export const NAV_LINKS: NavItemType[] = [
       icon: IconBuildingWarehouse,
       links: [
          { label: 'Closing Stocks', url: '/warehouse/closing-stocks' },
-         { label: 'In Records', url: '/warehouse/in-records' },
-         { label: 'Out Records', url: '/warehouse/out-records' },
+         { label: 'Supply Records', url: '/warehouse/supply-records' },
+         { label: 'Transfer Records', url: '/warehouse/transfer-records' },
       ],
    },
 ]

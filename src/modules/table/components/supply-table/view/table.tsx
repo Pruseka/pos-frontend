@@ -13,7 +13,6 @@ import {
 import { IconPackage, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { Item } from '../../../../../api/invoice/queries/getInvoiceById'
-import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../../customer-table/table'
 import useStyles from './styles'
 
@@ -111,7 +110,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields })
                               </th>
                            )
                         })}
-                        <th />
                      </tr>
                   </thead>
                   {paginatedData.length > 0 ? (

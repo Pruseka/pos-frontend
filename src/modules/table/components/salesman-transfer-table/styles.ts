@@ -60,4 +60,7 @@ export default createStyles((theme) => ({
       borderBottomLeftRadius: theme.radius.lg,
       borderBottomRightRadius: theme.radius.lg,
    },
+   number: {
+      textAlign: 'right',
+   },
 }))

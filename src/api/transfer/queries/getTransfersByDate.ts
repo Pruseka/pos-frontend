@@ -1,9 +1,12 @@
 import apiClient from '../../instance'
 
-export type Item = {
+export type TransferItemList = {
    itemId: string
+   code: string
+   name: string
+   category: string
    qty: number
-}
+}[]
 
 export enum Status {
    PAID = 'paid',
@@ -22,7 +25,7 @@ export type GetAllTransfersData = {
    type: TransferType
    createdBy: string
    createdAt: Date
-   items: Item[]
+   items: TransferItemList
 }[]
 
 export type GetAllTransfersResponse = {

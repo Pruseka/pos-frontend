@@ -36,7 +36,7 @@ const CustomerTransfersTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Transfer"
-         excludeFields={['createdBy', 'items', 'createdAt']}
+         excludeFields={['items', 'createdAt']}
       />
    )
 }

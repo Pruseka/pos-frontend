@@ -18,6 +18,9 @@ export default createStyles((theme) => ({
 
    input: {
       flex: 1,
+      [theme.fn.largerThan('xl')]: {
+         maxWidth: 300,
+      },
    },
 
    empty: {
@@ -54,6 +57,16 @@ export default createStyles((theme) => ({
    paginationWrapper: {
       border: `1px solid ${theme.colors.gray[3]}`,
       borderTop: 0,
+      borderBottomLeftRadius: theme.radius.lg,
+      borderBottomRightRadius: theme.radius.lg,
+   },
+
+   totalAmountWrapper: {
+      backgroundColor: theme.colors.gray[0],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      borderTop: 0,
+   },
+   roundedBottom: {
       borderBottomLeftRadius: theme.radius.lg,
       borderBottomRightRadius: theme.radius.lg,
    },

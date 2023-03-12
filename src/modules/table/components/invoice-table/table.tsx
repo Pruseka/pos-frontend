@@ -3,8 +3,8 @@ import {
    Badge,
    Box,
    Button,
-   Collapse,
    Flex,
+   Group,
    Loader,
    Pagination,
    ScrollArea,
@@ -15,7 +15,7 @@ import {
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData, PaymentType } from '../../../../api/invoice/queries/getInvoicesByDate'
@@ -100,6 +100,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const columns = Object.keys(data[0] || {})
    const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
+   const handleViewInvoice = (item: Item) => {
+      navigate(`/invoices/view/${item.invoiceId}`)
+   }
+
    const rows = paginatedData.map((item) => {
       return (
          <tr key={item.invoiceId}>
@@ -155,7 +159,19 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                return <td key={key}>{`${value}`}</td>
             })}
 
-            <td />
+            <td>
+               <Group spacing={0} position="right">
+                  <ActionIcon onClick={() => handleViewInvoice(item)}>
+                     <IconEye size={16} stroke={1.5} />
+                  </ActionIcon>
+
+                  {/* {action?.delete && (
+                      <ActionIcon color="red">
+                         <IconTrash size={16} stroke={1.5} />
+                      </ActionIcon>
+                   )} */}
+               </Group>
+            </td>
          </tr>
       )
    })
@@ -258,17 +274,19 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
-            <Flex
-               p="md"
-               className={cx(classes.totalAmountWrapper, {
-                  [classes.roundedBottom]: !(total > 1),
-               })}
-               justify="flex-end"
-            >
-               <Text color="dimmed" size="md" fw="bold">
-                  Total Amount: {totalAmount.toLocaleString()} Ks
-               </Text>
-            </Flex>
+            {paginatedData.length > 0 && (
+               <Flex
+                  p="md"
+                  className={cx(classes.totalAmountWrapper, {
+                     [classes.roundedBottom]: !(total > 1),
+                  })}
+                  justify="flex-end"
+               >
+                  <Text color="dimmed" size="md" fw="bold">
+                     Total Amount: {totalAmount.toLocaleString()} Ks
+                  </Text>
+               </Flex>
+            )}
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />
