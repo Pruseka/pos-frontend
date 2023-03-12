@@ -17,7 +17,6 @@ const TransfersTable: React.FC = () => {
    const [tblData, setTblData] = useState<GetAllTransfersData>([])
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
-   console.log(dates, value)
 
    const shouldRefetch = dates.every((d: any) => d !== undefined)
    const unselectedDate = dates.every((d: any) => d === undefined)
@@ -40,8 +39,8 @@ const TransfersTable: React.FC = () => {
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
-         title="Supply"
-         excludeFields={['createdBy', 'items', 'createdAt']}
+         title="Transfer"
+         excludeFields={['transferId', 'createdBy', 'userId', 'items', 'createdAt']}
       />
    )
 }

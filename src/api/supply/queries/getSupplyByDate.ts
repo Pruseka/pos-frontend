@@ -5,11 +5,6 @@ export type Item = {
    qty: number
 }
 
-export enum Status {
-   PAID = 'paid',
-   UNPAID = 'unpaid',
-}
-
 export enum SupplyType {
    CASH = 'cash',
    CREDIT = 'credit',
@@ -19,14 +14,11 @@ export enum SupplyType {
 
 export type GetAllSuppliesData = {
    supplyId: string
-   createdByName: string
    supplier: string
    type: SupplyType
-   status: Status
    amount: number
    createdBy: string
    createdAt: Date
-   items: Item[]
 }[]
 
 export type GetAllSuppliesResponse = {

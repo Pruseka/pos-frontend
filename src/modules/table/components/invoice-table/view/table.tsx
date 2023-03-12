@@ -1,7 +1,20 @@
-import { ActionIcon, Box, Flex, Group, Loader, Pagination, ScrollArea, Table, Text } from '@mantine/core'
+import {
+   ActionIcon,
+   Badge,
+   Box,
+   Flex,
+   Group,
+   Loader,
+   Pagination,
+   ScrollArea,
+   Table,
+   Text,
+} from '@mantine/core'
 import { IconPackage, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { Item } from '.'
+import { CustomerType } from '../../../../../api/customer/queries/getAllCustomers'
+import { Badge as CustomerBadge, CustomerTypeBadges } from '../../customer-table/table'
 import useStyles from './styles'
 
 interface TableProps {
@@ -9,11 +22,9 @@ interface TableProps {
    loading: boolean
    title: string
    excludeFields: string[]
-   updateRow: (item: Item) => void
-   deleteRow: (item: Item) => void
 }
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, deleteRow, excludeFields }) => {
+const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
 
@@ -26,20 +37,12 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
 
    const columns = ['No', 'Code', 'Name', 'Price', 'Qty', 'Net Amount']
 
-   const currencyRows = ['price', 'netAmount']
+   const currencyRows = ['netAmount']
    const numberRows = [...currencyRows, 'no', 'qty']
    const numberColumns = ['No', 'Price', 'Qty', 'Net Amount']
    const totalAmount = data
       .map((item) => +item.netAmount)
       .reduce((previous, current) => previous + current, 0)
-
-   const handleEdit = (item: Item) => {
-      updateRow(item)
-   }
-
-   const handleDelete = (item: Item) => {
-      deleteRow(item)
-   }
 
    const rows = paginatedData.map((item) => {
       return (
@@ -47,6 +50,18 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
             {Object.entries(item).map(([key, value]) => {
                if (excludeFields.find((field) => field === key)) {
                   return null
+               }
+
+               if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
+                  return (
+                     <td key={key}>
+                        <Badge color={CustomerTypeBadges?.[value as CustomerBadge] as any}>{value}</Badge>
+                     </td>
+                  )
+               }
+
+               if (key === 'price' && typeof value !== 'string' && typeof value !== 'number') {
+                  return <td key={key} className={classes.number}>{`${value.toLocaleString()} Ks`}</td>
                }
 
                if (value === '') return <td key={key}>-</td>
@@ -59,18 +74,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                   >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
                )
             })}
-
-            <td>
-               <Group spacing={0} position="right">
-                  <ActionIcon onClick={() => handleEdit(item)}>
-                     <IconPencil size={16} stroke={1.5} />
-                  </ActionIcon>
-
-                  <ActionIcon color="red" onClick={() => handleDelete(item)}>
-                     <IconTrash size={16} stroke={1.5} />
-                  </ActionIcon>
-               </Group>
-            </td>
          </tr>
       )
    })

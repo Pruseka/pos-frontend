@@ -14,7 +14,7 @@ import { DatePicker } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
-import { GetSalesmanClosingStocksData } from '../../../../../api/salesman-stock/queries/getClosingStock'
+import { GetSalesmanClosingStocksData } from '../../../../../api/salesman-stock/queries/getClosingStocks'
 import { toSentenceCase } from '../../../../../helpers/conver-title'
 import useStyles from './styles'
 

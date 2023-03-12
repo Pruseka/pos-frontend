@@ -67,13 +67,52 @@ const PosTable: React.FC<TableProps> = ({
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
 
-   const rowsPerPage = 3
+   const rowsPerPage = 8
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
    const query = q.toLowerCase().trim()
    const searchedData = data.filter((item) => item.name?.toLowerCase().includes(query))
    const paginatedData = searchedData.slice(startOffset, endOffset)
    const total = searchedData.length > 0 ? Math.ceil(searchedData.length / rowsPerPage) : 0
+
+   const currencyRows = ['purchasingPrice', 'retailPrice', 'wholesalesPrice']
+   const numberRows = [...currencyRows]
+
+   const columns = Object.keys(data[0] || {})
+
+   const rows = paginatedData?.map((item) => {
+      return (
+         <tr key={Math.random().toString()}>
+            {Object.entries(item).map(([key, value]) => {
+               if (excludeFields.find((field) => field === key)) {
+                  return null
+               }
+
+               if (value === '') return <td key={key}>-</td>
+               return (
+                  <td
+                     key={key}
+                     className={cx({
+                        [classes.number]: numberRows.includes(key),
+                     })}
+                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+               )
+            })}
+
+            <td>
+               <Group spacing={10} position="right">
+                  <ActionIcon onClick={() => openUpdateFormModal(item)}>
+                     <IconPencil size={16} stroke={1.5} />
+                  </ActionIcon>
+
+                  <ActionIcon onClick={() => openUpdatePriceFormModal(item)}>
+                     <IconCoin size={16} stroke={1.5} />
+                  </ActionIcon>
+               </Group>
+            </td>
+         </tr>
+      )
+   })
 
    const openUpdateFormModal = (item: Item) => {
       setOpenEditForm(true)
@@ -183,35 +222,6 @@ const PosTable: React.FC<TableProps> = ({
       }
    }, [handleUpdatePrice, item, openEditPriceForm, title, updatingPrice])
 
-   const columns = Object.keys(data[0] || {})
-
-   const rows = paginatedData?.map((item) => {
-      return (
-         <tr key={Math.random().toString()}>
-            {Object.entries(item).map(([key, value]) => {
-               if (excludeFields.find((field) => field === key)) {
-                  return null
-               }
-
-               if (value === '') return <td key={key}>-</td>
-               return <td key={key}>{`${value}`}</td>
-            })}
-
-            <td>
-               <Group spacing={10} position="right">
-                  <ActionIcon onClick={() => openUpdateFormModal(item)}>
-                     <IconPencil size={16} stroke={1.5} />
-                  </ActionIcon>
-
-                  <ActionIcon onClick={() => openUpdatePriceFormModal(item)}>
-                     <IconCoin size={16} stroke={1.5} />
-                  </ActionIcon>
-               </Group>
-            </td>
-         </tr>
-      )
-   })
-
    if (loading)
       return (
          <Flex p="xl" justify="center" align="center" style={{ width: '100%' }}>
@@ -237,7 +247,7 @@ const PosTable: React.FC<TableProps> = ({
                   icon={<IconSearch size={20} stroke={1.5} />}
                   mx={{ base: 0, xs: 'md' }}
                   className={classes.input}
-                  placeholder="Search By Customer Name"
+                  placeholder="Search By Item Name"
                   defaultValue={q}
                   onChange={(e) => setQ(e.currentTarget.value)}
                   size="md"
@@ -254,7 +264,16 @@ const PosTable: React.FC<TableProps> = ({
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
                               }
-                              return <th key={columnName}>{toSentenceCase(columnName)}</th>
+                              return (
+                                 <th
+                                    key={columnName}
+                                    {...(numberRows.includes(columnName)
+                                       ? { style: { textAlign: 'right' } }
+                                       : {})}
+                                 >
+                                    {toSentenceCase(columnName)}
+                                 </th>
+                              )
                            })}
                            <th />
                         </tr>

@@ -26,14 +26,11 @@ const InvoiceTable: React.FC = () => {
          data?.data && data?.data.length > 0
             ? data?.data.map((d) => ({
                  invoiceId: d.invoiceId,
-                 createdByName: d.createdByName,
                  customer: d.customer,
                  customerType: d.customerType,
                  type: d.type,
-                 status: d.status,
                  createdBy: d.createdBy,
                  createdAt: d.createdAt,
-                 items: d.items,
                  amount: d.amount,
               }))
             : []
@@ -49,7 +46,7 @@ const InvoiceTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Invoice"
-         excludeFields={['createdBy', 'items', 'createdAt']}
+         excludeFields={['createdAt']}
       />
    )
 }

@@ -51,6 +51,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
+   console.log('data', data)
 
    const searchedData = data
       .filter((transfer) => transfer.user?.toLowerCase().includes(query))
@@ -64,7 +65,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Creator Name', 'Supplier', 'Type', 'Status', 'Amount']
+   const columns = ['User', 'Salesman', 'Type']
    const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
 
    const rows = paginatedData.map((item) => {
@@ -124,7 +125,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <DateRangePicker
                      placeholder="Pick dates range"
                      value={dateValue}
-                     maxDate={new Date()}
+                     // maxDate={new Date()}
                      sx={{ flex: 1 }}
                      onChange={setDate}
                      size="md"
@@ -159,7 +160,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
                   <Button
                      onClick={() => {
-                        navigate('/supplies/add')
+                        navigate('/salesman/transfers/add')
                      }}
                      h={40}
                      className={classes.addButton}

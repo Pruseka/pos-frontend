@@ -69,7 +69,7 @@ const CustomerForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
                <Flex justify="center" align="center" sx={{ flex: 1 / 2 }}>
                   <Flex direction="column" gap={{ base: 'sm' }} py="md" w="100%">
                      <Select
-                        label="User Name"
+                        label="Cutsomer Name"
                         py="xs"
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label }}

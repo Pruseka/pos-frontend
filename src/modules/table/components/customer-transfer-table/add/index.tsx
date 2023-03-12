@@ -9,7 +9,6 @@ import CustomerForm, { FormValues } from './customer-form'
 import InvoiceForm from './invoice-form'
 import useStyles from './styles'
 import PosTable from './table'
-import { transferSalesmanMutation } from '../../../../../api/transfer/mutations/transferSalesman'
 import { transferCustomerMutation } from '../../../../../api/customerTransfer/mutations/transferCustomer'
 
 export type Item = {
@@ -20,7 +19,7 @@ export type Item = {
    qty: number
 }
 
-const TransferSalesman: React.FC = () => {
+const AddTransferCustomer: React.FC = () => {
    const { classes } = useStyles()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
@@ -151,4 +150,4 @@ const TransferSalesman: React.FC = () => {
    )
 }
 
-export default TransferSalesman
+export default AddTransferCustomer

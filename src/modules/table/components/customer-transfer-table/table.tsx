@@ -156,7 +156,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
                   <Button
                      onClick={() => {
-                        navigate('/supplies/add')
+                        navigate('/customer/transfers/add')
                      }}
                      h={40}
                      className={classes.addButton}

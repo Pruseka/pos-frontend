@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import {
    GetSalesmanClosingStocksResponse,
    getSalesmanClosingStocks,
-} from '../../../../../api/salesman-stock/queries/getClosingStock'
+} from '../../../../../api/salesman-stock/queries/getClosingStocks'
 import {
    getAllUsers,
    GetAllUsersData,

@@ -19,7 +19,7 @@ export type Item = {
    qty: number
 }
 
-const TransferSalesman: React.FC = () => {
+const AddTransferSalesman: React.FC = () => {
    const { classes } = useStyles()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
@@ -150,4 +150,4 @@ const TransferSalesman: React.FC = () => {
    )
 }
 
-export default TransferSalesman
+export default AddTransferSalesman

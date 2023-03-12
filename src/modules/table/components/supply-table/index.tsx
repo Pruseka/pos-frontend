@@ -1,4 +1,5 @@
 import { DateRangePickerValue } from '@mantine/dates'
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import {
@@ -27,13 +28,10 @@ const SupplyTable: React.FC = () => {
          data?.data && data?.data.length > 0
             ? data?.data.map((d) => ({
                  supplyId: d.supplyId,
-                 createdByName: d.createdByName,
                  supplier: d.supplier,
                  type: d.type,
-                 status: d.status,
                  createdBy: d.createdBy,
                  createdAt: d.createdAt,
-                 items: d.items,
                  amount: d.amount,
               }))
             : []
@@ -49,7 +47,7 @@ const SupplyTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Supply"
-         excludeFields={['createdBy', 'items', 'createdAt']}
+         excludeFields={['items']}
       />
    )
 }

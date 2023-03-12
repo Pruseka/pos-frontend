@@ -48,8 +48,8 @@ const PosTable: React.FC<TableProps> = ({
 
    const columns = ['No', 'Code', 'Name', 'Price', 'Qty', 'Net Amount']
 
-   const currentRows = ['netAmount']
-   const numberRows = [...currentRows, 'no', 'qty']
+   const currencyRows = ['netAmount']
+   const numberRows = [...currencyRows, 'no', 'qty']
    const numberColumns = ['No', 'Price', 'Qty', 'Net Amount']
    const totalAmount = data
       .map((item) => +item.netAmount)
@@ -95,7 +95,7 @@ const PosTable: React.FC<TableProps> = ({
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${value} ${currentRows.includes(key) ? 'Ks' : ''}`}</td>
+                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
                )
             })}
 

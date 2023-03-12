@@ -67,12 +67,27 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
    const [salesmanFilter, setSalesmanFilter] = useState<string | null>(null)
 
-   const mappedSalesmen = data.map((d) => d.createdByName!)
+   const mappedSalesmen = data.map((d) => d.createdBy!)
    const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
 
    const searchedData = data
       .filter((invoice) => invoice.customer?.toLowerCase().includes(query))
       .filter((invoice) => (typeFilter ? invoice.type === typeFilter : invoice))
+
+   const totalAmount = data.reduce((previousAmount, item) => {
+      switch (item.type) {
+         case PaymentType.CASH:
+         case PaymentType.CREDIT:
+            return previousAmount + +item.amount!
+         case PaymentType.DAMAGE:
+         case PaymentType.CANCEL:
+            return previousAmount - +item.amount!
+         case PaymentType.RETURN:
+            return previousAmount
+         default:
+            return previousAmount
+      }
+   }, 0)
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -85,120 +100,63 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const columns = Object.keys(data[0] || {})
    const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
-   const c = ['Name', 'Qty', 'Price', 'Net Amount']
-
-   const d = [
-      { name: 'Ice Cream', qty: 4, price: 1000, netAmount: 5000 },
-      { name: 'Ice Cream', qty: 4, price: 1000, netAmount: 5000 },
-   ]
-
-   const g = c.map((c) => <th key={c}>{c}</th>)
-
-   const z = d.map((item) => {
-      return (
-         <tr key={Math.random().toString()}>
-            <td />
-            {Object.entries(item).map(([key, value]) => {
-               return <td key={key}>{`${value}`}</td>
-            })}
-         </tr>
-      )
-   })
-
-   const childTable = (
-      <>
-         <Table className={classes.childTable} verticalSpacing="sm">
-            <thead>
-               <tr>
-                  <th />
-                  {g}
-               </tr>
-            </thead>
-            <tbody>{z}</tbody>
-         </Table>
-      </>
-   )
-
    const rows = paginatedData.map((item) => {
       return (
-         <React.Fragment key={item.invoiceId}>
-            <tr>
-               <td colSpan={0}>
-                  <ActionIcon
-                     onClick={() => {
-                        setOpenedId((prev) => (prev === item.invoiceId ? null : item.invoiceId!))
-                     }}
-                  >
-                     <IconPlus
-                        size={16}
-                        stroke={1.5}
-                        style={{
-                           transform: openedId === item.invoiceId ? `rotate(45deg)` : 'none',
-                           transition: 'all 0.1s linear',
-                        }}
-                     />
-                  </ActionIcon>
-               </td>
-               {Object.entries(item).map(([key, value]) => {
-                  if (excludeFields.find((field) => field === key)) {
-                     return null
-                  }
+         <tr key={item.invoiceId}>
+            {Object.entries(item).map(([key, value]) => {
+               if (excludeFields.find((field) => field === key)) {
+                  return null
+               }
 
-                  if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
-                     return (
-                        <td key={key}>
-                           <Text>
-                              <Flex align="center" gap="xs">
-                                 {CustomerTypeBadges?.[value as CustomerBadge]}
-                                 {value}
-                              </Flex>
-                           </Text>
-                        </td>
-                     )
-                  }
-
-                  if (key === 'type' && typeof value === 'string' && value in PaymentTypes) {
-                     return (
-                        <td key={key}>
-                           <Badge color={PaymentTypes?.[value as PaymentType]}>{value}</Badge>
-                        </td>
-                     )
-                  }
-
-                  if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
-                     return (
-                        <td key={key}>
-                           <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
-                              <Box
-                                 sx={(theme) => ({
-                                    borderRadius: '50%',
-                                    backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
-                                    height: 6,
-                                    width: 6,
-                                 })}
-                              ></Box>
+               if (key === 'customerType' && typeof value === 'string' && value in CustomerTypeBadges) {
+                  return (
+                     <td key={key}>
+                        <Text>
+                           <Flex align="center" gap="xs">
+                              {CustomerTypeBadges?.[value as CustomerBadge]}
                               {value}
                            </Flex>
-                        </td>
-                     )
-                  }
+                        </Text>
+                     </td>
+                  )
+               }
 
-                  if (key === 'amount') {
-                     return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
-                  }
+               if (key === 'type' && typeof value === 'string' && value in PaymentTypes) {
+                  return (
+                     <td key={key}>
+                        <Badge color={PaymentTypes?.[value as PaymentType]}>{value}</Badge>
+                     </td>
+                  )
+               }
 
-                  if (value === '') return <td key={key}>-</td>
-                  return <td key={key}>{`${value}`}</td>
-               })}
+               if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
+                  return (
+                     <td key={key}>
+                        <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
+                           <Box
+                              sx={(theme) => ({
+                                 borderRadius: '50%',
+                                 backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
+                                 height: 6,
+                                 width: 6,
+                              })}
+                           ></Box>
+                           {value}
+                        </Flex>
+                     </td>
+                  )
+               }
 
-               <td />
-            </tr>
-            <tr>
-               <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedId === item.invoiceId}>{childTable}</Collapse>
-               </td>
-            </tr>
-         </React.Fragment>
+               if (key === 'amount') {
+                  return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
+               }
+
+               if (value === '') return <td key={key}>-</td>
+               return <td key={key}>{`${value}`}</td>
+            })}
+
+            <td />
+         </tr>
       )
    })
 
@@ -282,7 +240,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Table miw={1000} fontSize="sm" withBorder verticalSpacing="md" className={classes.table}>
                      <thead key="head">
                         <tr>
-                           <th />
                            {columns.map((columnName) => {
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
@@ -301,6 +258,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
+            <Flex
+               p="md"
+               className={cx(classes.totalAmountWrapper, {
+                  [classes.roundedBottom]: !(total > 1),
+               })}
+               justify="flex-end"
+            >
+               <Text color="dimmed" size="md" fw="bold">
+                  Total Amount: {totalAmount.toLocaleString()} Ks
+               </Text>
+            </Flex>
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />

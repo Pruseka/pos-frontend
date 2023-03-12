@@ -62,7 +62,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
    const [salesmanFilter, setSalesmanFilter] = useState<string | null>(null)
 
-   const mappedSalesmen = data.map((d) => d.createdByName!)
+   const mappedSalesmen = data.map((d) => d.createdBy!)
    const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
 
    const searchedData = data
@@ -77,8 +77,22 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Creator Name', 'Supplier', 'Type', 'Status', 'Amount']
+   const columns = ['Supply Id', 'Salesman', 'Supplier', 'Type', 'Amount']
    const paymentTypes = Object.values(SupplyType).map((type) => ({ label: type, value: type }))
+
+   const totalAmount = data.reduce((previousAmount, item) => {
+      switch (item.type) {
+         case SupplyType.CASH:
+         case SupplyType.CREDIT:
+            return previousAmount + +item.amount!
+         case SupplyType.CANCEL:
+            return previousAmount - +item.amount!
+         case SupplyType.RETURN:
+            return previousAmount
+         default:
+            return previousAmount
+      }
+   }, 0)
 
    const rows = paginatedData.map((item) => {
       return (
@@ -200,7 +214,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}
                      className={classes.input}
-                     placeholder="Search By Customer Name"
+                     placeholder="Search By Supplier Name"
                      defaultValue={q}
                      onChange={(e) => setQ(e.currentTarget.value)}
                      radius="md"
@@ -245,6 +259,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
+            <Flex
+               p="md"
+               className={cx(classes.totalAmountWrapper, {
+                  [classes.roundedBottom]: !(total > 1),
+               })}
+               justify="flex-end"
+            >
+               <Text color="dimmed" size="md" fw="bold">
+                  Total Amount: {totalAmount.toLocaleString()} Ks
+               </Text>
+            </Flex>
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />

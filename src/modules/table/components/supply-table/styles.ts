@@ -60,4 +60,14 @@ export default createStyles((theme) => ({
       borderBottomLeftRadius: theme.radius.lg,
       borderBottomRightRadius: theme.radius.lg,
    },
+
+   totalAmountWrapper: {
+      backgroundColor: theme.colors.gray[0],
+      border: `1px solid ${theme.colors.gray[3]}`,
+      borderTop: 0,
+   },
+   roundedBottom: {
+      borderBottomLeftRadius: theme.radius.lg,
+      borderBottomRightRadius: theme.radius.lg,
+   },
 }))

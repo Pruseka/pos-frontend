@@ -8,7 +8,6 @@ import {
    Loader,
    Pagination,
    ScrollArea,
-   Select,
    Table,
    Text,
    TextInput,
@@ -18,11 +17,11 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetWarehouseInStocksData, SuppliesList } from '../../../../../api/warehouse/queries/getInStocks'
-import { SupplyType } from '../../../../../api/supply/queries/getSupplyByDate'
+import { SuppliesList } from '../../../../../api/warehouse/queries/getInStocks'
+import { GetWarehouseOutStocksData, TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
 import useStyles from './styles'
 
-export type Item = Partial<GetWarehouseInStocksData[0]>
+export type Item = Partial<GetWarehouseOutStocksData[0]>
 
 interface TableProps {
    data: Item[]
@@ -74,10 +73,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Supplier', 'Type', 'Qty']
-   const childExcludeColumns = ['supplyId', 'supplyItemId', 'createdAt']
+   const childColumns = ['User', 'Type', 'Qty']
+   const childExcludeColumns = ['transferId', 'transferItemId', 'createdAt']
 
-   const getChildRows = (list: SuppliesList) => {
+   const getChildRows = (list: TransfersList) => {
       return list.map((li) => (
          <tr key={Math.random().toString()}>
             <td />
@@ -100,7 +99,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    }
    const childColumnsElement = childColumns.map((column) => <th key={column}>{column}</th>)
 
-   const getChildTable = (list: SuppliesList) => (
+   const getChildTable = (list: TransfersList) => (
       <>
          <Table className={classes.childTable} verticalSpacing="sm">
             <thead>

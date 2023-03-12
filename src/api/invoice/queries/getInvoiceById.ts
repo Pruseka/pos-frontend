@@ -3,12 +3,12 @@ import apiClient from '../../instance'
 
 export type Item = {
    itemId: string
+   code: string
+   name: string
+   category: string
    qty: number
-}
-
-export enum Status {
-   PAID = 'paid',
-   UNPAID = 'unpaid',
+   price: number
+   amount: number
 }
 
 export enum PaymentType {
@@ -19,24 +19,22 @@ export enum PaymentType {
    DAMAGE = 'damage',
 }
 
-export type GetAllInvoicesData = {
-   invoiceId: string
+export type GetInvoiceData = {
    createdBy: string
    customer: string
    customerType: CustomerType
    type: PaymentType
    amount: number
    createdAt: Date
-}[]
-
-export type GetAllInvoicesResponse = {
-   status: string
-   data: GetAllInvoicesData
+   items: Item[]
 }
 
-export async function getInvoicesByDate(url: string, from: string, to: string) {
-   if (!from || !to) return
+export type GetInvoiceResponse = {
+   status: string
+   data: GetInvoiceData
+}
 
-   const { data } = await apiClient.get(`${url}?from=${from}&to=${to}`)
+export async function getInvoiceById(url: string, invoiceId: string) {
+   const { data } = await apiClient.get(`${url}/${invoiceId}`)
    return data
 }

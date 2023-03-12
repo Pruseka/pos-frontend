@@ -18,11 +18,11 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetWarehouseInStocksData, SuppliesList } from '../../../../../api/warehouse/queries/getInStocks'
-import { SupplyType } from '../../../../../api/supply/queries/getSupplyByDate'
+import { GetSalesmanInStocksData, InStocksList } from '../../../../../api/salesman-stock/queries/getInStocks'
+import { TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
 import useStyles from './styles'
 
-export type Item = Partial<GetWarehouseInStocksData[0]>
+export type Item = Partial<GetSalesmanInStocksData[0]>
 
 interface TableProps {
    data: Item[]
@@ -38,6 +38,12 @@ interface TableProps {
    //    }
    excludeFields: string[]
    dateValue: DateRangePickerValue
+   userId: string | null
+   users: {
+      label: string
+      value: string
+   }[]
+   setUserId: React.Dispatch<React.SetStateAction<string | null>>
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
@@ -56,7 +62,17 @@ export const StatusTypes = {
 export type SupplyTypeBadge = keyof typeof SupplyTypes
 export type StatusPin = keyof typeof StatusTypes
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
+const PosTable: React.FC<TableProps> = ({
+   data,
+   loading,
+   title,
+   excludeFields,
+   dateValue,
+   userId,
+   setUserId,
+   users,
+   setDate,
+}) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
    const [openedItemId, setOpenedItemId] = useState<string | null>(null)
@@ -74,10 +90,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Supplier', 'Type', 'Qty']
-   const childExcludeColumns = ['supplyId', 'supplyItemId', 'createdAt']
+   const childColumns = ['Type', 'Qty']
+   const childExcludeColumns = ['transferId', 'transferItemId', 'createdAt']
 
-   const getChildRows = (list: SuppliesList) => {
+   const getChildRows = (list: InStocksList) => {
       return list.map((li) => (
          <tr key={Math.random().toString()}>
             <td />
@@ -100,7 +116,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    }
    const childColumnsElement = childColumns.map((column) => <th key={column}>{column}</th>)
 
-   const getChildTable = (list: SuppliesList) => (
+   const getChildTable = (list: InStocksList) => (
       <>
          <Table className={classes.childTable} verticalSpacing="sm">
             <thead>
@@ -203,15 +219,27 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                direction={{ base: 'column', xl: 'row' }}
                gap={{ md: 'sm', base: 'md' }}
             >
-               <DateRangePicker
-                  placeholder="Pick dates range"
-                  value={dateValue}
-                  maxDate={new Date()}
-                  sx={{ flex: 1 }}
-                  onChange={setDate}
-                  size="md"
-               />
+               <Flex gap="sm" align="center">
+                  <DateRangePicker
+                     placeholder="Pick dates range"
+                     value={dateValue}
+                     maxDate={new Date()}
+                     sx={{ flex: 1 }}
+                     onChange={setDate}
+                     size="md"
+                  />
 
+                  <Select
+                     data={users}
+                     sx={{ flex: 1 / 2 }}
+                     size="md"
+                     value={userId}
+                     onChange={setUserId}
+                     allowDeselect
+                     searchable
+                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                  />
+               </Flex>
                <Flex
                   direction={{ base: 'column', xs: 'row' }}
                   align={{ xs: 'center' }}

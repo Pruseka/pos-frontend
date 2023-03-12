@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
 import CategoriesTable from '../modules/table/components/category-table'
 import CustomersTable from '../modules/table/components/customer-table'
+import TransfersTable from '../modules/table/components/salesman-transfer-table'
 import InvoiceTable from '../modules/table/components/invoice-table'
 import AddInvoice from '../modules/table/components/invoice-table/add'
 import ItemsTable from '../modules/table/components/item-table'
 import SalesmanClosingStocksTable from '../modules/table/components/salesman-table/closing-stocks'
-import TransferSalesman from '../modules/table/components/salesman-transfer-table/add'
+import AddTransferSalesman from '../modules/table/components/salesman-transfer-table/add'
 import SuppliersTable from '../modules/table/components/supplier-table'
 import SupplyTable from '../modules/table/components/supply-table'
 import AddSupply from '../modules/table/components/supply-table/add'
@@ -16,6 +17,10 @@ import ErrorPage from '../pages/error'
 import Layout from '../pages/layout'
 import LoginPage from '../pages/login'
 import Root from '../pages/root'
+import CustomerTransfersTable from '../modules/table/components/customer-transfer-table'
+import AddTransferCustomer from '../modules/table/components/customer-transfer-table/add'
+import WarehouseOutStocksTable from '../modules/table/components/warehouse-table/out-stocks'
+import SalesmanInStocksTable from '../modules/table/components/salesman-table/in-stocks'
 
 export const router = createBrowserRouter([
    {
@@ -39,9 +44,13 @@ export const router = createBrowserRouter([
                { path: '/categories', element: <CategoriesTable /> },
                { path: '/items', element: <ItemsTable /> },
                { path: '/users', element: <UsersTable /> },
+               { path: '/salesman/transfers', element: <TransfersTable /> },
+               { path: '/customer/transfers', element: <CustomerTransfersTable /> },
                { path: '/salesman/closing-stocks', element: <SalesmanClosingStocksTable /> },
+               { path: '/salesman/in-records', element: <SalesmanInStocksTable /> },
                { path: '/warehouse/closing-stocks', element: <WarehouseClosingStocksTable /> },
                { path: '/warehouse/in-records', element: <WarehouseInStocksTable /> },
+               { path: '/warehouse/out-records', element: <WarehouseOutStocksTable /> },
             ],
          },
          {
@@ -54,7 +63,11 @@ export const router = createBrowserRouter([
          },
          {
             path: '/salesman/transfers/add',
-            element: <TransferSalesman />,
+            element: <AddTransferSalesman />,
+         },
+         {
+            path: '/customer/transfers/add',
+            element: <AddTransferCustomer />,
          },
       ],
    },
