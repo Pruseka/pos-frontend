@@ -16,6 +16,7 @@ import {
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -78,8 +79,8 @@ const PosTable: React.FC<TableProps> = ({
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['User', 'Type', 'Qty']
-   const childExcludeColumns = ['invoiceId', 'invoiceItemId', 'createdAt']
+   const childColumns = ['Invoice Id', 'User', 'Type', 'Qty', 'Created At']
+   const childExcludeColumns = ['invoiceItemId']
 
    const getChildRows = (list: OutStocksList) => {
       return list.map((li) => (
@@ -96,6 +97,10 @@ const PosTable: React.FC<TableProps> = ({
                         <Badge color={PaymentTypes?.[value as PaymentBadge]}>{value}</Badge>
                      </td>
                   )
+               }
+
+               if (key === 'createdAt' && moment(value).isValid()) {
+                  return <td key={key}>{moment(value).format('LLL')}</td>
                }
 
                return <td key={key}>{`${value}`}</td>
@@ -156,7 +161,17 @@ const PosTable: React.FC<TableProps> = ({
             </tr>
             <tr>
                <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedItemId === item.itemId}>{getChildTable(item.list!)}</Collapse>
+                  <Collapse in={openedItemId === item.itemId}>
+                     {getChildTable(
+                        item.list!.map((li) => {
+                           const { invoiceId, ...list } = li
+                           return {
+                              invoiceId,
+                              ...list,
+                           }
+                        })
+                     )}
+                  </Collapse>
                </td>
             </tr>
          </React.Fragment>
@@ -198,7 +213,6 @@ const PosTable: React.FC<TableProps> = ({
                      size="md"
                      value={userId}
                      onChange={setUserId}
-                     allowDeselect
                      searchable
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />

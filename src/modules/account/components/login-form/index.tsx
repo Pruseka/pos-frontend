@@ -19,7 +19,7 @@ const LoginForm: React.FC<Props> = ({ handleSubmit, loading }) => {
 
       validate: {
          email: isEmail('Invalid Email'),
-         password: hasLength({ min: 4, max: 16 }, 'Passwords must be at least 4 characters long'),
+         password: hasLength({ min: 3, max: 16 }, 'Passwords must be at least 4 characters long'),
       },
    })
 

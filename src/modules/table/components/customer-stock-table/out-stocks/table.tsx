@@ -2,10 +2,8 @@ import {
    ActionIcon,
    Badge,
    Box,
-   Button,
    Collapse,
    Flex,
-   Group,
    Loader,
    Pagination,
    ScrollArea,
@@ -16,25 +14,17 @@ import {
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { IconEye, IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-   GetAllTransfersData,
-   TransferItemList,
-   TransferType,
-} from '../../../../api/transfer/queries/getTransfersByDate'
+   CustomerInOutStocksList,
+   GetCustomerInStocksData,
+} from '../../../../../api/customer-stock/queries/getInStocks'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllTransfersData[0]>
-
-export const TransferTypeBadges = {
-   to: 'blue',
-   from: 'teal',
-}
-
-export type Badge = keyof typeof TransferTypeBadges
+export type Item = Partial<GetCustomerInStocksData[0]>
 
 interface TableProps {
    data: Item[]
@@ -50,20 +40,48 @@ interface TableProps {
    //    }
    excludeFields: string[]
    dateValue: DateRangePickerValue
+   customerId: string | null
+   customers: {
+      label: string
+      value: string
+   }[]
+   setCustomerId: React.Dispatch<React.SetStateAction<string | null>>
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
-const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
+export const SupplyTypes = {
+   cash: 'teal',
+   credit: 'orange',
+   return: 'blue',
+   cancel: 'gray',
+}
+
+export const StatusTypes = {
+   paid: 'teal',
+   unpaid: 'red',
+}
+
+export type SupplyTypeBadge = keyof typeof SupplyTypes
+export type StatusPin = keyof typeof StatusTypes
+
+const PosTable: React.FC<TableProps> = ({
+   data,
+   loading,
+   title,
+   excludeFields,
+   dateValue,
+   customerId,
+   setCustomerId,
+   customers,
+   setDate,
+}) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
+   const [openedItemId, setOpenedItemId] = useState<string | null>(null)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
-   const [typeFilter, setTypeFilter] = useState<string | null>(null)
-   const [openedItemId, setOpenedItemId] = useState<string | null>(null)
 
-   const searchedData = data
-      .filter((transfer) => transfer.user?.toLowerCase().includes(query))
-      .filter((transfer) => (typeFilter ? transfer.type === typeFilter : transfer))
+   const searchedData = data.filter((item) => item.name?.toLowerCase().includes(query))
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -73,14 +91,11 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
-   const columns = ['Transfer Id', 'User', 'Type', 'Salesman', 'Created At']
-   const childColumns = ['Code', 'Name', 'Category', 'Qty']
-   const childExcludeColumns = ['itemId']
-   const childNumberRows = ['qty']
-   const childNumberColumns = ['Amount', 'Qty']
+   const columns = ['Code', 'Name', 'Category', 'Qty']
+   const childColumns = ['Transfer Id', 'Type', 'Qty', 'Created At']
+   const childExcludeColumns = ['customerTransferItemId', 'customerId']
 
-   const getChildRows = (list: TransferItemList) => {
+   const getChildRows = (list: CustomerInOutStocksList) => {
       return list.map((li) => (
          <tr key={Math.random().toString()}>
             <td />
@@ -88,28 +103,26 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                if (childExcludeColumns.find((field) => field === key)) {
                   return null
                }
+               if (key === 'type' && typeof value === 'string' && value in SupplyTypes) {
+                  return (
+                     <td key={key}>
+                        <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
+                     </td>
+                  )
+               }
 
-               return (
-                  <td
-                     key={key}
-                     className={cx({
-                        [classes.number]: childNumberRows.includes(key),
-                     })}
-                  >{`${value}`}</td>
-               )
+               if (key === 'createdAt' && moment(value).isValid()) {
+                  return <td key={key}>{moment(value).format('LLL')}</td>
+               }
+
+               return <td key={key}>{`${value}`}</td>
             })}
          </tr>
       ))
    }
-   const childColumnsElement = childColumns.map((column) => {
-      return (
-         <th key={column} {...(childNumberColumns.includes(column) ? { style: { textAlign: 'right' } } : {})}>
-            {column}
-         </th>
-      )
-   })
+   const childColumnsElement = childColumns.map((column) => <th key={column}>{column}</th>)
 
-   const getChildTable = (list: TransferItemList) => (
+   const getChildTable = (list: CustomerInOutStocksList) => (
       <>
          <Table className={classes.childTable} verticalSpacing="sm">
             <thead>
@@ -125,39 +138,51 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const rows = paginatedData.map((item) => {
       return (
-         <React.Fragment key={item.transferId}>
+         <React.Fragment key={item.itemId}>
             <tr>
                <td colSpan={0}>
                   <ActionIcon
                      onClick={() => {
-                        setOpenedItemId((prev) => (prev === item.transferId ? null : item.transferId!))
+                        setOpenedItemId((prev) => (prev === item.itemId ? null : item.itemId!))
                      }}
                   >
                      <IconPlus
                         size={16}
                         stroke={1.5}
                         style={{
-                           transform: openedItemId === item.transferId ? `rotate(45deg)` : 'none',
+                           transform: openedItemId === item.itemId ? `rotate(45deg)` : 'none',
                            transition: 'all 0.1s linear',
                         }}
                      />
                   </ActionIcon>
                </td>
-
                {Object.entries(item).map(([key, value]) => {
                   if (excludeFields.find((field) => field === key)) {
                      return null
                   }
 
-                  if (key === 'customerType' && typeof value === 'string' && value in TransferTypeBadges) {
+                  if (key === 'type' && typeof value === 'string' && value in SupplyTypes) {
                      return (
                         <td key={key}>
-                           <Text>
-                              <Flex align="center" gap="xs">
-                                 {TransferTypeBadges?.[value as Badge]}
-                                 {value}
-                              </Flex>
-                           </Text>
+                           <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
+                        </td>
+                     )
+                  }
+
+                  if (key === 'status' && typeof value === 'string' && value in StatusTypes) {
+                     return (
+                        <td key={key}>
+                           <Flex align="center" gap="xs" sx={{ textTransform: 'capitalize' }}>
+                              <Box
+                                 sx={(theme) => ({
+                                    borderRadius: '50%',
+                                    backgroundColor: theme.colors[StatusTypes?.[value as StatusPin]][6],
+                                    height: 6,
+                                    width: 6,
+                                 })}
+                              ></Box>
+                              {value}
+                           </Flex>
                         </td>
                      )
                   }
@@ -166,17 +191,15 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                      return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
                   }
 
-                  if (key === 'createdAt' && moment(value as any).isValid()) {
-                     return <td key={key}>{moment(value as any).format('LLL')}</td>
-                  }
-
                   if (value === '') return <td key={key}>-</td>
                   return <td key={key}>{`${value}`}</td>
                })}
+
+               <td />
             </tr>
             <tr>
                <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedItemId === item.transferId}>{getChildTable(item.items!)}</Collapse>
+                  <Collapse in={openedItemId === item.itemId}>{getChildTable(item.list!)}</Collapse>
                </td>
             </tr>
          </React.Fragment>
@@ -202,7 +225,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                direction={{ base: 'column', xl: 'row' }}
                gap={{ md: 'sm', base: 'md' }}
             >
-               <Flex gap="sm" direction={{ base: 'column', xs: 'row' }} w="100%" sx={{ flex: 1 }}>
+               <Flex gap="sm" align="center" sx={{ flex: 1 }}>
                   <DateRangePicker
                      placeholder="Pick dates range"
                      value={dateValue}
@@ -213,39 +236,25 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   />
 
                   <Select
-                     data={transferTypes}
+                     data={customers}
                      sx={{ flex: 1 / 2 }}
                      size="md"
-                     value={typeFilter}
-                     onChange={setTypeFilter}
-                     allowDeselect
+                     value={customerId}
+                     onChange={setCustomerId}
+                     searchable
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />
                </Flex>
-
-               <Flex
-                  direction={{ base: 'column', xs: 'row' }}
-                  align={{ xs: 'center' }}
-                  gap="sm"
-                  w="100%"
-                  sx={{ flex: 3 / 4 }}
-               >
+               <Flex w="100%" sx={{ flex: 3 / 4 }}>
                   <TextInput
                      icon={<IconSearch size={20} stroke={1.5} />}
                      className={classes.input}
-                     placeholder="Search By User Name"
+                     placeholder="Search By Item Name"
                      defaultValue={q}
                      onChange={(e) => setQ(e.currentTarget.value)}
                      radius="md"
                      size="md"
                   />
-                  <Button
-                     onClick={() => {
-                        navigate('/salesman/transfers/add')
-                     }}
-                     h={40}
-                     className={classes.addButton}
-                  >{`Add ${title}`}</Button>
                </Flex>
             </Flex>
             {paginatedData.length > 0 ? (
@@ -267,6 +276,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                               }
                               return <th key={columnName}>{columnName}</th>
                            })}
+                           <th />
                         </tr>
                      </thead>
                      <tbody>{rows}</tbody>
@@ -289,57 +299,3 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 }
 
 export default PosTable
-
-// return (
-//    <>
-//       <ScrollArea sx={{ width: '100%' }}>
-//          <Box p="md">
-//             <Text fw="bold" fz="xl" className={classes.title}>
-//                {title}
-//             </Text>
-//             <Flex style={{ width: '100%' }} py="lg" justify="flex-end" align="end">
-//                <DateRangePicker
-//                   label="Book hotel"
-//                   placeholder="Pick dates range"
-//                   value={dateValue}
-//                   mx="md"
-//                   sx={{ width: 300 }}
-//                   onChange={setDate}
-//                />
-
-//                <Button
-//                   onClick={() => {
-//                      navigate('/invoices/add')
-//                   }}
-//                >{`Add ${title}`}</Button>
-//             </Flex>
-//             {paginatedData.length > 0 ? (
-//                <Table sx={{ minWidth: 600 }} striped fontSize="sm" verticalSpacing="sm">
-//                   <thead key="head">
-//                      <tr>
-//                         {columns.map((columnName) => {
-//                            if (excludeFields.find((field) => field === columnName)) {
-//                               return null
-//                            }
-//                            return <th key={columnName}>{toSentenceCase(columnName)}</th>
-//                         })}
-//                         <th />
-//                      </tr>
-//                   </thead>
-//                   <tbody>{rows}</tbody>
-//                </Table>
-//             ) : (
-//                <Flex direction="column" justify="center" align="center" className={classes.empty}>
-//                   <IconPackage size={56} stroke={1.5} />
-//                   <Text fz="md">No Data Found</Text>
-//                </Flex>
-//             )}
-//          </Box>
-//          {total > 1 && (
-//             <Flex justify="flex-end" align="center" p="lg">
-//                <Pagination total={total} page={activePage} onChange={setActivePage} />
-//             </Flex>
-//          )}
-//       </ScrollArea>
-//    </>
-// )

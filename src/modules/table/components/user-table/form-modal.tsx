@@ -1,5 +1,6 @@
-import { Button, Flex, PasswordInput, TextInput } from '@mantine/core'
+import { Button, Flex, PasswordInput, Select, TextInput } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
+import { UserRole } from '../../../../api/user/mutations/createUser'
 import useStyles from './styles'
 import { Item } from './table'
 
@@ -7,6 +8,7 @@ interface FormValues {
    name: string
    email: string
    password?: string
+   role: UserRole
 }
 
 interface Props {
@@ -20,16 +22,20 @@ interface Props {
 const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRow }) => {
    const { classes } = useStyles()
 
+   const userRoles = Object.values(UserRole).map((type) => ({ label: type, value: type }))
+
    const initialValues =
       isEditing && item
          ? {
               name: item.name!,
               email: item.email!,
+              role: item.role!,
            }
          : {
               name: '',
               email: '',
               password: '',
+              role: '' as any,
            }
 
    const addValidate = {
@@ -67,6 +73,13 @@ const FormModal: React.FC<Props> = ({ item, isEditing, loading, updateRow, addRo
                py="xs"
                classNames={{ label: classes.label }}
                {...form.getInputProps('email')}
+            />
+            <Select
+               label="Role"
+               data={userRoles}
+               py="xs"
+               classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+               {...form.getInputProps('role')}
             />
             {!isEditing && (
                <PasswordInput

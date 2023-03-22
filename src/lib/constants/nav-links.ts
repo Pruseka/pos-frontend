@@ -49,7 +49,7 @@ export const NAV_LINKS: NavItemType[] = [
       links: [
          { label: 'Closing Stocks', url: '/salesman/closing-stocks' },
          { label: 'Transfer Records', url: '/salesman/transfer-records' },
-         { label: 'Sale Records', url: '/salesman/sale-records' },
+         { label: 'Invoice Records', url: '/salesman/invoice-records' },
       ],
    },
 
@@ -71,6 +71,7 @@ export const NAV_LINKS: NavItemType[] = [
          { label: 'Closing Stocks', url: '/warehouse/closing-stocks' },
          { label: 'Supply Records', url: '/warehouse/supply-records' },
          { label: 'Transfer Records', url: '/warehouse/transfer-records' },
+         { label: 'Invoice Records', url: '/warehouse/invoice-records' },
       ],
    },
 ]

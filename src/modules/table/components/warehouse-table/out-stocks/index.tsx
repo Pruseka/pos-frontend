@@ -17,7 +17,7 @@ const WarehouseOutStocksTable: React.FC = () => {
    const unselectedDate = dates.every((d: any) => d === undefined)
 
    const { data, isLoading } = useSWR<GetWarehouseOutStocksResponse>(
-      shouldRefetch ? ['/warehouse/out', ...dates] : null,
+      shouldRefetch ? ['/warehouse/transfer', ...dates] : null,
       ([url, from, to]: string[]) => getWarehouseOutStocks(url, from, to)
    )
 

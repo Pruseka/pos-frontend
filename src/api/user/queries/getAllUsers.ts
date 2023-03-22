@@ -1,9 +1,5 @@
 import apiClient from '../../instance'
-
-export enum UserRole {
-   ADMIN = 'admin',
-   SALESMAN = 'salesman',
-}
+import { UserRole } from '../mutations/createUser'
 
 export type GetAllUsersData = {
    userId: string

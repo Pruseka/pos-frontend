@@ -16,10 +16,10 @@ import {
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData, PaymentType } from '../../../../api/invoice/queries/getInvoicesByDate'
-import { toSentenceCase } from '../../../../helpers/conver-title'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
 
@@ -61,7 +61,6 @@ export type StatusPin = keyof typeof StatusTypes
 const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
-   const [openedId, setOpenedId] = useState<string | null>(null)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
    const [typeFilter, setTypeFilter] = useState<string | null>(null)
@@ -97,7 +96,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = Object.keys(data[0] || {})
+   const columns = ['Invoice Id', 'Customer', 'Customer Type', 'Type', 'Salesman', 'Amount', 'Created At']
+   const currencyRows = ['amount']
+   const numberRows = ['invoiceId', ...currencyRows]
+   const numberColumns = ['Amount', 'Invoice Id']
    const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
 
    const handleViewInvoice = (item: Item) => {
@@ -155,8 +157,19 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
                }
 
+               if (key === 'createdAt' && moment(value as any).isValid()) {
+                  return <td key={key}>{moment(value as any).format('LLL')}</td>
+               }
+
                if (value === '') return <td key={key}>-</td>
-               return <td key={key}>{`${value}`}</td>
+               return (
+                  <td
+                     key={key}
+                     className={cx({
+                        [classes.number]: numberRows.includes(key),
+                     })}
+                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+               )
             })}
 
             <td>
@@ -260,7 +273,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
                               }
-                              return <th key={columnName}>{toSentenceCase(columnName)}</th>
+
+                              return (
+                                 <th
+                                    key={columnName}
+                                    {...(numberColumns.includes(columnName)
+                                       ? { style: { textAlign: 'right' } }
+                                       : {})}
+                                 >
+                                    {columnName}
+                                 </th>
+                              )
                            })}
                            <th />
                         </tr>

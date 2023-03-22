@@ -98,6 +98,15 @@ const InvoiceForm: React.FC<Props> = ({
             price: item?.purchasingPrice,
             itemId: item?.itemId,
          })
+         return
+      }
+      if (form.values.name === '' || !form.values.name) {
+         form.setValues({
+            code: '',
+            name: '',
+            price: 0,
+            itemId: '',
+         })
       }
    }, [itemsData?.data, form.values.name])
 
@@ -141,6 +150,7 @@ const InvoiceForm: React.FC<Props> = ({
                         py="xs"
                         sx={{ flex: 1 }}
                         searchable
+                        allowDeselect
                         classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                         {...form.getInputProps('name')}
                      />

@@ -27,7 +27,18 @@ const TransfersTable: React.FC = () => {
    )
 
    useEffect(() => {
-      const tableData = data?.data && data?.data.length > 0 ? data?.data : []
+      const tableData =
+         data?.data && data?.data.length > 0
+            ? data?.data.map((d) => ({
+                 transferId: d.transferId,
+                 user: d.user,
+                 type: d.type,
+                 createdBy: d.createdBy,
+                 createdAt: d.createdAt,
+                 userId: d.userId,
+                 items: d.items,
+              }))
+            : []
       if (unselectedDate || shouldRefetch) {
          setTblData(tableData)
       }
@@ -40,7 +51,7 @@ const TransfersTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Transfer"
-         excludeFields={['transferId', 'userId', 'items', 'createdAt']}
+         excludeFields={['userId', 'items']}
       />
    )
 }

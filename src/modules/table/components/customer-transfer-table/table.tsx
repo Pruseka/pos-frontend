@@ -1,5 +1,4 @@
 import {
-   Badge,
    Box,
    Button,
    Flex,
@@ -14,10 +13,13 @@ import {
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconSearch } from '@tabler/icons-react'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GetAllCustomerTransfersData } from '../../../../api/customerTransfer/queries/getTransfersByDate'
-import { GetAllTransfersData, TransferType } from '../../../../api/transfer/queries/getTransfersByDate'
+import {
+   CustomerTransferType,
+   GetAllCustomerTransfersData,
+} from '../../../../api/customerTransfer/queries/getTransfersByDate'
 import useStyles from './styles'
 
 export type Item = Partial<GetAllCustomerTransfersData[0]>
@@ -57,8 +59,8 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Customer Transfer Id', 'Type', 'Customer', 'Salesman']
-   const transferTypes = Object.values(TransferType).map((type) => ({ label: type, value: type }))
+   const columns = ['Customer Transfer Id', 'Customer', 'Type', 'Salesman', 'Created At']
+   const transferTypes = Object.values(CustomerTransferType).map((type) => ({ label: type, value: type }))
 
    const rows = paginatedData.map((item) => {
       return (
@@ -87,6 +89,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
                if (key === 'amount') {
                   return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
+               }
+
+               if (key === 'createdAt' && moment(value as any).isValid()) {
+                  return <td key={key}>{moment(value as any).format('LLL')}</td>
                }
 
                if (value === '') return <td key={key}>-</td>

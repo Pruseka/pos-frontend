@@ -25,6 +25,10 @@ import ViewInvoice from '../modules/table/components/invoice-table/view'
 import SalesmanOutStocksTable from '../modules/table/components/salesman-table/out-stocks'
 import CreditInvoiceTable from '../modules/table/components/invoice-table/credit'
 import ViewSupply from '../modules/table/components/supply-table/view'
+import CustomerClosingStocksTable from '../modules/table/components/customer-stock-table/closing-stocks'
+import CustomerInStocksTable from '../modules/table/components/customer-stock-table/in-stocks'
+import CustomerOutStocksTable from '../modules/table/components/customer-stock-table/out-stocks'
+import WarehouseInvoiceRecordsTable from '../modules/table/components/warehouse-table/invoice-records'
 
 export const router = createBrowserRouter([
    {
@@ -51,12 +55,19 @@ export const router = createBrowserRouter([
                { path: '/users', element: <UsersTable /> },
                { path: '/salesman/transfers', element: <TransfersTable /> },
                { path: '/customer/transfers', element: <CustomerTransfersTable /> },
+
                { path: '/salesman/closing-stocks', element: <SalesmanClosingStocksTable /> },
                { path: '/salesman/transfer-records', element: <SalesmanInStocksTable /> },
-               { path: '/salesman/sale-records', element: <SalesmanOutStocksTable /> },
+               { path: '/salesman/invoice-records', element: <SalesmanOutStocksTable /> },
+
+               { path: '/customer/closing-stocks', element: <CustomerClosingStocksTable /> },
+               { path: '/customer/in-records', element: <CustomerInStocksTable /> },
+               { path: '/customer/out-records', element: <CustomerOutStocksTable /> },
+
                { path: '/warehouse/closing-stocks', element: <WarehouseClosingStocksTable /> },
                { path: '/warehouse/supply-records', element: <WarehouseInStocksTable /> },
                { path: '/warehouse/transfer-records', element: <WarehouseOutStocksTable /> },
+               { path: '/warehouse/invoice-records', element: <WarehouseInvoiceRecordsTable /> },
             ],
          },
          {

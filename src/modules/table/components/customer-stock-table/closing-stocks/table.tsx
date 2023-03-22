@@ -34,13 +34,13 @@ interface TableProps {
    //    }
    excludeFields: string[]
    dateValue: Date
-   userId: string | null
-   users: {
+   customerId: string | null
+   customers: {
       label: string
       value: string
    }[]
    setDate: React.Dispatch<React.SetStateAction<Date>>
-   setUserId: React.Dispatch<React.SetStateAction<string | null>>
+   setCustomerId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 export const PaymentTypes = {
@@ -66,9 +66,9 @@ const PosTable: React.FC<TableProps> = ({
    excludeFields,
    dateValue,
    setDate,
-   userId,
-   setUserId,
-   users,
+   customerId,
+   setCustomerId,
+   customers,
 }) => {
    const { classes, cx } = useStyles()
    const [activePage, setActivePage] = useState(1)
@@ -146,11 +146,11 @@ const PosTable: React.FC<TableProps> = ({
                      size="md"
                   />
                   <Select
-                     data={users}
+                     data={customers}
                      sx={{ flex: 1 / 2 }}
                      size="md"
-                     value={userId}
-                     onChange={setUserId}
+                     value={customerId}
+                     onChange={setCustomerId}
                      searchable
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />

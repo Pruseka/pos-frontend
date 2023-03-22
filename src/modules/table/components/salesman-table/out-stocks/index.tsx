@@ -14,7 +14,7 @@ const SalesmanOutStocksTable: React.FC = () => {
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
    const [userId, setUserId] = useState<string | null>(null)
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/all', getAllUsers)
+   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/van_sales', getAllUsers)
 
    const users = usersData?.data
       ? usersData.data.map((user) => ({ label: user.name, value: user.userId }))
@@ -24,7 +24,7 @@ const SalesmanOutStocksTable: React.FC = () => {
    const unselectedDate = dates.every((d: any) => d === undefined)
 
    const { data, isLoading } = useSWR<GetSalesmanOutStocksResponse>(
-      shouldRefetch ? ['/stock/out', ...dates, userId] : null,
+      shouldRefetch ? ['/van_stock/invoice', ...dates, userId] : null,
       ([url, from, to, userId]: string[]) => getSalesmanOutStocks(url, from, to, userId)
    )
 
@@ -44,7 +44,7 @@ const SalesmanOutStocksTable: React.FC = () => {
          userId={userId}
          users={users}
          setUserId={setUserId}
-         title="Sale Records"
+         title="Invoice Records"
          excludeFields={['itemId', 'list', 'createdAt']}
       />
    )

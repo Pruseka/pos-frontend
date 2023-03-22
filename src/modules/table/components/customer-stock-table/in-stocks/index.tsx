@@ -2,9 +2,15 @@ import { DateRangePickerValue } from '@mantine/dates'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import {
+   getCustomerInStocks,
+   GetCustomerInStocksData,
+   GetCustomerInStocksResponse,
+} from '../../../../../api/customer-stock/queries/getInStocks'
+import { getAllCustomers, GetAllCustomersResponse } from '../../../../../api/customer/queries/getAllCustomers'
+import {
    getSalesmanInStocks,
    GetSalesmanInStocksData,
-   GetSalesmanInStocksResponse,
+   GetSalesmanInStocksResponse as GetCustomersInStocksResponse,
 } from '../../../../../api/salesman-stock/queries/getInStocks'
 import { GetAllUsersResponse, getAllUsers } from '../../../../../api/user/queries/getAllUsers'
 import {
@@ -14,23 +20,23 @@ import {
 } from '../../../../../api/warehouse/queries/getOutStocks'
 import PosTable from './table'
 
-const SalesmanInStocksTable: React.FC = () => {
-   const [tblData, setTblData] = useState<GetSalesmanInStocksData>([])
+const CustomerInStocksTable: React.FC = () => {
+   const [tblData, setTblData] = useState<GetCustomerInStocksData>([])
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
-   const [userId, setUserId] = useState<string | null>(null)
+   const [customerId, setCustomerId] = useState<string | null>(null)
 
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/van_sales', getAllUsers)
-   const users = usersData?.data
-      ? usersData.data.map((user) => ({ label: user.name, value: user.userId }))
+   const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
+   const customers = customersData?.data
+      ? customersData.data.map((user) => ({ label: user.name, value: user.customerId }))
       : []
 
-   const shouldRefetch = dates.every((d: any) => d !== undefined) && userId
+   const shouldRefetch = dates.every((d: any) => d !== undefined) && customerId
    const unselectedDate = dates.every((d: any) => d === undefined)
 
-   const { data, isLoading } = useSWR<GetSalesmanInStocksResponse>(
-      shouldRefetch ? ['/van_stock/transfer', ...dates, userId] : null,
-      ([url, from, to, userId]: string[]) => getSalesmanInStocks(url, from, to, userId)
+   const { data, isLoading } = useSWR<GetCustomerInStocksResponse>(
+      shouldRefetch ? ['/customer_stock/in', ...dates, customerId] : null,
+      ([url, from, to, userId]: string[]) => getCustomerInStocks(url, from, to, userId)
    )
 
    useEffect(() => {
@@ -46,13 +52,13 @@ const SalesmanInStocksTable: React.FC = () => {
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
-         userId={userId}
-         users={users}
-         setUserId={setUserId}
-         title="Transfer Records"
+         customerId={customerId}
+         customers={customers}
+         setCustomerId={setCustomerId}
+         title="In Records"
          excludeFields={['itemId', 'list', 'createdAt']}
       />
    )
 }
 
-export default SalesmanInStocksTable
+export default CustomerInStocksTable

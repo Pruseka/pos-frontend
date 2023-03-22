@@ -30,8 +30,8 @@ const InvoiceTable: React.FC = () => {
                  customerType: d.customerType,
                  type: d.type,
                  createdBy: d.createdBy,
-                 createdAt: d.createdAt,
                  amount: d.amount,
+                 createdAt: d.createdAt,
               }))
             : []
       if (unselectedDate || shouldRefetch) {
@@ -46,7 +46,7 @@ const InvoiceTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Invoice"
-         excludeFields={['createdAt']}
+         excludeFields={[]}
       />
    )
 }

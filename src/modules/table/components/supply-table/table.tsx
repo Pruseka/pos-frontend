@@ -16,6 +16,7 @@ import {
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetAllSuppliesData, SupplyType } from '../../../../api/supply/queries/getSupplyByDate'
@@ -80,10 +81,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Salesman', 'Type', 'Supplier', 'Amount']
+   const columns = ['Supply Id', 'Salesman', 'Type', 'Supplier', 'Amount', 'Created At']
    const currencyRows = ['amount']
-   const numberRows = [...currencyRows]
-   const numberColumns = ['Amount']
+   const numberRows = ['supplyId', ...currencyRows]
+   const numberColumns = ['Amount', 'Supply Id']
 
    const paymentTypes = Object.values(SupplyType).map((type) => ({ label: type, value: type }))
 
@@ -154,6 +155,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
                if (key === 'amount') {
                   return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
+               }
+
+               if (key === 'createdAt' && moment(value as any).isValid()) {
+                  return <td key={key}>{moment(value as any).format('LLL')}</td>
                }
 
                if (value === '') return <td key={key}>-</td>
@@ -262,13 +267,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                               if (excludeFields.find((field) => field === columnName)) {
                                  return null
                               }
-                              if (columnName === 'Amount') {
-                                 return (
-                                    <th key={columnName} style={{ textAlign: 'right' }}>
-                                       {columnName}
-                                    </th>
-                                 )
-                              }
+
                               return (
                                  <th
                                     key={columnName}

@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import { GetWarehouseInStocksData, SuppliesList } from '../../../../../api/warehouse/queries/getInStocks'
 import { SupplyType } from '../../../../../api/supply/queries/getSupplyByDate'
 import useStyles from './styles'
+import moment from 'moment'
 
 export type Item = Partial<GetWarehouseInStocksData[0]>
 
@@ -74,8 +75,8 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Supplier', 'Type', 'Qty']
-   const childExcludeColumns = ['supplyId', 'supplyItemId', 'createdAt']
+   const childColumns = ['SupplyId', 'Supplier', 'Type', 'Qty', 'Created At']
+   const childExcludeColumns = ['supplyItemId']
 
    const getChildRows = (list: SuppliesList) => {
       return list.map((li) => (
@@ -91,6 +92,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                         <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
                      </td>
                   )
+               }
+
+               if (key === 'createdAt' && moment(value).isValid()) {
+                  return <td key={key}>{moment(value).format('LLL')}</td>
                }
 
                return <td key={key}>{`${value}`}</td>
@@ -113,6 +118,17 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
          </Table>
       </>
    )
+
+   const sortChildColumns = (list: SuppliesList) => {
+      return list.map((li) => ({
+         supplyId: li.supplyId,
+         supplier: li.supplier,
+         type: li.type,
+         qty: li.qty,
+         supplyItemId: li.supplyItemId,
+         createdAt: li.createdAt,
+      }))
+   }
 
    const rows = paginatedData.map((item) => {
       return (
@@ -177,7 +193,9 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
             </tr>
             <tr>
                <td colSpan={9} style={{ padding: 0, border: 0 }}>
-                  <Collapse in={openedItemId === item.itemId}>{getChildTable(item.list!)}</Collapse>
+                  <Collapse in={openedItemId === item.itemId}>
+                     {getChildTable(sortChildColumns(item.list!))}
+                  </Collapse>
                </td>
             </tr>
          </React.Fragment>

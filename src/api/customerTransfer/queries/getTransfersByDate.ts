@@ -13,7 +13,6 @@ export enum CustomerTransferType {
 export type GetAllCustomerTransfersData = {
    customerTransferId: string
    customer: string
-   customerId: string
    type: CustomerTransferType
    createdBy: string
    createdAt: Date

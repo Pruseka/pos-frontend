@@ -13,7 +13,7 @@ import PosTable from './table'
 
 const SalesmanClosingStocksTable: React.FC = () => {
    const [value, setValue] = useState(new Date())
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/all', getAllUsers)
+   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/van_sales', getAllUsers)
    const users = usersData?.data
       ? usersData.data.map((user) => ({ label: user.name, value: user.userId }))
       : []
@@ -22,7 +22,7 @@ const SalesmanClosingStocksTable: React.FC = () => {
 
    const shouldRefetch = !!(value && userId)
    const { data, isLoading } = useSWR<GetSalesmanClosingStocksResponse>(
-      shouldRefetch ? ['/stock/closing', value, userId] : null,
+      shouldRefetch ? ['/van_stock/closing', value, userId] : null,
       ([url, to, userId]: string[]) => getSalesmanClosingStocks(url, to, userId)
    )
 

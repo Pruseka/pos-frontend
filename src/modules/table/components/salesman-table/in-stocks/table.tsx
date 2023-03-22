@@ -2,7 +2,6 @@ import {
    ActionIcon,
    Badge,
    Box,
-   Button,
    Collapse,
    Flex,
    Loader,
@@ -16,10 +15,10 @@ import {
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetSalesmanInStocksData, InStocksList } from '../../../../../api/salesman-stock/queries/getInStocks'
-import { TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
 import useStyles from './styles'
 
 export type Item = Partial<GetSalesmanInStocksData[0]>
@@ -90,8 +89,8 @@ const PosTable: React.FC<TableProps> = ({
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Type', 'Qty']
-   const childExcludeColumns = ['transferId', 'transferItemId', 'createdAt']
+   const childColumns = ['Transfer Id', 'Type', 'Qty', 'Created At']
+   const childExcludeColumns = ['transferItemId']
 
    const getChildRows = (list: InStocksList) => {
       return list.map((li) => (
@@ -107,6 +106,10 @@ const PosTable: React.FC<TableProps> = ({
                         <Badge color={SupplyTypes?.[value as SupplyTypeBadge]}>{value}</Badge>
                      </td>
                   )
+               }
+
+               if (key === 'createdAt' && moment(value).isValid()) {
+                  return <td key={key}>{moment(value).format('LLL')}</td>
                }
 
                return <td key={key}>{`${value}`}</td>
@@ -235,7 +238,6 @@ const PosTable: React.FC<TableProps> = ({
                      size="md"
                      value={userId}
                      onChange={setUserId}
-                     allowDeselect
                      searchable
                      classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                   />

@@ -31,8 +31,8 @@ const SupplyTable: React.FC = () => {
                  supplier: d.supplier,
                  type: d.type,
                  createdBy: d.createdBy,
-                 createdAt: d.createdAt,
                  amount: d.amount,
+                 createdAt: d.createdAt,
               }))
             : []
       if (unselectedDate || shouldRefetch) {
@@ -47,7 +47,7 @@ const SupplyTable: React.FC = () => {
          dateValue={value}
          setDate={setValue}
          title="Supply"
-         excludeFields={['items', 'createdAt']}
+         excludeFields={['items']}
       />
    )
 }

@@ -16,10 +16,13 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconPlus, IconSearch } from '@tabler/icons-react'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { GetWarehouseOutStocksData, TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
+import {
+   GetWarehouseInvoiceRecordsData,
+   InvoicesList,
+} from '../../../../../api/warehouse/queries/getInvoiceRecords'
 import useStyles from './styles'
 
-export type Item = Partial<GetWarehouseOutStocksData[0]>
+export type Item = Partial<GetWarehouseInvoiceRecordsData[0]>
 
 interface TableProps {
    data: Item[]
@@ -70,10 +73,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Transfer Id', 'User', 'Type', 'Qty', 'Created At']
-   const childExcludeColumns = ['transferItemId']
+   const childColumns = ['Invoice Id', 'Type', 'User', 'Qty', 'Created At']
+   const childExcludeColumns = ['invoiceItemId']
 
-   const getChildRows = (list: TransfersList) => {
+   const getChildRows = (list: InvoicesList) => {
       return list.map((li) => (
          <tr key={Math.random().toString()}>
             <td />
@@ -100,7 +103,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    }
    const childColumnsElement = childColumns.map((column) => <th key={column}>{column}</th>)
 
-   const getChildTable = (list: TransfersList) => (
+   const getChildTable = (list: InvoicesList) => (
       <>
          <Table className={classes.childTable} verticalSpacing="sm">
             <thead>
@@ -114,13 +117,13 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
       </>
    )
 
-   const sortChildColumns = (list: TransfersList) => {
+   const sortChildColumns = (list: InvoicesList) => {
       return list.map((li) => ({
-         transferId: li.transferId,
-         user: li.user,
+         invoiceId: li.invoiceId,
          type: li.type,
+         customer: li.customer,
          qty: li.qty,
-         transferItemId: li.transferItemId,
+         invoiceItemId: li.invoiceItemId,
          createdAt: li.createdAt,
       }))
    }

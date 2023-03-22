@@ -2,23 +2,23 @@ import { DateRangePickerValue } from '@mantine/dates'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import {
-   getWarehouseInStocks,
-   GetWarehouseInStocksData,
-   GetWarehouseInStocksResponse,
-} from '../../../../../api/warehouse/queries/getInStocks'
+   GetWarehouseInvoiceRecordsData,
+   GetWarehouseInvoiceRecordsResponse,
+} from '../../../../../api/warehouse/queries/getInvoiceRecords'
+import { getWarehouseOutStocks } from '../../../../../api/warehouse/queries/getOutStocks'
 import PosTable from './table'
 
-const WarehouseInStocksTable: React.FC = () => {
-   const [tblData, setTblData] = useState<GetWarehouseInStocksData>([])
+const WarehouseInvoiceRecordsTable: React.FC = () => {
+   const [tblData, setTblData] = useState<GetWarehouseInvoiceRecordsData>([])
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
 
    const shouldRefetch = dates.every((d: any) => d !== undefined)
    const unselectedDate = dates.every((d: any) => d === undefined)
 
-   const { data, isLoading } = useSWR<GetWarehouseInStocksResponse>(
-      shouldRefetch ? ['/warehouse/supply', ...dates] : null,
-      ([url, from, to]: string[]) => getWarehouseInStocks(url, from, to)
+   const { data, isLoading } = useSWR<GetWarehouseInvoiceRecordsResponse>(
+      shouldRefetch ? ['/warehouse/invoice', ...dates] : null,
+      ([url, from, to]: string[]) => getWarehouseOutStocks(url, from, to)
    )
 
    useEffect(() => {
@@ -34,10 +34,10 @@ const WarehouseInStocksTable: React.FC = () => {
          loading={isLoading}
          dateValue={value}
          setDate={setValue}
-         title="Supply Records"
-         excludeFields={['itemId', 'list']}
+         title="Invoice Records"
+         excludeFields={['itemId', 'list', 'createdAt']}
       />
    )
 }
 
-export default WarehouseInStocksTable
+export default WarehouseInvoiceRecordsTable

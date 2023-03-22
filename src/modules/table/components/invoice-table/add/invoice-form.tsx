@@ -41,7 +41,7 @@ const InvoiceForm: React.FC<Props> = ({
    customerType,
 }) => {
    const { classes } = useStyles()
-   const { data: itemsData, isLoading } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
+   const { data: itemsData } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
 
    const items =
       itemsData?.data && itemsData.data.length > 0
@@ -116,6 +116,16 @@ const InvoiceForm: React.FC<Props> = ({
             price: customerType === CustomerType.RETAIL ? item?.retailPrice : item?.wholesalesPrice,
             itemId: item?.itemId,
          })
+         return
+      }
+      if (form.values.name === '' || !form.values.name) {
+         form.setValues({
+            code: '',
+            retailPrice: 0,
+            wholesalesPrice: 0,
+            price: 0,
+            itemId: '',
+         })
       }
    }, [itemsData?.data, form.values.name, customerType])
 
@@ -160,6 +170,7 @@ const InvoiceForm: React.FC<Props> = ({
                         sx={{ flex: 1 }}
                         classNames={{ label: classes.label, item: classes.label, input: classes.label }}
                         searchable
+                        allowDeselect
                         {...form.getInputProps('name')}
                      />
                   </Flex>
