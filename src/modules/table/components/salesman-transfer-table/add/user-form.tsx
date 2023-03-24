@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 import { TransferType } from '../../../../../api/transfer/queries/getTransfersByDate'
 import { getAllUsers, GetAllUsersResponse } from '../../../../../api/user/queries/getAllUsers'
+import { getAllVansales } from '../../../../../api/user/queries/getAllVansales'
 import useStyles from './styles'
 
 export interface FormValues {
@@ -20,7 +21,7 @@ interface Props {
 const UserForm: React.FC<Props> = ({ submitForm, disabledSaveButton }) => {
    const navigate = useNavigate()
    const { classes } = useStyles()
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/all', getAllUsers)
+   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/van_sales', getAllVansales)
    const users =
       usersData?.data && usersData.data.length > 0
          ? usersData?.data.map((user) => ({ label: user.name, value: user.userId }))

@@ -19,6 +19,8 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GetSalesmanInStocksData, InStocksList } from '../../../../../api/salesman-stock/queries/getInStocks'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import useStyles from './styles'
 
 export type Item = Partial<GetSalesmanInStocksData[0]>
@@ -73,6 +75,7 @@ const PosTable: React.FC<TableProps> = ({
    setDate,
 }) => {
    const { classes, cx } = useStyles()
+   const { user } = useAuth()
    const [activePage, setActivePage] = useState(1)
    const [openedItemId, setOpenedItemId] = useState<string | null>(null)
    const [q, setQ] = useDebouncedState('', 200)
@@ -232,15 +235,17 @@ const PosTable: React.FC<TableProps> = ({
                      size="md"
                   />
 
-                  <Select
-                     data={users}
-                     sx={{ flex: 1 / 2 }}
-                     size="md"
-                     value={userId}
-                     onChange={setUserId}
-                     searchable
-                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                  />
+                  {user?.role !== UserRole.VAN_SALES && (
+                     <Select
+                        data={users}
+                        sx={{ flex: 1 / 2 }}
+                        size="md"
+                        value={userId}
+                        onChange={setUserId}
+                        searchable
+                        classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                     />
+                  )}
                </Flex>
                <Flex w="100%" sx={{ flex: 3 / 4 }}>
                   <TextInput

@@ -15,7 +15,9 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconPackage, IconSearch } from '@tabler/icons-react'
 import React, { useState } from 'react'
 import { GetSalesmanClosingStocksData } from '../../../../../api/salesman-stock/queries/getClosingStocks'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
 import { toSentenceCase } from '../../../../../helpers/conver-title'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import useStyles from './styles'
 
 export type Item = Partial<GetSalesmanClosingStocksData[0]>
@@ -71,6 +73,7 @@ const PosTable: React.FC<TableProps> = ({
    users,
 }) => {
    const { classes, cx } = useStyles()
+   const { user } = useAuth()
    const [activePage, setActivePage] = useState(1)
    const rowsPerPage = 10
    const [q, setQ] = useDebouncedState('', 200)
@@ -145,15 +148,17 @@ const PosTable: React.FC<TableProps> = ({
                      onChange={setDate as any}
                      size="md"
                   />
-                  <Select
-                     data={users}
-                     sx={{ flex: 1 / 2 }}
-                     size="md"
-                     value={userId}
-                     onChange={setUserId}
-                     searchable
-                     classNames={{ label: classes.label, item: classes.label, input: classes.label }}
-                  />
+                  {user?.role !== UserRole.VAN_SALES && (
+                     <Select
+                        data={users}
+                        sx={{ flex: 1 / 2 }}
+                        size="md"
+                        value={userId}
+                        onChange={setUserId}
+                        searchable
+                        classNames={{ label: classes.label, item: classes.label, input: classes.label }}
+                     />
+                  )}
                </Flex>
 
                <TextInput

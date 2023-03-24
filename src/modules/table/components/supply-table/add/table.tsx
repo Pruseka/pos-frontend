@@ -2,6 +2,8 @@ import { ActionIcon, Box, Flex, Group, Loader, Pagination, ScrollArea, Table, Te
 import { IconPackage, IconPencil, IconTrash } from '@tabler/icons-react'
 import { useState } from 'react'
 import { Item } from '.'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import useStyles from './styles'
 
 interface TableProps {
@@ -15,6 +17,7 @@ interface TableProps {
 
 const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, deleteRow, excludeFields }) => {
    const { classes, cx } = useStyles()
+   const { user } = useAuth()
    const [activePage, setActivePage] = useState(1)
 
    const rowsPerPage = 3
@@ -24,14 +27,21 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['No', 'Code', 'Name', 'Price', 'Qty', 'Net Amount']
+   const columns = [
+      'No',
+      'Code',
+      'Name',
+      'Qty',
+      ...(user?.role === UserRole.ADMIN ? ['Price', 'Net Amount'] : []),
+   ]
 
    const currencyRows = ['price', 'netAmount']
    const numberRows = [...currencyRows, 'no', 'qty']
    const numberColumns = ['No', 'Price', 'Qty', 'Net Amount']
-   const totalAmount = data
-      .map((item) => +item.netAmount)
-      .reduce((previous, current) => previous + current, 0)
+   const totalAmount =
+      user?.role === UserRole.ADMIN
+         ? data.map((item) => +item.netAmount!).reduce((previous, current) => previous + current, 0)
+         : 0
 
    const handleEdit = (item: Item) => {
       updateRow(item)
@@ -56,7 +66,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
                )
             })}
 
@@ -133,17 +143,19 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, updateRow, delet
                   )}
                </Table>
             </ScrollArea>
-            <Flex
-               p="md"
-               className={cx(classes.totalAmountWrapper, {
-                  [classes.roundedBottom]: !(total > 1),
-               })}
-               justify="flex-end"
-            >
-               <Text color="dimmed" size="md" fw="bold">
-                  Total Amount: {totalAmount.toLocaleString()} Ks
-               </Text>
-            </Flex>
+            {user?.role === UserRole.ADMIN && (
+               <Flex
+                  p="md"
+                  className={cx(classes.totalAmountWrapper, {
+                     [classes.roundedBottom]: !(total > 1),
+                  })}
+                  justify="flex-end"
+               >
+                  <Text color="dimmed" size="md" fw="bold">
+                     Total Amount: {totalAmount.toLocaleString()} Ks
+                  </Text>
+               </Flex>
+            )}
             {total > 1 && (
                <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
                   <Pagination total={total} page={activePage} onChange={setActivePage} />

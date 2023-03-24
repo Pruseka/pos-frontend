@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
 import { provideSupplyMutation } from '../../../../../api/supply/mutations/provideSupply'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import CustomerForm, { FormValues } from './customer-form'
 import InvoiceForm from './invoice-form'
 import useStyles from './styles'
@@ -17,12 +19,13 @@ export type Item = {
    code: string
    name: string
    qty: number
-   price: number
-   netAmount: number
+   price?: number
+   netAmount?: number
 }
 
 const AddSupply: React.FC = () => {
    const { classes } = useStyles()
+   const { user } = useAuth()
    const [items, setItems] = useState<Item[]>([])
    const [selectedItem, setSelectedItem] = useState<Item | null>(null)
    const [isEditing, setIsEditing] = useState(false)
@@ -52,12 +55,11 @@ const AddSupply: React.FC = () => {
             prev.map((itm, i) => {
                if (i === existingItemIndex) {
                   const newQty = itm.qty + item.qty
-                  const newNetAmount = itm.netAmount + item.netAmount
+                  const newNetAmount = itm.netAmount! + item.netAmount!
 
                   return {
                      ...itm,
-                     qty: newQty,
-                     netAmount: newNetAmount,
+                     ...(user?.role === UserRole.ADMIN ? { qty: newQty, netAmount: newNetAmount } : {}),
                   }
                }
                return itm

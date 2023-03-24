@@ -31,11 +31,11 @@ const AddTransferSalesman: React.FC = () => {
 
    const backButton = (
       <Box pl="xl">
-         <NavLink to="/salesman/transfers" className={classes.backLink}>
+         <NavLink to="/vansales/transfers" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all salesman transfers
+                  Back to all vansales transfers
                </Flex>
             </Text>
          </NavLink>

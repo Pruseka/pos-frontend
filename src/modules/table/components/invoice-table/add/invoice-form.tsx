@@ -86,7 +86,6 @@ const InvoiceForm: React.FC<Props> = ({
               price: { retail: values.retailPrice, wholesales: values.wholesalesPrice },
            })
 
-      //needs to fix(if item exist, the new item is added to existing one)
       form.reset()
    }
 

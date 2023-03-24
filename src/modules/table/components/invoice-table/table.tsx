@@ -153,10 +153,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   )
                }
 
-               if (key === 'amount') {
-                  return <td key={key} style={{ textAlign: 'right' }}>{`${value.toLocaleString()} Ks`}</td>
-               }
-
                if (key === 'createdAt' && moment(value as any).isValid()) {
                   return <td key={key}>{moment(value as any).format('LLL')}</td>
                }
@@ -168,7 +164,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
                )
             })}
 

@@ -6,21 +6,28 @@ import {
    GetSalesmanInStocksData,
    GetSalesmanInStocksResponse,
 } from '../../../../../api/salesman-stock/queries/getInStocks'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
 import { GetAllUsersResponse, getAllUsers } from '../../../../../api/user/queries/getAllUsers'
 import {
    getWarehouseOutStocks,
    GetWarehouseOutStocksData,
    GetWarehouseOutStocksResponse,
 } from '../../../../../api/warehouse/queries/getOutStocks'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import PosTable from './table'
 
 const SalesmanInStocksTable: React.FC = () => {
    const [tblData, setTblData] = useState<GetSalesmanInStocksData>([])
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
-   const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
    const [userId, setUserId] = useState<string | null>(null)
+   const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
 
-   const { data: usersData } = useSWR<GetAllUsersResponse>('/user/van_sales', getAllUsers)
+   const { user } = useAuth()
+   const shouldFetchUser = user?.role !== UserRole.VAN_SALES
+   const { data: usersData } = useSWR<GetAllUsersResponse>(
+      shouldFetchUser ? '/user/van_sales' : null,
+      getAllUsers
+   )
    const users = usersData?.data
       ? usersData.data.map((user) => ({ label: user.name, value: user.userId }))
       : []
@@ -39,6 +46,12 @@ const SalesmanInStocksTable: React.FC = () => {
          setTblData(tableData)
       }
    }, [data?.data, shouldRefetch, unselectedDate])
+
+   useEffect(() => {
+      if (user?.role === UserRole.VAN_SALES) {
+         setUserId(user.userId)
+      }
+   }, [user?.role, user?.userId])
 
    return (
       <PosTable

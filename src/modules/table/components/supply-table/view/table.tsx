@@ -57,12 +57,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields })
                   )
                }
 
-               if (key === 'price' && typeof value !== 'string' && typeof value !== 'number') {
-                  return (
-                     <td key={key} className={classes.number}>{`${(value as any).toLocaleString()} Ks`}</td>
-                  )
-               }
-
                if (value === '') return <td key={key}>-</td>
                return (
                   <td
@@ -70,7 +64,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields })
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${value} ${currencyRows.includes(key) ? 'Ks' : ''}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
                )
             })}
          </tr>

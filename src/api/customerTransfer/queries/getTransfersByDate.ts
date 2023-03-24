@@ -1,9 +1,5 @@
+import { TransferItemList } from './../../transfer/queries/getTransfersByDate'
 import apiClient from '../../instance'
-
-export type Item = {
-   itemId: string
-   qty: number
-}
 
 export enum CustomerTransferType {
    IN = 'in',
@@ -16,7 +12,7 @@ export type GetAllCustomerTransfersData = {
    type: CustomerTransferType
    createdBy: string
    createdAt: Date
-   items: Item[]
+   items: TransferItemList
 }[]
 
 export type GetAllCustomerTransfersResponse = {

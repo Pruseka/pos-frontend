@@ -4,14 +4,16 @@ import { useEffect } from 'react'
 import useSWR from 'swr'
 import { Item } from '.'
 import { getAllItems, GetAllItemsResponse } from '../../../../../api/item/queries/getAllItems'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
 import { INVOICE_FORM_WIDTH } from '../../../../../lib/constants/layout'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
 import useStyles from './styles'
 
 interface FormValues {
    itemId: string
    code: string
    name: string
-   price: number
+   price?: number
    qty: number
 }
 
@@ -35,7 +37,8 @@ const InvoiceForm: React.FC<Props> = ({
    cancelUpdate,
 }) => {
    const { classes } = useStyles()
-   const { data: itemsData, isLoading } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
+   const { user } = useAuth()
+   const { data: itemsData } = useSWR<GetAllItemsResponse>('/item/all', getAllItems)
 
    const items =
       itemsData?.data && itemsData.data.length > 0
@@ -46,8 +49,8 @@ const InvoiceForm: React.FC<Props> = ({
       itemId: '',
       code: '',
       name: '',
-      price: 0,
       qty: 0,
+      ...(user?.role === UserRole.ADMIN ? { price: 0 } : {}),
    }
    const addValidate = {
       name: isNotEmpty('Name must be filled'),
@@ -66,9 +69,10 @@ const InvoiceForm: React.FC<Props> = ({
    const netAmount = (form.values.price || 0) * (form.values.qty || 0)
 
    function handleSubmit(values: FormValues) {
+      console.log(values)
       isEditing && item
-         ? updateRow({ ...item, ...values, netAmount })
-         : addRow({ no: newId, ...values, netAmount })
+         ? updateRow({ ...item, ...values, ...(user?.role === UserRole.ADMIN ? { netAmount } : {}) })
+         : addRow({ no: newId, ...values, ...(user?.role === UserRole.ADMIN ? { netAmount } : {}) })
       //needs to fix(if item exist, the new item is added to existing one)
       form.reset()
    }
@@ -83,8 +87,8 @@ const InvoiceForm: React.FC<Props> = ({
          form.setValues({
             code: item.code,
             name: item.name,
-            price: item.price,
             qty: item.qty,
+            ...(user?.role === UserRole.ADMIN ? { price: item.price } : {}),
          })
       }
    }, [isEditing, item])
@@ -94,8 +98,8 @@ const InvoiceForm: React.FC<Props> = ({
          const item = itemsData?.data.find((item) => item.name === form.values.name)
          form.setValues({
             code: item?.code,
-            // price: customerType === CustomerType.RETAIL ? item?.retailPrice : item?.wholesalesPrice,
-            price: item?.purchasingPrice,
+            ...(user?.role === UserRole.ADMIN ? { price: item?.purchasingPrice } : {}),
+
             itemId: item?.itemId,
          })
          return
@@ -104,7 +108,7 @@ const InvoiceForm: React.FC<Props> = ({
          form.setValues({
             code: '',
             name: '',
-            price: 0,
+            ...(user?.role === UserRole.ADMIN ? { price: 0 } : {}),
             itemId: '',
          })
       }
@@ -157,24 +161,26 @@ const InvoiceForm: React.FC<Props> = ({
                   </Flex>
 
                   <Flex align="center" gap="md">
-                     <NumberInput
-                        label="Price"
-                        py="xs"
-                        disabled
-                        sx={{ flex: 1 }}
-                        classNames={{ label: classes.label }}
-                        step={1}
-                        min={0}
-                        hideControls
-                        rightSection={<Text fz="sm">Ks</Text>}
-                        parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-                        formatter={(value: any) =>
-                           !Number.isNaN(parseFloat(value))
-                              ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-                              : ''
-                        }
-                        {...form.getInputProps('price')}
-                     />
+                     {user?.role === UserRole.ADMIN && (
+                        <NumberInput
+                           label="Price"
+                           py="xs"
+                           disabled
+                           sx={{ flex: 1 }}
+                           classNames={{ label: classes.label }}
+                           step={1}
+                           min={0}
+                           hideControls
+                           rightSection={<Text fz="sm">Ks</Text>}
+                           parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+                           formatter={(value: any) =>
+                              !Number.isNaN(parseFloat(value))
+                                 ? `${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+                                 : ''
+                           }
+                           {...form.getInputProps('price')}
+                        />
+                     )}
                      <NumberInput
                         label="Qty"
                         py="xs"
@@ -186,11 +192,13 @@ const InvoiceForm: React.FC<Props> = ({
                      />
                   </Flex>
                </Flex>
-               <Box p="xl" my="md" className={classes.netAmountWrapper}>
-                  <Text color="dimmed" size="md" fw="bold">
-                     Net Amount: {netAmount.toLocaleString()} Ks
-                  </Text>
-               </Box>
+               {user?.role === UserRole.ADMIN && (
+                  <Box p="xl" my="md" className={classes.netAmountWrapper}>
+                     <Text color="dimmed" size="md" fw="bold">
+                        Net Amount: {netAmount.toLocaleString()} Ks
+                     </Text>
+                  </Box>
+               )}
 
                <Flex justify="flex-end" py="xl" gap="sm">
                   {isEditing && (

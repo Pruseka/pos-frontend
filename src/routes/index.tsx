@@ -29,6 +29,7 @@ import CustomerClosingStocksTable from '../modules/table/components/customer-sto
 import CustomerInStocksTable from '../modules/table/components/customer-stock-table/in-stocks'
 import CustomerOutStocksTable from '../modules/table/components/customer-stock-table/out-stocks'
 import WarehouseInvoiceRecordsTable from '../modules/table/components/warehouse-table/invoice-records'
+import ExpensesTable from '../modules/table/components/expense-table'
 
 export const router = createBrowserRouter([
    {
@@ -53,12 +54,13 @@ export const router = createBrowserRouter([
                { path: '/categories', element: <CategoriesTable /> },
                { path: '/items', element: <ItemsTable /> },
                { path: '/users', element: <UsersTable /> },
-               { path: '/salesman/transfers', element: <TransfersTable /> },
+               { path: '/expenses', element: <ExpensesTable /> },
+               { path: '/vansales/transfers', element: <TransfersTable /> },
                { path: '/customer/transfers', element: <CustomerTransfersTable /> },
 
-               { path: '/salesman/closing-stocks', element: <SalesmanClosingStocksTable /> },
-               { path: '/salesman/transfer-records', element: <SalesmanInStocksTable /> },
-               { path: '/salesman/invoice-records', element: <SalesmanOutStocksTable /> },
+               { path: '/vansales/closing-stocks', element: <SalesmanClosingStocksTable /> },
+               { path: '/vansales/transfer-records', element: <SalesmanInStocksTable /> },
+               { path: '/vansales/invoice-records', element: <SalesmanOutStocksTable /> },
 
                { path: '/customer/closing-stocks', element: <CustomerClosingStocksTable /> },
                { path: '/customer/in-records', element: <CustomerInStocksTable /> },

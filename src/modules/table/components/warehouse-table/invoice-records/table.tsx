@@ -73,7 +73,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = ['Code', 'Name', 'Category', 'Qty']
-   const childColumns = ['Invoice Id', 'Type', 'User', 'Qty', 'Created At']
+   const childColumns = ['Invoice Id', 'Type', 'Customer', 'Qty', 'Created At']
    const childExcludeColumns = ['invoiceItemId']
 
    const getChildRows = (list: InvoicesList) => {

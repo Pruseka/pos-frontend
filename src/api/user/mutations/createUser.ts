@@ -1,7 +1,7 @@
 import apiClient from '../../instance'
 
 export enum UserRole {
-   ADMIN = 'admin',
+   ADMIN = 'Admin',
    VAN_SALES = 'Van Sales',
    SALES_ADMIN = 'Sales Admin',
 }

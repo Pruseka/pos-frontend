@@ -40,14 +40,6 @@ interface TableProps {
    data: Item[]
    loading: boolean
    title: string
-   //    forms: {
-   //       [key: string]: {
-   //          title?: string
-   //          value: string | number | Date | { label: string; value: string }[]
-   //          addRequired: boolean
-   //          updateRequired: boolean
-   //       }
-   //    }
    excludeFields: string[]
    dateValue: DateRangePickerValue
    setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>

@@ -1,36 +1,51 @@
 import {
    ActionIcon,
+   Badge,
    Box,
    Button,
    Flex,
    Group,
+   HoverCard,
    Loader,
    Pagination,
    ScrollArea,
    Table,
    Text,
    TextInput,
+   Tooltip,
 } from '@mantine/core'
+import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { closeModal, openModal } from '@mantine/modals'
-import { IconCoin, IconPackage, IconPencil, IconSearch } from '@tabler/icons-react'
+import { openModal, closeModal } from '@mantine/modals'
+import {
+   IconBuildingFactory2,
+   IconBuildingStore,
+   IconPackage,
+   IconPencil,
+   IconSearch,
+} from '@tabler/icons-react'
+import moment from 'moment'
 import { useCallback, useEffect, useState } from 'react'
-import { GetAllCategoriesResponse } from '../../../../api/category/queries/getAllCategories'
-import { GetAllItemsData } from '../../../../api/item/queries/getAllItems'
+import { GetAllCustomersData } from '../../../../api/customer/queries/getAllCustomers'
+import { GetExpensesByDateData } from '../../../../api/expense/queries/getExpensesByDate'
 import { toSentenceCase } from '../../../../helpers/conver-title'
 import FormModal from './form-modal'
-import PriceFormModal from './price-form-modal'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllItemsData[0]>
+export type Item = Partial<GetExpensesByDateData[0]>
+
+export const CustomerTypeBadges = {
+   retail: <IconBuildingStore size={14} color="blue" />,
+   wholesales: <IconBuildingFactory2 size={14} color="teal" />,
+}
+
+export type Badge = keyof typeof CustomerTypeBadges
 
 interface TableProps {
    data: Item[]
    loading: boolean
    formSubmitting: boolean
-   updatingPrice: boolean
    title: string
-   categoriesData: GetAllCategoriesResponse | undefined
    //    forms: {
    //       [key: string]: {
    //          title?: string
@@ -41,87 +56,44 @@ interface TableProps {
    //    }
    excludeFields: string[]
    updateRow: (values: { [key: string]: unknown }) => Promise<void>
-   updatePrice: (values: { [key: string]: unknown }) => Promise<void>
    addRow: (values: { [key: string]: unknown }) => Promise<void>
    refetch: () => Promise<void>
+   dateValue: DateRangePickerValue
+   setDate: React.Dispatch<React.SetStateAction<DateRangePickerValue>>
 }
 
 const PosTable: React.FC<TableProps> = ({
    data,
    loading,
-   categoriesData,
    formSubmitting,
    title,
    excludeFields,
+   dateValue,
+   setDate,
    updateRow,
-   updatePrice,
-   updatingPrice,
    addRow,
    refetch,
 }) => {
    const { classes, cx } = useStyles()
    const [isEditing, setIsEditing] = useState(false)
-   const [openEditForm, setOpenEditForm] = useState(false)
-   const [openEditPriceForm, setOpenEditPriceForm] = useState(false)
+   const [openActionForm, setOpenActionForm] = useState(false)
    const [item, setItem] = useState<Item | null>(null)
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
 
-   const rowsPerPage = 8
+   const rowsPerPage = 5
    const endOffset = rowsPerPage * activePage
    const startOffset = endOffset - rowsPerPage
    const query = q.toLowerCase().trim()
-   const searchedData = data.filter((item) => item.name?.toLowerCase().includes(query))
+   const searchedData = data.filter((expense) => expense.title?.toLowerCase().includes(query))
    const paginatedData = searchedData.slice(startOffset, endOffset)
    const total = searchedData.length > 0 ? Math.ceil(searchedData.length / rowsPerPage) : 0
 
-   const currencyRows = ['purchasingPrice', 'retailPrice', 'wholesalesPrice']
+   const currencyRows = ['amount']
    const numberRows = [...currencyRows]
 
-   const columns = Object.keys(data[0] || {})
-
-   const rows = paginatedData?.map((item) => {
-      return (
-         <tr key={Math.random().toString()}>
-            {Object.entries(item).map(([key, value]) => {
-               if (excludeFields.find((field) => field === key)) {
-                  return null
-               }
-
-               if (value === '') return <td key={key}>-</td>
-               return (
-                  <td
-                     key={key}
-                     className={cx({
-                        [classes.number]: numberRows.includes(key),
-                     })}
-                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
-               )
-            })}
-
-            <td>
-               <Group spacing={10} position="right">
-                  <ActionIcon onClick={() => openUpdateFormModal(item)}>
-                     <IconPencil size={16} stroke={1.5} />
-                  </ActionIcon>
-
-                  <ActionIcon onClick={() => openUpdatePriceFormModal(item)}>
-                     <IconCoin size={16} stroke={1.5} />
-                  </ActionIcon>
-               </Group>
-            </td>
-         </tr>
-      )
-   })
-
    const openUpdateFormModal = (item: Item) => {
-      setOpenEditForm(true)
-      setIsEditing(true)
-      setItem(item)
-   }
-
-   const openUpdatePriceFormModal = (item: Item) => {
-      setOpenEditPriceForm(true)
+      setOpenActionForm(true)
       setIsEditing(true)
       setItem(item)
    }
@@ -144,17 +116,10 @@ const PosTable: React.FC<TableProps> = ({
       [refetch, title, updateRow]
    )
 
-   const handleUpdatePrice = useCallback(
-      async <T extends { [key: string]: unknown }>(values: T) => {
-         await updatePrice(values)
-         await refetch()
-         closeModal(`${title}-price`)
-      },
-      [refetch, title, updatePrice]
-   )
+   console.count('customer table')
 
    useEffect(() => {
-      if (openEditForm) {
+      if (openActionForm) {
          if (isEditing && item) {
             openModal({
                title: `${isEditing ? 'Update' : 'Add'} ${title}`,
@@ -162,7 +127,6 @@ const PosTable: React.FC<TableProps> = ({
                children: (
                   <FormModal
                      item={item}
-                     categoriesData={categoriesData}
                      isEditing={isEditing}
                      loading={formSubmitting}
                      updateRow={handleUpdate}
@@ -173,7 +137,7 @@ const PosTable: React.FC<TableProps> = ({
                size: 'sm',
 
                onClose: () => {
-                  setOpenEditForm(false)
+                  setOpenActionForm(false)
                   setIsEditing(false)
                   setItem(null)
                },
@@ -187,7 +151,6 @@ const PosTable: React.FC<TableProps> = ({
             children: (
                <FormModal
                   item={null}
-                  categoriesData={categoriesData}
                   isEditing={isEditing}
                   loading={formSubmitting}
                   updateRow={async () => {}}
@@ -198,40 +161,84 @@ const PosTable: React.FC<TableProps> = ({
             size: 'sm',
             overflow: 'inside',
             onClose: () => {
-               setOpenEditForm(false)
+               setOpenActionForm(false)
             },
          })
       }
-   }, [isEditing, item, handleUpdate, title, openEditForm, handleAdd, formSubmitting, categoriesData])
+   }, [isEditing, item, handleUpdate, title, openActionForm, handleAdd, formSubmitting])
 
-   useEffect(() => {
-      if (openEditPriceForm && item) {
-         openModal({
-            title: 'Update Price',
-            modalId: `${title}-price`,
-            children: <PriceFormModal item={item} loading={updatingPrice} updatePrice={handleUpdatePrice} />,
-            centered: true,
-            size: 'sm',
+   const columns = Object.keys(data[0] || {})
 
-            onClose: () => {
-               setOpenEditPriceForm(false)
-               setIsEditing(false)
-               setItem(null)
-            },
-         })
-      }
-   }, [handleUpdatePrice, item, openEditPriceForm, title, updatingPrice])
+   const rows = paginatedData?.map((item) => {
+      return (
+         <tr key={Math.random().toString()}>
+            {Object.entries(item).map(([key, value]) => {
+               if (excludeFields.find((field) => field === key)) {
+                  return null
+               }
+
+               if (key === 'type' && value in CustomerTypeBadges) {
+                  return (
+                     <td key={key}>
+                        <Text>
+                           <Flex align="center" gap="xs">
+                              {CustomerTypeBadges?.[value as Badge]}
+                              {value}
+                           </Flex>
+                        </Text>
+                     </td>
+                  )
+               }
+
+               if (key === 'description')
+                  return (
+                     <td key={key} style={{ maxWidth: 200 }}>
+                        <Text truncate>{value}</Text>
+                     </td>
+                  )
+
+               if (key === 'createdAt' || (key === 'updatedAt' && moment(value as any).isValid())) {
+                  return <td key={key}>{moment(value as any).format('LLL')}</td>
+               }
+
+               if (value === '') return <td key={key}>-</td>
+               return (
+                  <td
+                     key={key}
+                     className={cx({
+                        [classes.number]: numberRows.includes(key),
+                     })}
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
+               )
+            })}
+
+            <td>
+               <Group spacing={0} position="right">
+                  <ActionIcon onClick={() => openUpdateFormModal(item)}>
+                     <IconPencil size={16} stroke={1.5} />
+                  </ActionIcon>
+
+                  {/* {action?.delete && (
+                      <ActionIcon color="red">
+                         <IconTrash size={16} stroke={1.5} />
+                      </ActionIcon>
+                   )} */}
+               </Group>
+            </td>
+         </tr>
+      )
+   })
 
    if (loading)
       return (
-         <Flex p="xl" justify="center" align="center" style={{ width: '100%' }}>
+         <Flex p="xl" justify="center" align="center" sx={{ width: '100%' }}>
             <Loader />
          </Flex>
       )
 
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
-         <Box pt={{ base: 'xs', xs: 'md' }}>
+         <Box py={{ base: 'xs', xs: 'md' }}>
             <Text fw="bold" fz="xl" className={classes.title}>
                {title}
             </Text>
@@ -243,17 +250,26 @@ const PosTable: React.FC<TableProps> = ({
                direction={{ xs: 'row', base: 'column-reverse' }}
                gap={{ xs: 0, base: 'md' }}
             >
+               <DateRangePicker
+                  placeholder="Pick dates range"
+                  value={dateValue}
+                  maxDate={new Date()}
+                  sx={{ flex: 1 }}
+                  onChange={setDate}
+                  size="md"
+               />
+
                <TextInput
                   icon={<IconSearch size={20} stroke={1.5} />}
                   mx={{ base: 0, xs: 'md' }}
                   className={classes.input}
-                  placeholder="Search By Item Name"
+                  placeholder="Search By Customer Name"
                   defaultValue={q}
                   onChange={(e) => setQ(e.currentTarget.value)}
                   size="md"
                   radius="md"
                />
-               <Button h={40} onClick={() => setOpenEditForm(true)}>{`Add ${title}`}</Button>
+               <Button h={40} onClick={() => setOpenActionForm(true)}>{`Add ${title}`}</Button>
             </Flex>
             {paginatedData.length > 0 ? (
                <ScrollArea>
@@ -287,12 +303,12 @@ const PosTable: React.FC<TableProps> = ({
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
+            {total > 1 && (
+               <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
+                  <Pagination total={total} page={activePage} onChange={setActivePage} />
+               </Flex>
+            )}
          </Box>
-         {total > 1 && (
-            <Flex justify="flex-end" align="center" p="lg" className={classes.paginationWrapper}>
-               <Pagination total={total} page={activePage} onChange={setActivePage} />
-            </Flex>
-         )}
       </Box>
    )
 }
