@@ -73,4 +73,14 @@ export default createStyles((theme) => ({
    number: {
       textAlign: 'right',
    },
+   link: {
+      fontWeight: 500,
+      textDecoration: 'none',
+      fontSize: theme.fontSizes.md,
+      color: theme.colors.gray[7],
+
+      '&:hover': {
+         textDecoration: 'underline',
+      },
+   },
 }))

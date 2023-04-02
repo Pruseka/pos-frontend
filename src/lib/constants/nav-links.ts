@@ -5,6 +5,7 @@ import {
    IconCreditCard,
    IconHeadphones,
    IconPackages,
+   IconReportAnalytics,
    IconSend,
    IconTag,
    IconUsers,
@@ -66,6 +67,7 @@ export const ADMIN_NAV_LINKS: NavItemType[] = [
 
    { label: 'Users', icon: IconHeadphones, url: '/users' },
    { label: 'Expenses', icon: IconChartBar, url: '/expenses' },
+   { label: 'Summary', icon: IconReportAnalytics, url: '/summary' },
    {
       label: `Warehouse's Stocks`,
       icon: IconBuildingWarehouse,

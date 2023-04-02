@@ -1,4 +1,3 @@
-import { CustomerType } from '../../customer/queries/getAllCustomers'
 import apiClient from '../../instance'
 
 export type Item = {

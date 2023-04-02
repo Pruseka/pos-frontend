@@ -64,7 +64,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields })
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} Ks` : `${value}`}`}</td>
                )
             })}
          </tr>

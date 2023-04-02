@@ -1,7 +1,6 @@
 import {
    ActionIcon,
    Box,
-   Button,
    Flex,
    Group,
    Loader,
@@ -18,12 +17,11 @@ import { IconArrowNarrowLeft, IconCoins, IconPackage, IconSearch } from '@tabler
 import moment from 'moment'
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { GetAllCreditInvoicesData } from '../../../../../api/invoice/queries/getCreditInvoiceByDate'
-import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
+import { GetAllCreditSuppliesData } from '../../../../../api/supply/queries/getCreditSupplyByDate'
 import { Status } from '../../../../../api/transfer/queries/getTransfersByDate'
 import useStyles from './styles'
 
-export type Item = Partial<GetAllCreditInvoicesData[0]>
+export type Item = Partial<GetAllCreditSuppliesData[0]>
 
 interface TableProps {
    data: Item[]
@@ -60,7 +58,7 @@ const PosTable: React.FC<TableProps> = ({
    const mappedSalesmen = data.map((d) => d.createdBy!)
    const salesmen = mappedSalesmen.filter((item, i) => mappedSalesmen.indexOf(item) === i)
 
-   const searchedData = data.filter((invoice) => invoice.customer?.toLowerCase().includes(query))
+   const searchedData = data.filter((supply) => supply.supplier?.toLowerCase().includes(query))
 
    const totalAmount = data.reduce((prev, currItm) => prev + +currItm.amount!, 0)
 
@@ -73,31 +71,31 @@ const PosTable: React.FC<TableProps> = ({
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
    const columns = [
-      'Invoice Id',
-      'Customer',
+      'Supply Id',
+      'Supplier',
       'Status',
       'Salesman',
       'Created At',
-      'Received By',
-      'Received At',
+      'Withdrawn By',
+      'Withdrawn At',
       'Amount',
    ]
 
    const currencyRows = ['amount']
-   const numberRows = ['invoiceId', ...currencyRows]
-   const numberColumns = ['Amount', 'Invoice Id']
+   const numberRows = ['supplyId', ...currencyRows]
+   const numberColumns = ['Amount', 'Supply Id']
 
    const handlePayInvoice = async (item: Item) => {
-      await updateInvoice(item.invoiceId!.toString())
+      await updateInvoice(item.supplyId!.toString())
    }
 
    const backButton = (
       <Box>
-         <NavLink to="/" className={classes.backLink}>
+         <NavLink to="/supplies" className={classes.backLink}>
             <Text>
                <Flex align="center" gap="xs">
                   <IconArrowNarrowLeft size={14} />
-                  Back to all invoices
+                  Back to all supplies
                </Flex>
             </Text>
          </NavLink>
@@ -106,7 +104,7 @@ const PosTable: React.FC<TableProps> = ({
 
    const rows = paginatedData.map((item) => {
       return (
-         <tr key={item.invoiceId}>
+         <tr key={item.supplyId}>
             {Object.entries(item).map(([key, value]) => {
                if (excludeFields.find((field) => field === key)) {
                   return null
@@ -134,7 +132,7 @@ const PosTable: React.FC<TableProps> = ({
                   return <td key={key} style={{ textAlign: 'right' }}>{`${value!.toLocaleString()} Ks`}</td>
                }
 
-               if ((key === 'createdAt' || key === 'receivedAt') && moment(value as any).isValid()) {
+               if ((key === 'createdAt' || key === 'withdrawnAt') && moment(value as any).isValid()) {
                   return <td key={key}>{moment(value as any).format('LLL')}</td>
                }
 

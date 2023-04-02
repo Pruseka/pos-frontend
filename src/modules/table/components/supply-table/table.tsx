@@ -18,7 +18,7 @@ import { useDebouncedState } from '@mantine/hooks'
 import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { GetAllSuppliesData, SupplyType } from '../../../../api/supply/queries/getSupplyByDate'
 import { TransferItemList } from '../../../../api/transfer/queries/getTransfersByDate'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
@@ -72,6 +72,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const searchedData = data
       .filter((supply) => supply.supplier?.toLowerCase().includes(query))
       .filter((supply) => (typeFilter ? supply.type === typeFilter : supply))
+      .filter((supply) => (salesmanFilter ? supply.createdBy === salesmanFilter : supply))
 
    const navigate = useNavigate()
    const rowsPerPage = 10
@@ -105,6 +106,18 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const handleViewSupply = (item: Item) => {
       navigate(`/supplies/view/${item.supplyId}`)
    }
+
+   const creditSuppliesLink = (
+      <Box pl="xl">
+         <NavLink to="/supplies/credit" className={classes.link}>
+            <Text>
+               <Flex align="center" gap="xs">
+                  View Credit Supplies
+               </Flex>
+            </Text>
+         </NavLink>
+      </Box>
+   )
 
    const rows = paginatedData.map((item) => {
       return (
@@ -164,7 +177,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} Ks` : `${value}`}`}</td>
                )
             })}
 
@@ -189,9 +202,12 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="baseline">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               {creditSuppliesLink}
+            </Flex>
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"

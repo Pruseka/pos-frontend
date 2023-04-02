@@ -5,15 +5,18 @@ import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
 import { updateInvoiceMutation } from '../../../../../api/invoice/mutations/updateInvoice'
+import { GetAllCreditInvoicesResponse } from '../../../../../api/invoice/queries/getCreditInvoiceByDate'
+import { getInvoicesByDate } from '../../../../../api/invoice/queries/getInvoicesByDate'
 import {
-   GetAllCreditInvoicesData,
-   GetAllCreditInvoicesResponse,
-   getCreditInvoicesByDate,
-} from '../../../../../api/invoice/queries/getCreditInvoiceByDate'
+   GetAllCreditSuppliesData,
+   GetAllCreditSuppliesResponse,
+   getCreditSuppliesByDate,
+} from '../../../../../api/supply/queries/getCreditSupplyByDate'
 import PosTable from './table'
+import { updateSupplyMutation } from '../../../../../api/supply/mutations/updateSupply'
 
-const CreditInvoiceTable: React.FC = () => {
-   const [tblData, setTblData] = useState<GetAllCreditInvoicesData>([])
+const CreditSupplyTable: React.FC = () => {
+   const [tblData, setTblData] = useState<GetAllCreditSuppliesData>([])
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
 
@@ -24,27 +27,27 @@ const CreditInvoiceTable: React.FC = () => {
       data,
       isLoading,
       mutate: refetch,
-   } = useSWR<GetAllCreditInvoicesResponse>(
-      shouldRefetch ? ['/invoice/credit', ...dates] : null,
-      ([url, from, to]: string[]) => getCreditInvoicesByDate(url, from, to)
+   } = useSWR<GetAllCreditSuppliesResponse>(
+      shouldRefetch ? ['/supply/credit', ...dates] : null,
+      ([url, from, to]: string[]) => getCreditSuppliesByDate(url, from, to)
    )
 
-   const { trigger: updateInvoice, isMutating: updatingInvoice } = useSWRMutation(
-      '/invoice/status',
-      updateInvoiceMutation
+   const { trigger: updateSupply, isMutating: updatingSupply } = useSWRMutation(
+      '/supply/status',
+      updateSupplyMutation
    )
 
    useEffect(() => {
       const tableData =
          data?.data && data?.data.length > 0
             ? data?.data.map((d) => ({
-                 invoiceId: d.invoiceId,
-                 customer: d.customer,
+                 supplyId: d.supplyId,
+                 supplier: d.supplier,
                  status: d.status,
                  createdBy: d.createdBy,
                  createdAt: d.createdAt,
-                 receivedBy: d.receivedBy,
-                 receivedAt: d.receivedAt,
+                 withdrawnBy: d.withdrawnBy,
+                 withdrawnAt: d.withdrawnAt,
                  amount: d.amount,
               }))
             : []
@@ -53,9 +56,9 @@ const CreditInvoiceTable: React.FC = () => {
       }
    }, [data?.data, shouldRefetch, unselectedDate])
 
-   const handleUpdateInvoice = async (invoiceId: string) => {
-      await updateInvoice(
-         { invoiceId },
+   const handleUpdateInvoice = async (supplyId: string) => {
+      await updateSupply(
+         { supplyId },
          {
             onSuccess: (data) => {
                showNotification({
@@ -72,14 +75,14 @@ const CreditInvoiceTable: React.FC = () => {
    return (
       <PosTable
          data={tblData}
-         loading={isLoading || updatingInvoice}
+         loading={isLoading || updatingSupply}
          dateValue={value}
          setDate={setValue}
-         title="Credit Invoices"
+         title="Credit Supplies"
          excludeFields={[]}
          updateInvoice={handleUpdateInvoice}
       />
    )
 }
 
-export default CreditInvoiceTable
+export default CreditSupplyTable

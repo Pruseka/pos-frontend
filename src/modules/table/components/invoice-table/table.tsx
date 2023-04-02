@@ -15,10 +15,10 @@ import {
 } from '@mantine/core'
 import { DateRangePicker, DateRangePickerValue } from '@mantine/dates'
 import { useDebouncedState } from '@mantine/hooks'
-import { IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
+import { IconArrowNarrowLeft, IconEye, IconPackage, IconSearch } from '@tabler/icons-react'
 import moment from 'moment'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData, PaymentType } from '../../../../api/invoice/queries/getInvoicesByDate'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
@@ -106,6 +106,18 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
       navigate(`/invoices/view/${item.invoiceId}`)
    }
 
+   const creditInvoicesLink = (
+      <Box pl="xl">
+         <NavLink to="/invoices/credit" className={classes.link}>
+            <Text>
+               <Flex align="center" gap="xs">
+                  View Credit Invoices
+               </Flex>
+            </Text>
+         </NavLink>
+      </Box>
+   )
+
    const rows = paginatedData.map((item) => {
       return (
          <tr key={item.invoiceId}>
@@ -164,7 +176,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                      className={cx({
                         [classes.number]: numberRows.includes(key),
                      })}
-                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} KS` : `${value}`}`}</td>
+                  >{`${currencyRows.includes(key) ? `${value.toLocaleString()} Ks` : `${value}`}`}</td>
                )
             })}
 
@@ -195,9 +207,12 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="baseline">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               {creditInvoicesLink}
+            </Flex>
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"

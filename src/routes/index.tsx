@@ -30,6 +30,8 @@ import CustomerInStocksTable from '../modules/table/components/customer-stock-ta
 import CustomerOutStocksTable from '../modules/table/components/customer-stock-table/out-stocks'
 import WarehouseInvoiceRecordsTable from '../modules/table/components/warehouse-table/invoice-records'
 import ExpensesTable from '../modules/table/components/expense-table'
+import SummaryTable from '../modules/table/components/summary-table'
+import CreditSupplyTable from '../modules/table/components/supply-table/credit'
 
 export const router = createBrowserRouter([
    {
@@ -49,6 +51,8 @@ export const router = createBrowserRouter([
                { index: true, element: <InvoiceTable /> },
                { path: '/invoices/credit', element: <CreditInvoiceTable /> },
                { path: '/supplies', element: <SupplyTable /> },
+               { path: '/supplies/credit', element: <CreditSupplyTable /> },
+
                { path: '/customers', element: <CustomersTable /> },
                { path: '/suppliers', element: <SuppliersTable /> },
                { path: '/categories', element: <CategoriesTable /> },
@@ -70,6 +74,7 @@ export const router = createBrowserRouter([
                { path: '/warehouse/supply-records', element: <WarehouseInStocksTable /> },
                { path: '/warehouse/transfer-records', element: <WarehouseOutStocksTable /> },
                { path: '/warehouse/invoice-records', element: <WarehouseInvoiceRecordsTable /> },
+               { path: '/summary', element: <SummaryTable /> },
             ],
          },
          {
