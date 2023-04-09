@@ -23,6 +23,8 @@ import { GetAllSuppliesData, SupplyType } from '../../../../api/supply/queries/g
 import { TransferItemList } from '../../../../api/transfer/queries/getTransfersByDate'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
+import { useAuth } from '../../../../lib/contexts/auth-context'
+import { UserRole } from '../../../../api/user/mutations/createUser'
 
 export type Item = Partial<GetAllSuppliesData[0]>
 
@@ -60,6 +62,7 @@ export type StatusPin = keyof typeof StatusTypes
 
 const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, dateValue, setDate }) => {
    const { classes, cx } = useStyles()
+   const { user } = useAuth()
    const [activePage, setActivePage] = useState(1)
    const [q, setQ] = useDebouncedState('', 200)
    const query = q.toLowerCase().trim()
@@ -82,7 +85,14 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
 
    const total = data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 0
 
-   const columns = ['Supply Id', 'Salesman', 'Type', 'Supplier', 'Amount', 'Created At']
+   const columns = [
+      'Supply Id',
+      'Salesman',
+      'Type',
+      'Supplier',
+      ...(user?.role === UserRole.ADMIN ? ['Amount'] : []),
+      'Created At',
+   ]
    const currencyRows = ['amount']
    const numberRows = ['supplyId', ...currencyRows]
    const numberColumns = ['Amount', 'Supply Id']
@@ -106,18 +116,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    const handleViewSupply = (item: Item) => {
       navigate(`/supplies/view/${item.supplyId}`)
    }
-
-   const creditSuppliesLink = (
-      <Box pl="xl">
-         <NavLink to="/supplies/credit" className={classes.link}>
-            <Text>
-               <Flex align="center" gap="xs">
-                  View Credit Supplies
-               </Flex>
-            </Text>
-         </NavLink>
-      </Box>
-   )
 
    const rows = paginatedData.map((item) => {
       return (
@@ -171,6 +169,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                }
 
                if (value === '') return <td key={key}>-</td>
+               console.log(key)
                return (
                   <td
                      key={key}
@@ -202,12 +201,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Flex justify="space-between" align="baseline">
-               <Text fw="bold" fz="xl" className={classes.title}>
-                  {title}
-               </Text>
-               {creditSuppliesLink}
-            </Flex>
+            <Text fw="bold" fz="xl" className={classes.title}>
+               {title}
+            </Text>
+
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
@@ -303,7 +300,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                   <Text fz="md">No Data Found</Text>
                </Flex>
             )}
-            {paginatedData.length > 0 && (
+            {user?.role === UserRole.ADMIN && paginatedData.length > 0 && (
                <Flex
                   p="md"
                   className={cx(classes.totalAmountWrapper, {

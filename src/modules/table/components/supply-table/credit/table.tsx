@@ -89,19 +89,6 @@ const PosTable: React.FC<TableProps> = ({
       await updateInvoice(item.supplyId!.toString())
    }
 
-   const backButton = (
-      <Box>
-         <NavLink to="/supplies" className={classes.backLink}>
-            <Text>
-               <Flex align="center" gap="xs">
-                  <IconArrowNarrowLeft size={14} />
-                  Back to all supplies
-               </Flex>
-            </Text>
-         </NavLink>
-      </Box>
-   )
-
    const rows = paginatedData.map((item) => {
       return (
          <tr key={item.supplyId}>
@@ -177,7 +164,6 @@ const PosTable: React.FC<TableProps> = ({
 
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
-         {backButton}
          <Box py={{ base: 'xs', xs: 'md' }}>
             <Text fw="bold" fz="xl" className={classes.title}>
                {title}

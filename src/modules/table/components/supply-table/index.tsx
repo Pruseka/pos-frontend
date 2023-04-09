@@ -7,9 +7,12 @@ import {
    getSuppliesByDate,
 } from '../../../../api/supply/queries/getSupplyByDate'
 import PosTable from './table'
+import { useAuth } from '../../../../lib/contexts/auth-context'
+import { UserRole } from '../../../../api/user/mutations/createUser'
 
 const SupplyTable: React.FC = () => {
    const [tblData, setTblData] = useState<GetAllSuppliesData>([])
+   const { user } = useAuth()
    const [value, setValue] = useState<DateRangePickerValue>([new Date(), new Date()])
    const dates: any = value.map((value) => value?.toLocaleDateString('en-US'))
    console.log(dates, value)
@@ -30,14 +33,14 @@ const SupplyTable: React.FC = () => {
                  supplier: d.supplier,
                  type: d.type,
                  createdBy: d.createdBy,
-                 amount: d.amount,
+                 ...(user?.role === UserRole.ADMIN ? { amount: d.amount } : {}),
                  createdAt: d.createdAt,
               }))
             : []
       if (unselectedDate || shouldRefetch) {
          setTblData(tableData)
       }
-   }, [data?.data, shouldRefetch, unselectedDate])
+   }, [data?.data, shouldRefetch, unselectedDate, user?.role])
 
    return (
       <PosTable

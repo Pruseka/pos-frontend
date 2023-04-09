@@ -16,7 +16,7 @@ export type GetAllSuppliesData = {
    supplyId: string
    supplier: string
    type: SupplyType
-   amount: number
+   amount?: number
    createdBy: string
    createdAt: Date
 }[]

@@ -18,6 +18,7 @@ export const ADMIN_NAV_LINKS: NavItemType[] = [
       icon: IconChartHistogram,
       links: [
          { label: 'Invoices', url: '/' },
+         { label: 'Credit Invoices', url: '/invoice/credit' },
          { label: 'Customers', url: '/customers' },
       ],
    },
@@ -26,6 +27,7 @@ export const ADMIN_NAV_LINKS: NavItemType[] = [
       icon: IconCreditCard,
       links: [
          { label: 'Supplies', url: '/supplies' },
+         { label: 'Credit Supplies', url: '/supply/credit' },
          { label: 'Supplier', url: '/suppliers' },
       ],
    },
@@ -65,9 +67,6 @@ export const ADMIN_NAV_LINKS: NavItemType[] = [
       ],
    },
 
-   { label: 'Users', icon: IconHeadphones, url: '/users' },
-   { label: 'Expenses', icon: IconChartBar, url: '/expenses' },
-   { label: 'Summary', icon: IconReportAnalytics, url: '/summary' },
    {
       label: `Warehouse's Stocks`,
       icon: IconBuildingWarehouse,
@@ -78,6 +77,10 @@ export const ADMIN_NAV_LINKS: NavItemType[] = [
          { label: 'Invoice Records', url: '/warehouse/invoice-records' },
       ],
    },
+
+   { label: 'Users', icon: IconHeadphones, url: '/users' },
+   { label: 'Expenses', icon: IconChartBar, url: '/expenses' },
+   { label: 'Summary', icon: IconReportAnalytics, url: '/summary' },
 ]
 
 export const SALES_ADMIN_NAV_LINKS: NavItemType[] = [

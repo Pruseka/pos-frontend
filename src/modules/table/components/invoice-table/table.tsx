@@ -106,18 +106,6 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
       navigate(`/invoices/view/${item.invoiceId}`)
    }
 
-   const creditInvoicesLink = (
-      <Box pl="xl">
-         <NavLink to="/invoices/credit" className={classes.link}>
-            <Text>
-               <Flex align="center" gap="xs">
-                  View Credit Invoices
-               </Flex>
-            </Text>
-         </NavLink>
-      </Box>
-   )
-
    const rows = paginatedData.map((item) => {
       return (
          <tr key={item.invoiceId}>
@@ -207,12 +195,10 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Flex justify="space-between" align="baseline">
-               <Text fw="bold" fz="xl" className={classes.title}>
-                  {title}
-               </Text>
-               {creditInvoicesLink}
-            </Flex>
+            <Text fw="bold" fz="xl" className={classes.title}>
+               {title}
+            </Text>
+
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"

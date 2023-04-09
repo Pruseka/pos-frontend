@@ -38,4 +38,8 @@ export default createStyles((theme) => ({
       paddingTop: theme.spacing.md,
       paddingBottom: theme.spacing.md,
    },
+
+   logo: {
+      backgroundColor: theme.colors.gray[1],
+   },
 }))

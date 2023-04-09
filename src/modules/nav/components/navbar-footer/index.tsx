@@ -1,4 +1,4 @@
-import { Flex, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
+import { Box, Flex, Navbar, Text, ThemeIcon, UnstyledButton } from '@mantine/core'
 import { closeAllModals } from '@mantine/modals'
 import { showNotification } from '@mantine/notifications'
 import { IconCheck, IconLogout } from '@tabler/icons-react'

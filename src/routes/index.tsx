@@ -49,9 +49,9 @@ export const router = createBrowserRouter([
             errorElement: <ErrorPage />,
             children: [
                { index: true, element: <InvoiceTable /> },
-               { path: '/invoices/credit', element: <CreditInvoiceTable /> },
+               { path: '/invoice/credit', element: <CreditInvoiceTable /> },
                { path: '/supplies', element: <SupplyTable /> },
-               { path: '/supplies/credit', element: <CreditSupplyTable /> },
+               { path: '/supply/credit', element: <CreditSupplyTable /> },
 
                { path: '/customers', element: <CustomersTable /> },
                { path: '/suppliers', element: <SuppliersTable /> },

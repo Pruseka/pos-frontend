@@ -10,6 +10,7 @@ const mqOnMobile = (theme: MantineTheme) => ({
 export default createStyles((theme) => ({
    container: {
       display: 'none',
+      position: 'fixed',
       flex: 1,
       [theme.fn.largerThan('md')]: {
          display: 'flex',
