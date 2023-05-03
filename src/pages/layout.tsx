@@ -1,4 +1,4 @@
-import { Box, Flex, Footer, Paper, Text } from '@mantine/core'
+import { Box, Flex, Paper, Text } from '@mantine/core'
 import { Outlet } from 'react-router-dom'
 import Navigation from '../modules/nav/templates/nav'
 import NavigationHeader from '../modules/nav/components/nav-header'
@@ -40,7 +40,7 @@ export default function Layout() {
                >
                   <Box>
                      <Text fw="bold" color="dimmed" size="sm">
-                        Created By Idea Fresh
+                        Made with &hearts; by Ideafresh
                      </Text>
                   </Box>
                </Box>

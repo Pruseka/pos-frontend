@@ -33,7 +33,7 @@
    },
    "scripts": {
       "start": "vite",
-      "build": "vite build",
+      "build": "vite build --mode prod",
       "lint": "eslint .",
       "lint:fix": "eslint --fix",
       "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"

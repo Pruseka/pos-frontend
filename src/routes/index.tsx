@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 import CategoriesTable from '../modules/table/components/category-table'
 import CustomersTable from '../modules/table/components/customer-table'
 import TransfersTable from '../modules/table/components/salesman-transfer-table'
@@ -33,7 +33,7 @@ import ExpensesTable from '../modules/table/components/expense-table'
 import SummaryTable from '../modules/table/components/summary-table'
 import CreditSupplyTable from '../modules/table/components/supply-table/credit'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
    {
       path: '/login',
       element: <LoginPage />,
