@@ -1,4 +1,4 @@
-import { TextInput, PasswordInput, Anchor, Paper, Title, Container, Button } from '@mantine/core'
+import { TextInput, PasswordInput, Paper, Title, Container, Button } from '@mantine/core'
 import { IconAt, IconLock, IconLogin } from '@tabler/icons-react'
 import { useForm, isEmail, hasLength } from '@mantine/form'
 import type { Credentials } from '../../../../api/user/mutations/login'
@@ -26,7 +26,7 @@ const LoginForm: React.FC<Props> = ({ handleSubmit, loading }) => {
    return (
       <Container size={420} my={40}>
          <Title align="center" className={classes.formTitle}>
-            Welcome back!
+            Nan Oo Admin
          </Title>
 
          <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -46,9 +46,6 @@ const LoginForm: React.FC<Props> = ({ handleSubmit, loading }) => {
                   mt="md"
                   {...form.getInputProps('password')}
                />
-               <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                  Forgot password?
-               </Anchor>
                <Button leftIcon={<IconLogin size={16} />} fullWidth mt="xl" type="submit" loading={loading}>
                   Sign in
                </Button>
