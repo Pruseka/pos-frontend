@@ -1,0 +1,350 @@
+Date : 2023-05-08 13:06:43
+Directory : c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine
+Total : 205 files,  14449 codes, 794 comments, 1744 blanks, all 16987 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| TypeScript JSX     |         99 |     11,129 |        778 |      1,271 |     13,178 |
+| TypeScript         |         97 |      3,101 |         16 |        444 |      3,561 |
+| JSON               |          3 |        105 |          0 |          3 |        108 |
+| JSON with Comments |          2 |         73 |          0 |          2 |         75 |
+| Markdown           |          1 |         26 |          0 |         21 |         47 |
+| HTML               |          1 |         13 |          0 |          3 |         16 |
+| Properties         |          1 |          1 |          0 |          0 |          1 |
+| SVG                |          1 |          1 |          0 |          0 |          1 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                            | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                               |        205 |     14,449 |        794 |      1,744 |     16,987 |
+| . (Files)                                                                                                                       |         10 |        227 |          1 |         31 |        259 |
+| src                                                                                                                             |        195 |     14,222 |        793 |      1,713 |     16,728 |
+| src (Files)                                                                                                                     |          1 |         26 |          0 |          2 |         28 |
+| src\api                                                                                                                         |         51 |      1,015 |          3 |        209 |      1,227 |
+| src\api (Files)                                                                                                                 |          2 |         28 |          3 |          6 |         37 |
+| src\api\admin                                                                                                                   |          1 |         15 |          0 |          3 |         18 |
+| src\api\admin\mutations                                                                                                         |          1 |         15 |          0 |          3 |         18 |
+| src\api\category                                                                                                                |          4 |         50 |          0 |         13 |         63 |
+| src\api\category\mutations                                                                                                      |          3 |         37 |          0 |          9 |         46 |
+| src\api\category\queries                                                                                                        |          1 |         13 |          0 |          4 |         17 |
+| src\api\customer                                                                                                                |          3 |         64 |          0 |         11 |         75 |
+| src\api\customer-stock                                                                                                          |          3 |         68 |          0 |         14 |         82 |
+| src\api\customer-stock\queries                                                                                                  |          3 |         68 |          0 |         14 |         82 |
+| src\api\customerTransfer                                                                                                        |          2 |         40 |          0 |          9 |         49 |
+| src\api\customerTransfer\mutations                                                                                              |          1 |         17 |          0 |          3 |         20 |
+| src\api\customerTransfer\queries                                                                                                |          1 |         23 |          0 |          6 |         29 |
+| src\api\customer\mutations                                                                                                      |          2 |         43 |          0 |          6 |         49 |
+| src\api\customer\queries                                                                                                        |          1 |         21 |          0 |          5 |         26 |
+| src\api\expense                                                                                                                 |          3 |         50 |          0 |         10 |         60 |
+| src\api\expense\mutations                                                                                                       |          2 |         34 |          0 |          6 |         40 |
+| src\api\expense\queries                                                                                                         |          1 |         16 |          0 |          4 |         20 |
+| src\api\invoice                                                                                                                 |          5 |        128 |          0 |         27 |        155 |
+| src\api\invoice\mutations                                                                                                       |          2 |         29 |          0 |          6 |         35 |
+| src\api\invoice\queries                                                                                                         |          3 |         99 |          0 |         21 |        120 |
+| src\api\item                                                                                                                    |          4 |         71 |          0 |         13 |         84 |
+| src\api\item\mutations                                                                                                          |          3 |         53 |          0 |          9 |         62 |
+| src\api\item\queries                                                                                                            |          1 |         18 |          0 |          4 |         22 |
+| src\api\salesman-stock                                                                                                          |          3 |         67 |          0 |         14 |         81 |
+| src\api\salesman-stock\queries                                                                                                  |          3 |         67 |          0 |         14 |         81 |
+| src\api\summary                                                                                                                 |          1 |         22 |          0 |          4 |         26 |
+| src\api\summary\queries                                                                                                         |          1 |         22 |          0 |          4 |         26 |
+| src\api\supplier                                                                                                                |          3 |         56 |          0 |         10 |         66 |
+| src\api\supplier\mutations                                                                                                      |          2 |         40 |          0 |          6 |         46 |
+| src\api\supplier\queries                                                                                                        |          1 |         16 |          0 |          4 |         20 |
+| src\api\supply                                                                                                                  |          5 |        104 |          0 |         24 |        128 |
+| src\api\supply\mutations                                                                                                        |          2 |         26 |          0 |          6 |         32 |
+| src\api\supply\queries                                                                                                          |          3 |         78 |          0 |         18 |         96 |
+| src\api\transfer                                                                                                                |          2 |         51 |          0 |         11 |         62 |
+| src\api\transfer\mutations                                                                                                      |          1 |         17 |          0 |          3 |         20 |
+| src\api\transfer\queries                                                                                                        |          1 |         34 |          0 |          8 |         42 |
+| src\api\user                                                                                                                    |          6 |        107 |          0 |         21 |        128 |
+| src\api\user\mutations                                                                                                          |          4 |         67 |          0 |         13 |         80 |
+| src\api\user\queries                                                                                                            |          2 |         40 |          0 |          8 |         48 |
+| src\api\warehouse                                                                                                               |          4 |         94 |          0 |         19 |        113 |
+| src\api\warehouse\queries                                                                                                       |          4 |         94 |          0 |         19 |        113 |
+| src\helpers                                                                                                                     |          1 |          4 |          0 |          1 |          5 |
+| src\lib                                                                                                                         |          7 |        261 |          0 |         32 |        293 |
+| src\lib\constants                                                                                                               |          5 |        179 |          0 |         15 |        194 |
+| src\lib\contexts                                                                                                                |          1 |         74 |          0 |         14 |         88 |
+| src\lib\store                                                                                                                   |          1 |          8 |          0 |          3 |         11 |
+| src\modules                                                                                                                     |        129 |     12,736 |        790 |      1,451 |     14,977 |
+| src\modules\account                                                                                                             |          3 |        106 |          0 |         15 |        121 |
+| src\modules\account\components                                                                                                  |          2 |         62 |          0 |          9 |         71 |
+| src\modules\account\components\login-form                                                                                       |          2 |         62 |          0 |          9 |         71 |
+| src\modules\account\templates                                                                                                   |          1 |         44 |          0 |          6 |         50 |
+| src\modules\dashboard                                                                                                           |          1 |         92 |          0 |          6 |         98 |
+| src\modules\dashboard\table                                                                                                     |          1 |         92 |          0 |          6 |         98 |
+| src\modules\error                                                                                                               |          3 |         59 |          0 |         12 |         71 |
+| src\modules\error\components                                                                                                    |          2 |         55 |          0 |         10 |         65 |
+| src\modules\error\components\error-conatiner                                                                                    |          2 |         55 |          0 |         10 |         65 |
+| src\modules\error\templates                                                                                                     |          1 |          4 |          0 |          2 |          6 |
+| src\modules\nav                                                                                                                 |         13 |        360 |          5 |         60 |        425 |
+| src\modules\nav\components                                                                                                      |         12 |        355 |          5 |         57 |        417 |
+| src\modules\nav\components\nav-header                                                                                           |          2 |         37 |          0 |          9 |         46 |
+| src\modules\nav\components\nav-item                                                                                             |          2 |        116 |          0 |         14 |        130 |
+| src\modules\nav\components\navbar                                                                                               |          2 |         32 |          0 |          6 |         38 |
+| src\modules\nav\components\navbar-body                                                                                          |          2 |         42 |          0 |          9 |         51 |
+| src\modules\nav\components\navbar-container                                                                                     |          2 |         55 |          5 |          7 |         67 |
+| src\modules\nav\components\navbar-footer                                                                                        |          2 |         73 |          0 |         12 |         85 |
+| src\modules\nav\templates                                                                                                       |          1 |          5 |          0 |          3 |          8 |
+| src\modules\nav\templates\nav                                                                                                   |          1 |          5 |          0 |          3 |          8 |
+| src\modules\table                                                                                                               |        109 |     12,119 |        785 |      1,358 |     14,262 |
+| src\modules\table\components                                                                                                    |        109 |     12,119 |        785 |      1,358 |     14,262 |
+| src\modules\table\components\category-table                                                                                     |          4 |        351 |         54 |         37 |        442 |
+| src\modules\table\components\customer-stock-table                                                                               |          9 |      1,024 |         32 |        112 |      1,168 |
+| src\modules\table\components\customer-stock-table\closing-stocks                                                                |          3 |        266 |         16 |         26 |        308 |
+| src\modules\table\components\customer-stock-table\in-stocks                                                                     |          3 |        377 |          8 |         43 |        428 |
+| src\modules\table\components\customer-stock-table\out-stocks                                                                    |          3 |        381 |          8 |         43 |        432 |
+| src\modules\table\components\customer-table                                                                                     |          4 |        421 |         55 |         42 |        518 |
+| src\modules\table\components\customer-transfer-table                                                                            |          8 |        968 |         54 |        112 |      1,134 |
+| src\modules\table\components\customer-transfer-table (Files)                                                                    |          3 |        373 |         52 |         43 |        468 |
+| src\modules\table\components\customer-transfer-table\add                                                                        |          5 |        595 |          2 |         69 |        666 |
+| src\modules\table\components\expense-table                                                                                      |          4 |        478 |         55 |         49 |        582 |
+| src\modules\table\components\form-modal                                                                                         |          2 |        122 |          4 |         15 |        141 |
+| src\modules\table\components\invoice-table                                                                                      |         15 |      1,911 |        129 |        210 |      2,250 |
+| src\modules\table\components\invoice-table (Files)                                                                              |          3 |        401 |         65 |         51 |        517 |
+| src\modules\table\components\invoice-table\add                                                                                  |          5 |        772 |          2 |         76 |        850 |
+| src\modules\table\components\invoice-table\credit                                                                               |          3 |        394 |         57 |         50 |        501 |
+| src\modules\table\components\invoice-table\view                                                                                 |          4 |        344 |          5 |         33 |        382 |
+| src\modules\table\components\item-table                                                                                         |          5 |        551 |         54 |         55 |        660 |
+| src\modules\table\components\pos-table                                                                                          |          2 |        235 |          2 |         21 |        258 |
+| src\modules\table\components\salesman-table                                                                                     |          9 |      1,023 |         32 |        113 |      1,168 |
+| src\modules\table\components\salesman-table\closing-stocks                                                                      |          3 |        279 |         16 |         28 |        323 |
+| src\modules\table\components\salesman-table\in-stocks                                                                           |          3 |        385 |          8 |         44 |        437 |
+| src\modules\table\components\salesman-table\out-stocks                                                                          |          3 |        359 |          8 |         41 |        408 |
+| src\modules\table\components\salesman-transfer-table                                                                            |          8 |        961 |         54 |        112 |      1,127 |
+| src\modules\table\components\salesman-transfer-table (Files)                                                                    |          3 |        370 |         52 |         43 |        465 |
+| src\modules\table\components\salesman-transfer-table\add                                                                        |          5 |        591 |          2 |         69 |        662 |
+| src\modules\table\components\summary-table                                                                                      |          3 |        152 |          1 |         28 |        181 |
+| src\modules\table\components\supplier-table                                                                                     |          4 |        384 |         55 |         41 |        480 |
+| src\modules\table\components\supply-table                                                                                       |         15 |      1,804 |        123 |        202 |      2,129 |
+| src\modules\table\components\supply-table (Files)                                                                               |          3 |        415 |         60 |         51 |        526 |
+| src\modules\table\components\supply-table\add                                                                                   |          5 |        677 |          1 |         68 |        746 |
+| src\modules\table\components\supply-table\credit                                                                                |          3 |        395 |         57 |         50 |        502 |
+| src\modules\table\components\supply-table\view                                                                                  |          4 |        317 |          5 |         33 |        355 |
+| src\modules\table\components\user-table                                                                                         |          5 |        494 |         41 |         55 |        590 |
+| src\modules\table\components\warehouse-table                                                                                    |         12 |      1,240 |         40 |        154 |      1,434 |
+| src\modules\table\components\warehouse-table\closing-stocks                                                                     |          3 |        230 |         16 |         25 |        271 |
+| src\modules\table\components\warehouse-table\in-stocks                                                                          |          3 |        339 |          8 |         43 |        390 |
+| src\modules\table\components\warehouse-table\invoice-records                                                                    |          3 |        337 |          8 |         43 |        388 |
+| src\modules\table\components\warehouse-table\out-stocks                                                                         |          3 |        334 |          8 |         43 |        385 |
+| src\pages                                                                                                                       |          4 |         72 |          0 |         10 |         82 |
+| src\routes                                                                                                                      |          1 |        101 |          0 |          6 |        107 |
+| src\types                                                                                                                       |          1 |          7 |          0 |          2 |          9 |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                        | language           | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.env                                                                       | Properties         |          1 |          0 |          0 |          1 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.eslintrc.json                                                             | JSON with Comments |         46 |          0 |          1 |         47 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.prettierrc                                                                | JSON               |          9 |          0 |          1 |         10 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\README.md                                                                  | Markdown           |         26 |          0 |         21 |         47 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\index.html                                                                 | HTML               |         13 |          0 |          3 |         16 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\manifest.json                                                              | JSON               |         25 |          0 |          1 |         26 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\package.json                                                               | JSON               |         71 |          0 |          1 |         72 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\admin\mutations\add-admin.ts                                       | TypeScript         |         15 |          0 |          3 |         18 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\addCategory.ts                                  | TypeScript         |          9 |          0 |          3 |         12 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\deleteCategory.ts                               | TypeScript         |         14 |          0 |          3 |         17 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\updateCategory.ts                               | TypeScript         |         14 |          0 |          3 |         17 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\queries\getAllCategories.ts                               | TypeScript         |         13 |          0 |          4 |         17 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getClosingStocks.ts                         | TypeScript         |         16 |          0 |          4 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getInStocks.ts                              | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getOutStocks.ts                             | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customerTransfer\mutations\transferCustomer.ts                     | TypeScript         |         17 |          0 |          3 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customerTransfer\queries\getTransfersByDate.ts                     | TypeScript         |         23 |          0 |          6 |         29 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\mutations\addCustomer.ts                                  | TypeScript         |         21 |          0 |          3 |         24 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\mutations\updateCustomer.ts                               | TypeScript         |         22 |          0 |          3 |         25 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\queries\getAllCustomers.ts                                | TypeScript         |         21 |          0 |          5 |         26 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\mutations\addExpense.ts                                    | TypeScript         |         16 |          0 |          3 |         19 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\mutations\updateExpense.ts                                 | TypeScript         |         18 |          0 |          3 |         21 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\queries\getExpensesByDate.ts                               | TypeScript         |         16 |          0 |          4 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\instance.ts                                                        | TypeScript         |         27 |          3 |          5 |         35 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\mutations\createInvoice.ts                                 | TypeScript         |         20 |          0 |          3 |         23 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\mutations\updateInvoice.ts                                 | TypeScript         |          9 |          0 |          3 |         12 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getCreditInvoiceByDate.ts                          | TypeScript         |         35 |          0 |          8 |         43 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getInvoiceById.ts                                  | TypeScript         |         29 |          0 |          5 |         34 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getInvoicesByDate.ts                               | TypeScript         |         35 |          0 |          8 |         43 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\addItem.ts                                          | TypeScript         |         17 |          0 |          3 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\updateItem.ts                                       | TypeScript         |         18 |          0 |          3 |         21 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\updatePrice.ts                                      | TypeScript         |         18 |          0 |          3 |         21 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\queries\getAllItems.ts                                        | TypeScript         |         18 |          0 |          4 |         22 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getClosingStocks.ts                         | TypeScript         |         16 |          0 |          4 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getInStocks.ts                              | TypeScript         |         25 |          0 |          5 |         30 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getOutStocks.ts                             | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\summary\queries\getSummary.ts                                      | TypeScript         |         22 |          0 |          4 |         26 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\mutations\addSupplier.ts                                  | TypeScript         |         20 |          0 |          3 |         23 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\mutations\updateSupplier.ts                               | TypeScript         |         20 |          0 |          3 |         23 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\queries\getAllSuppliers.ts                                | TypeScript         |         16 |          0 |          4 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\mutations\provideSupply.ts                                  | TypeScript         |         17 |          0 |          3 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\mutations\updateSupply.ts                                   | TypeScript         |          9 |          0 |          3 |         12 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getCreditSupplyByDate.ts                            | TypeScript         |         24 |          0 |          6 |         30 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getSupplyByDate.ts                                  | TypeScript         |         28 |          0 |          7 |         35 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getSupplyById.ts                                    | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\transfer\mutations\transferSalesman.ts                             | TypeScript         |         17 |          0 |          3 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\transfer\queries\getTransfersByDate.ts                             | TypeScript         |         34 |          0 |          8 |         42 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\urls.ts                                                            | TypeScript         |          1 |          0 |          1 |          2 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\createUser.ts                                       | TypeScript         |         23 |          0 |          4 |         27 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\login.ts                                            | TypeScript         |         14 |          0 |          3 |         17 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\updateUser.ts                                       | TypeScript         |         16 |          0 |          3 |         19 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\updateUserPassword.ts                               | TypeScript         |         14 |          0 |          3 |         17 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\queries\getAllUsers.ts                                        | TypeScript         |         20 |          0 |          4 |         24 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\queries\getAllVansales.ts                                     | TypeScript         |         20 |          0 |          4 |         24 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getClosingStock.ts                               | TypeScript         |         16 |          0 |          4 |         20 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getInStocks.ts                                   | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getInvoiceRecords.ts                             | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getOutStocks.ts                                  | TypeScript         |         26 |          0 |          5 |         31 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\helpers\conver-title.ts                                                | TypeScript         |          4 |          0 |          1 |          5 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\index.tsx                                                              | TypeScript JSX     |         26 |          0 |          2 |         28 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\config.ts                                                | TypeScript         |          4 |          0 |          2 |          6 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\layout.ts                                                | TypeScript         |          2 |          0 |          1 |          3 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\message.ts                                               | TypeScript         |          4 |          0 |          1 |          5 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\nav-links.ts                                             | TypeScript         |        166 |          0 |         10 |        176 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\status.ts                                                | TypeScript         |          3 |          0 |          1 |          4 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\contexts\auth-context.tsx                                          | TypeScript JSX     |         74 |          0 |         14 |         88 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\store\useMessage.tsx                                               | TypeScript JSX     |          8 |          0 |          3 |         11 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\components\login-form\index.tsx                        | TypeScript JSX     |         55 |          0 |          7 |         62 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\components\login-form\styles.ts                        | TypeScript         |          7 |          0 |          2 |          9 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\templates\login-template.tsx                           | TypeScript JSX     |         44 |          0 |          6 |         50 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\dashboard\table\index.tsx                                      | TypeScript JSX     |         92 |          0 |          6 |         98 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\components\error-conatiner\index.tsx                     | TypeScript JSX     |         22 |          0 |          3 |         25 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\components\error-conatiner\styles.tsx                    | TypeScript JSX     |         33 |          0 |          7 |         40 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\templates\error-template.tsx                             | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-header\index.tsx                            | TypeScript JSX     |         16 |          0 |          5 |         21 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-header\styles.ts                            | TypeScript         |         21 |          0 |          4 |         25 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-item\index.tsx                              | TypeScript JSX     |         74 |          0 |          7 |         81 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-item\styles.ts                              | TypeScript         |         42 |          0 |          7 |         49 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-body\index.tsx                           | TypeScript JSX     |         32 |          0 |          6 |         38 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-body\styles.ts                           | TypeScript         |         10 |          0 |          3 |         13 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-container\index.tsx                      | TypeScript JSX     |         30 |          5 |          4 |         39 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-container\styles.ts                      | TypeScript         |         25 |          0 |          3 |         28 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-footer\index.tsx                         | TypeScript JSX     |         34 |          0 |          5 |         39 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-footer\styles.ts                         | TypeScript         |         39 |          0 |          7 |         46 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar\index.tsx                                | TypeScript JSX     |         20 |          0 |          4 |         24 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar\styles.ts                                | TypeScript         |         12 |          0 |          2 |         14 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\templates\nav\index.tsx                                    | TypeScript JSX     |          5 |          0 |          3 |          8 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\form-modal.tsx                 | TypeScript JSX     |         40 |         41 |          9 |         90 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\index.tsx                      | TypeScript JSX     |         59 |          0 |          8 |         67 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\styles.ts                      | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\table.tsx                      | TypeScript JSX     |        208 |         13 |         19 |        240 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\index.tsx | TypeScript JSX     |         45 |          0 |          7 |         52 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\styles.ts | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\table.tsx | TypeScript JSX     |        177 |         16 |         18 |        211 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\index.tsx      | TypeScript JSX     |         57 |          0 |          8 |         65 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\styles.ts      | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\table.tsx      | TypeScript JSX     |        269 |          8 |         25 |        302 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\index.tsx     | TypeScript JSX     |         61 |          0 |          8 |         69 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\styles.ts     | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\table.tsx     | TypeScript JSX     |        269 |          8 |         25 |        302 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\form-modal.tsx                 | TypeScript JSX     |         87 |         41 |         10 |        138 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\index.tsx                      | TypeScript JSX     |         57 |          1 |          8 |         66 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\styles.ts                      | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\table.tsx                      | TypeScript JSX     |        233 |         13 |         23 |        269 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\customer-form.tsx | TypeScript JSX     |         94 |          1 |         12 |        107 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\index.tsx         | TypeScript JSX     |        138 |          0 |         16 |        154 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\invoice-form.tsx  | TypeScript JSX     |        151 |          1 |         17 |        169 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\styles.ts         | TypeScript         |         89 |          0 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\table.tsx         | TypeScript JSX     |        123 |          0 |         18 |        141 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\index.tsx             | TypeScript JSX     |         48 |          0 |          7 |         55 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\styles.ts             | TypeScript         |         57 |          0 |         10 |         67 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\table.tsx             | TypeScript JSX     |        268 |         52 |         26 |        346 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\form-modal.tsx                  | TypeScript JSX     |         76 |         41 |         11 |        128 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\index.tsx                       | TypeScript JSX     |         78 |          1 |         10 |         89 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\styles.ts                       | TypeScript         |         47 |          0 |          1 |         48 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\table.tsx                       | TypeScript JSX     |        277 |         13 |         27 |        317 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\form-modal\index.tsx                          | TypeScript JSX     |        110 |          4 |         14 |        128 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\form-modal\styles.ts                          | TypeScript         |         12 |          0 |          1 |         13 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\customer-form.tsx           | TypeScript JSX     |        116 |          1 |         13 |        130 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\index.tsx                   | TypeScript JSX     |        179 |          0 |         19 |        198 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\invoice-form.tsx            | TypeScript JSX     |        209 |          1 |         20 |        230 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\styles.ts                   | TypeScript         |         89 |          0 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\table.tsx                   | TypeScript JSX     |        179 |          0 |         18 |        197 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\index.tsx                | TypeScript JSX     |         77 |          0 |          9 |         86 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\styles.ts                | TypeScript         |         75 |          0 |         12 |         87 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\table.tsx                | TypeScript JSX     |        242 |         57 |         29 |        328 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\index.tsx                       | TypeScript JSX     |         48 |          0 |          7 |         55 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\styles.ts                       | TypeScript         |         75 |          0 |         12 |         87 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\table.tsx                       | TypeScript JSX     |        278 |         65 |         32 |        375 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\customer-form.tsx          | TypeScript JSX     |         47 |          0 |          5 |         52 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\index.tsx                  | TypeScript JSX     |         66 |          0 |          8 |         74 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\styles.ts                  | TypeScript         |         84 |          5 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\table.tsx                  | TypeScript JSX     |        147 |          0 |         14 |        161 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\form-modal.tsx                     | TypeScript JSX     |         87 |         45 |         13 |        145 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\index.tsx                          | TypeScript JSX     |         68 |          0 |          8 |         76 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\price-form-modal.tsx               | TypeScript JSX     |         80 |          1 |          9 |         90 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\styles.ts                          | TypeScript         |         47 |          0 |          1 |         48 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\table.tsx                          | TypeScript JSX     |        269 |          8 |         24 |        301 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\pos-table\index.tsx                           | TypeScript JSX     |        229 |          0 |         20 |        249 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\pos-table\styles.ts                           | TypeScript         |          6 |          2 |          1 |          9 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\index.tsx       | TypeScript JSX     |         53 |          0 |          9 |         62 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\styles.ts       | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\table.tsx       | TypeScript JSX     |        182 |         16 |         18 |        216 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\index.tsx            | TypeScript JSX     |         63 |          0 |          9 |         72 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\styles.ts            | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\table.tsx            | TypeScript JSX     |        271 |          8 |         25 |        304 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\index.tsx           | TypeScript JSX     |         58 |          0 |          9 |         67 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\styles.ts           | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\table.tsx           | TypeScript JSX     |        250 |          8 |         22 |        280 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\index.tsx         | TypeScript JSX     |        138 |          0 |         16 |        154 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\invoice-form.tsx  | TypeScript JSX     |        151 |          1 |         17 |        169 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\styles.ts         | TypeScript         |         89 |          0 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\table.tsx         | TypeScript JSX     |        123 |          0 |         18 |        141 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\user-form.tsx     | TypeScript JSX     |         90 |          1 |         12 |        103 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\index.tsx             | TypeScript JSX     |         53 |          0 |          7 |         60 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\styles.ts             | TypeScript         |         57 |          0 |         10 |         67 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\table.tsx             | TypeScript JSX     |        260 |         52 |         26 |        338 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\index.tsx                       | TypeScript JSX     |         38 |          1 |         10 |         49 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\styles.ts                       | TypeScript         |         17 |          0 |          2 |         19 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\table.tsx                       | TypeScript JSX     |         97 |          0 |         16 |        113 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\form-modal.tsx                 | TypeScript JSX     |         72 |         41 |         12 |        125 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\index.tsx                      | TypeScript JSX     |         59 |          1 |          8 |         68 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\styles.ts                      | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\table.tsx                      | TypeScript JSX     |        209 |         13 |         20 |        242 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\customer-form.tsx            | TypeScript JSX     |         90 |          0 |         11 |        101 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\index.tsx                    | TypeScript JSX     |        144 |          0 |         16 |        160 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\invoice-form.tsx             | TypeScript JSX     |        200 |          1 |         19 |        220 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\styles.ts                    | TypeScript         |         89 |          0 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\table.tsx                    | TypeScript JSX     |        154 |          0 |         16 |        170 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\index.tsx                 | TypeScript JSX     |         80 |          0 |          9 |         89 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\styles.ts                 | TypeScript         |         75 |          0 |         12 |         87 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\table.tsx                 | TypeScript JSX     |        240 |         57 |         29 |        326 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\index.tsx                        | TypeScript JSX     |         51 |          0 |          7 |         58 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\styles.ts                        | TypeScript         |         75 |          0 |         12 |         87 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\table.tsx                        | TypeScript JSX     |        289 |         60 |         32 |        381 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\index.tsx                   | TypeScript JSX     |         58 |          0 |          8 |         66 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\styles.ts                   | TypeScript         |         84 |          5 |          6 |         95 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\supplier-form.tsx           | TypeScript JSX     |         35 |          0 |          6 |         41 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\table.tsx                   | TypeScript JSX     |        140 |          0 |         13 |        153 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\form-modal.tsx                     | TypeScript JSX     |         89 |         41 |         13 |        143 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\index.tsx                          | TypeScript JSX     |         65 |          0 |          8 |         73 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\password-form-modal.tsx            | TypeScript JSX     |         44 |          0 |         10 |         54 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\styles.ts                          | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\table.tsx                          | TypeScript JSX     |        252 |          0 |         23 |        275 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\index.tsx      | TypeScript JSX     |         36 |          0 |          6 |         42 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\styles.ts      | TypeScript         |         44 |          0 |          1 |         45 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\table.tsx      | TypeScript JSX     |        150 |         16 |         18 |        184 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\index.tsx           | TypeScript JSX     |         37 |          0 |          7 |         44 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\styles.ts           | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\table.tsx           | TypeScript JSX     |        251 |          8 |         26 |        285 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\index.tsx     | TypeScript JSX     |         37 |          0 |          7 |         44 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\styles.ts     | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\table.tsx     | TypeScript JSX     |        249 |          8 |         26 |        283 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\index.tsx          | TypeScript JSX     |         37 |          0 |          7 |         44 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\styles.ts          | TypeScript         |         51 |          0 |         10 |         61 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\table.tsx          | TypeScript JSX     |        246 |          8 |         26 |        280 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\error.tsx                                                        | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\layout.tsx                                                       | TypeScript JSX     |         50 |          0 |          2 |         52 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\login.tsx                                                        | TypeScript JSX     |          4 |          0 |          2 |          6 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\root.tsx                                                         | TypeScript JSX     |         14 |          0 |          4 |         18 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\routes\index.tsx                                                       | TypeScript JSX     |        101 |          0 |          6 |        107 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\types\global.ts                                                        | TypeScript         |          7 |          0 |          2 |          9 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\tsconfig.json                                                              | JSON with Comments |         27 |          0 |          1 |         28 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\vite.config.ts                                                             | TypeScript         |          8 |          1 |          2 |         11 |
+| c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\vite.svg                                                                   | SVG                |          1 |          0 |          0 |          1 |
+| Total                                                                                                                           |                    |     14,449 |        794 |      1,744 |     16,987 |
++---------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -21,6 +21,7 @@ const Table: React.FC<Props> = ({ data, dateValue, title, setDate }) => {
             </Text>
             <Flex p="md" direction={{ base: 'column', xl: 'row' }} gap={{ md: 'sm', base: 'md' }}>
                <DateRangePicker
+                  allowSingleDateInRange
                   placeholder="Pick dates range"
                   value={dateValue}
                   maxDate={new Date()}

@@ -115,6 +115,7 @@ const AddInvoice: React.FC = () => {
 
    const handleCreateInvoice = async (values: FormValues) => {
       const mappedItems = items.map((item) => ({ itemId: item.itemId, qty: item.qty }))
+
       await createInvoice(
          { ...values, customerType, items: mappedItems },
          {
@@ -124,7 +125,8 @@ const AddInvoice: React.FC = () => {
                   icon: <IconCheck />,
                   color: 'teal',
                })
-               // navigate(`${}`)
+               const invoiceId = data?.data?.data.invoiceId
+               navigate(`/invoices/view/${invoiceId}`)
             },
          }
       )

@@ -22,6 +22,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { GetAllInvoicesData, PaymentType } from '../../../../api/invoice/queries/getInvoicesByDate'
 import { Badge as CustomerBadge, CustomerTypeBadges } from '../customer-table/table'
 import useStyles from './styles'
+import { CSVDownload, CSVLink } from 'react-csv'
 
 export type Item = Partial<GetAllInvoicesData[0]>
 
@@ -47,7 +48,7 @@ export const PaymentTypes = {
    credit: 'orange',
    return: 'blue',
    cancel: 'gray',
-   damage: 'red',
+   adjust: 'red',
 }
 
 export const StatusTypes = {
@@ -78,7 +79,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
          case PaymentType.CASH:
          case PaymentType.CREDIT:
             return previousAmount + +item.amount!
-         case PaymentType.DAMAGE:
+         case PaymentType.ADJUST:
          case PaymentType.CANCEL:
             return previousAmount - +item.amount!
          case PaymentType.RETURN:
@@ -195,9 +196,20 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="center">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               <Button variant="outline" disabled={searchedData.length === 0}>
+                  <CSVLink
+                     data={searchedData}
+                     style={{ textDecoration: 'none', color: 'inherit' }}
+                     filename={`invoices-table.csv`}
+                  >
+                     Export
+                  </CSVLink>
+               </Button>
+            </Flex>
 
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
@@ -208,6 +220,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                <Flex gap="sm" direction={{ base: 'column', xs: 'row' }} w="100%" sx={{ flex: 1 }}>
                   <DateRangePicker
                      placeholder="Pick dates range"
+                     allowSingleDateInRange
                      value={dateValue}
                      maxDate={new Date()}
                      sx={{ flex: 1 }}

@@ -2,6 +2,7 @@ import {
    ActionIcon,
    Badge,
    Box,
+   Button,
    Collapse,
    Flex,
    Loader,
@@ -18,6 +19,7 @@ import moment from 'moment'
 import React, { useState } from 'react'
 import { GetWarehouseOutStocksData, TransfersList } from '../../../../../api/warehouse/queries/getOutStocks'
 import useStyles from './styles'
+import { CSVLink } from 'react-csv'
 
 export type Item = Partial<GetWarehouseOutStocksData[0]>
 
@@ -207,9 +209,21 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="center">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               <Button variant="outline" disabled={searchedData.length === 0}>
+                  <CSVLink
+                     data={searchedData}
+                     style={{ textDecoration: 'none', color: 'inherit' }}
+                     filename={`warehouse-transfer-records-table.csv`}
+                  >
+                     Export
+                  </CSVLink>
+               </Button>
+            </Flex>
+
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
@@ -217,6 +231,7 @@ const PosTable: React.FC<TableProps> = ({ data, loading, title, excludeFields, d
                gap={{ md: 'sm', base: 'md' }}
             >
                <DateRangePicker
+                  allowSingleDateInRange
                   placeholder="Pick dates range"
                   value={dateValue}
                   maxDate={new Date()}

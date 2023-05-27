@@ -99,12 +99,13 @@ const AddTransferCustomer: React.FC = () => {
       await transferCustomer(
          { ...values, items: mappedItems },
          {
-            onSuccess: (data) =>
+            onSuccess: (data) => {
                showNotification({
                   message: data.data.message,
                   icon: <IconCheck />,
                   color: 'teal',
-               }),
+               })
+            },
          }
       )
    }

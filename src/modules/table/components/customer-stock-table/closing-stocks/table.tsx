@@ -1,5 +1,6 @@
 import {
    Box,
+   Button,
    Flex,
    Group,
    Loader,
@@ -17,6 +18,7 @@ import React, { useState } from 'react'
 import { GetSalesmanClosingStocksData } from '../../../../../api/salesman-stock/queries/getClosingStocks'
 import { toSentenceCase } from '../../../../../helpers/conver-title'
 import useStyles from './styles'
+import { CSVLink } from 'react-csv'
 
 export type Item = Partial<GetSalesmanClosingStocksData[0]>
 
@@ -127,9 +129,21 @@ const PosTable: React.FC<TableProps> = ({
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="center">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               <Button variant="outline" disabled={searchedData.length === 0}>
+                  <CSVLink
+                     data={searchedData}
+                     style={{ textDecoration: 'none', color: 'inherit' }}
+                     filename={`customer-closing-stocks-table.csv`}
+                  >
+                     Export
+                  </CSVLink>
+               </Button>
+            </Flex>
+
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"

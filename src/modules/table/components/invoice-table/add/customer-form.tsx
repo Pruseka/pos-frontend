@@ -11,6 +11,8 @@ import {
 } from '../../../../../api/customer/queries/getAllCustomers'
 import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
 import useStyles from './styles'
+import { useAuth } from '../../../../../lib/contexts/auth-context'
+import { UserRole } from '../../../../../api/user/mutations/createUser'
 
 export interface FormValues {
    customer: string
@@ -25,6 +27,7 @@ interface Props {
 }
 
 const CustomerForm: React.FC<Props> = ({ submitForm, customerType, setCustomerType, disabledSaveButton }) => {
+   const { user } = useAuth()
    const { classes } = useStyles()
    const navigate = useNavigate()
    const { data: customersData } = useSWR<GetAllCustomersResponse>('/customer/all', getAllCustomers)
@@ -34,7 +37,9 @@ const CustomerForm: React.FC<Props> = ({ submitForm, customerType, setCustomerTy
          : []
 
    const customerTypes = Object.values(CustomerType).map((type) => ({ label: type, value: type }))
-   const paymentTypes = Object.values(PaymentType).map((type) => ({ label: type, value: type }))
+   const paymentTypes = Object.values(PaymentType)
+      .filter((type) => !(user?.role !== UserRole.ADMIN && type === PaymentType.RETURN))
+      .map((type) => ({ label: type, value: type }))
 
    const initialValues = {
       customer: '',

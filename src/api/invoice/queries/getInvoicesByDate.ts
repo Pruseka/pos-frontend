@@ -16,7 +16,7 @@ export enum PaymentType {
    CREDIT = 'credit',
    RETURN = 'return',
    CANCEL = 'cancel',
-   DAMAGE = 'damage',
+   ADJUST = 'adjust',
 }
 
 export type GetAllInvoicesData = {

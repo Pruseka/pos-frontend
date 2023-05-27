@@ -1,0 +1,207 @@
+"filename", "language", "Properties", "JSON with Comments", "JSON", "HTML", "Markdown", "SVG", "TypeScript", "TypeScript JSX", "comment", "blank", "total"
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.env", "Properties", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.eslintrc.json", "JSON with Comments", 0, 46, 0, 0, 0, 0, 0, 0, 0, 1, 47
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\.prettierrc", "JSON", 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\README.md", "Markdown", 0, 0, 0, 0, 26, 0, 0, 0, 0, 21, 47
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\index.html", "HTML", 0, 0, 0, 13, 0, 0, 0, 0, 0, 3, 16
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\manifest.json", "JSON", 0, 0, 25, 0, 0, 0, 0, 0, 0, 1, 26
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\package.json", "JSON", 0, 0, 71, 0, 0, 0, 0, 0, 0, 1, 72
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\admin\mutations\add-admin.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 15, 0, 0, 3, 18
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\addCategory.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\deleteCategory.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 3, 17
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\mutations\updateCategory.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 3, 17
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\category\queries\getAllCategories.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 13, 0, 0, 4, 17
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getClosingStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getInStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer-stock\queries\getOutStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customerTransfer\mutations\transferCustomer.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 17, 0, 0, 3, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customerTransfer\queries\getTransfersByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 23, 0, 0, 6, 29
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\mutations\addCustomer.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 21, 0, 0, 3, 24
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\mutations\updateCustomer.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 22, 0, 0, 3, 25
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\customer\queries\getAllCustomers.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 21, 0, 0, 5, 26
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\mutations\addExpense.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 3, 19
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\mutations\updateExpense.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 18, 0, 0, 3, 21
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\expense\queries\getExpensesByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\instance.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 27, 0, 3, 5, 35
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\mutations\createInvoice.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 3, 23
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\mutations\updateInvoice.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getCreditInvoiceByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 35, 0, 0, 8, 43
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getInvoiceById.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 29, 0, 0, 5, 34
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\invoice\queries\getInvoicesByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 35, 0, 0, 8, 43
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\addItem.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 17, 0, 0, 3, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\updateItem.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 18, 0, 0, 3, 21
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\mutations\updatePrice.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 18, 0, 0, 3, 21
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\item\queries\getAllItems.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 18, 0, 0, 4, 22
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getClosingStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getInStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 5, 30
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\salesman-stock\queries\getOutStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\summary\queries\getSummary.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 22, 0, 0, 4, 26
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\mutations\addSupplier.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 3, 23
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\mutations\updateSupplier.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 3, 23
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supplier\queries\getAllSuppliers.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\mutations\provideSupply.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 17, 0, 0, 3, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\mutations\updateSupply.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getCreditSupplyByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 24, 0, 0, 6, 30
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getSupplyByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 28, 0, 0, 7, 35
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\supply\queries\getSupplyById.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\transfer\mutations\transferSalesman.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 17, 0, 0, 3, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\transfer\queries\getTransfersByDate.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 34, 0, 0, 8, 42
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\urls.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 2
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\createUser.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 23, 0, 0, 4, 27
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\login.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 3, 17
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\updateUser.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 3, 19
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\mutations\updateUserPassword.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 14, 0, 0, 3, 17
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\queries\getAllUsers.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 4, 24
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\user\queries\getAllVansales.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 20, 0, 0, 4, 24
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getClosingStock.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 16, 0, 0, 4, 20
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getInStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getInvoiceRecords.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\api\warehouse\queries\getOutStocks.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 26, 0, 0, 5, 31
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\helpers\conver-title.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 5
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 26, 0, 2, 28
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\config.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 4, 0, 0, 2, 6
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\layout.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\message.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 4, 0, 0, 1, 5
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\nav-links.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 166, 0, 0, 10, 176
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\constants\status.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\contexts\auth-context.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 74, 0, 14, 88
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\lib\store\useMessage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 8, 0, 3, 11
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\components\login-form\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 55, 0, 7, 62
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\components\login-form\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 2, 9
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\account\templates\login-template.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 44, 0, 6, 50
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\dashboard\table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 92, 0, 6, 98
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\components\error-conatiner\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 22, 0, 3, 25
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\components\error-conatiner\styles.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 33, 0, 7, 40
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\error\templates\error-template.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 6
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-header\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 16, 0, 5, 21
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-header\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 21, 0, 0, 4, 25
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-item\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 74, 0, 7, 81
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\nav-item\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 42, 0, 0, 7, 49
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-body\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 32, 0, 6, 38
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-body\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 10, 0, 0, 3, 13
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-container\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 30, 5, 4, 39
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-container\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 25, 0, 0, 3, 28
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-footer\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 34, 0, 5, 39
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar-footer\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 39, 0, 0, 7, 46
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 20, 0, 4, 24
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\components\navbar\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 12, 0, 0, 2, 14
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\nav\templates\nav\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 5, 0, 3, 8
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 40, 41, 9, 90
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 59, 0, 8, 67
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\category-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 208, 13, 19, 240
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 45, 0, 7, 52
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\closing-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 177, 16, 18, 211
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 57, 0, 8, 65
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\in-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 269, 8, 25, 302
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 61, 0, 8, 69
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-stock-table\out-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 269, 8, 25, 302
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 87, 41, 10, 138
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 57, 1, 8, 66
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 233, 13, 23, 269
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\customer-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 94, 1, 12, 107
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 138, 0, 16, 154
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\invoice-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 151, 1, 17, 169
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 89, 0, 0, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\add\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 123, 0, 18, 141
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 48, 0, 7, 55
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 57, 0, 0, 10, 67
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\customer-transfer-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 268, 52, 26, 346
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 76, 41, 11, 128
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 78, 1, 10, 89
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 47, 0, 0, 1, 48
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\expense-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 277, 13, 27, 317
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\form-modal\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 110, 4, 14, 128
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\form-modal\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 12, 0, 0, 1, 13
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\customer-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 116, 1, 13, 130
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 179, 0, 19, 198
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\invoice-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 209, 1, 20, 230
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 89, 0, 0, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\add\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 179, 0, 18, 197
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 77, 0, 9, 86
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 75, 0, 0, 12, 87
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\credit\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 242, 57, 29, 328
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 48, 0, 7, 55
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 75, 0, 0, 12, 87
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 278, 65, 32, 375
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\customer-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 47, 0, 5, 52
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 66, 0, 8, 74
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 84, 0, 5, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\invoice-table\view\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 147, 0, 14, 161
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 87, 45, 13, 145
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 68, 0, 8, 76
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\price-form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 80, 1, 9, 90
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 47, 0, 0, 1, 48
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\item-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 269, 8, 24, 301
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\pos-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 229, 0, 20, 249
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\pos-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 6, 0, 2, 1, 9
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 53, 0, 9, 62
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\closing-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 182, 16, 18, 216
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 63, 0, 9, 72
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\in-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 271, 8, 25, 304
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 58, 0, 9, 67
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-table\out-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 250, 8, 22, 280
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 138, 0, 16, 154
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\invoice-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 151, 1, 17, 169
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 89, 0, 0, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 123, 0, 18, 141
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\add\user-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 90, 1, 12, 103
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 53, 0, 7, 60
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 57, 0, 0, 10, 67
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\salesman-transfer-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 260, 52, 26, 338
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 38, 1, 10, 49
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 17, 0, 0, 2, 19
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\summary-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 97, 0, 16, 113
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 72, 41, 12, 125
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 59, 1, 8, 68
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supplier-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 209, 13, 20, 242
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\customer-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 90, 0, 11, 101
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 144, 0, 16, 160
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\invoice-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 200, 1, 19, 220
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 89, 0, 0, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\add\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 154, 0, 16, 170
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 80, 0, 9, 89
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 75, 0, 0, 12, 87
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\credit\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 240, 57, 29, 326
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 51, 0, 7, 58
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 75, 0, 0, 12, 87
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 289, 60, 32, 381
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 58, 0, 8, 66
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 84, 0, 5, 6, 95
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\supplier-form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 35, 0, 6, 41
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\supply-table\view\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 140, 0, 13, 153
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 89, 41, 13, 143
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 65, 0, 8, 73
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\password-form-modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 44, 0, 10, 54
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\user-table\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 252, 0, 23, 275
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 36, 0, 6, 42
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 45
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\closing-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 150, 16, 18, 184
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 37, 0, 7, 44
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\in-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 251, 8, 26, 285
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 37, 0, 7, 44
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\invoice-records\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 249, 8, 26, 283
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 37, 0, 7, 44
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\styles.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\modules\table\components\warehouse-table\out-stocks\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 246, 8, 26, 280
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\error.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 6
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 50, 0, 2, 52
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\login.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 6
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\pages\root.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 14, 0, 4, 18
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\routes\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 101, 0, 6, 107
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\src\types\global.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 7, 0, 0, 2, 9
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\tsconfig.json", "JSON with Comments", 0, 27, 0, 0, 0, 0, 0, 0, 0, 1, 28
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\vite.config.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 8, 0, 1, 2, 11
+"c:\Users\rday6\OneDrive\Desktop\pos-frontend-mantine\vite.svg", "SVG", 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+"Total", "-", 1, 73, 105, 13, 26, 1, 3101, 11129, 794, 1744, 16987

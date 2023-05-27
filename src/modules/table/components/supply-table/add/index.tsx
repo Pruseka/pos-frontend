@@ -3,7 +3,7 @@ import { useHotkeys } from '@mantine/hooks'
 import { showNotification } from '@mantine/notifications'
 import { IconArrowNarrowLeft, IconCheck } from '@tabler/icons-react'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
 import { provideSupplyMutation } from '../../../../../api/supply/mutations/provideSupply'
 import { UserRole } from '../../../../../api/user/mutations/createUser'
@@ -24,6 +24,7 @@ export type Item = {
 }
 
 const AddSupply: React.FC = () => {
+   const navigate = useNavigate()
    const { classes } = useStyles()
    const { user } = useAuth()
    const [items, setItems] = useState<Item[]>([])
@@ -105,12 +106,15 @@ const AddSupply: React.FC = () => {
       await provideSupply(
          { ...values, items: mappedItems },
          {
-            onSuccess: (data) =>
+            onSuccess: (data) => {
                showNotification({
                   message: data.data.message,
                   icon: <IconCheck />,
                   color: 'teal',
-               }),
+               })
+               const supplyId = data?.data?.data?.supplyId
+               navigate(`/supplies/view/${supplyId}`)
+            },
          }
       )
    }

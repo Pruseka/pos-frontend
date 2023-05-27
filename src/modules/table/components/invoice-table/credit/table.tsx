@@ -22,6 +22,7 @@ import { GetAllCreditInvoicesData } from '../../../../../api/invoice/queries/get
 import { PaymentType } from '../../../../../api/invoice/queries/getInvoicesByDate'
 import { Status } from '../../../../../api/transfer/queries/getTransfersByDate'
 import useStyles from './styles'
+import { CSVLink } from 'react-csv'
 
 export type Item = Partial<GetAllCreditInvoicesData[0]>
 
@@ -167,9 +168,21 @@ const PosTable: React.FC<TableProps> = ({
    return (
       <Box p={{ base: 'sm', sm: 'xl' }}>
          <Box py={{ base: 'xs', xs: 'md' }}>
-            <Text fw="bold" fz="xl" className={classes.title}>
-               {title}
-            </Text>
+            <Flex justify="space-between" align="center">
+               <Text fw="bold" fz="xl" className={classes.title}>
+                  {title}
+               </Text>
+               <Button variant="outline" disabled={searchedData.length === 0}>
+                  <CSVLink
+                     data={searchedData}
+                     style={{ textDecoration: 'none', color: 'inherit' }}
+                     filename={`credit-invoices-table.csv`}
+                  >
+                     Export
+                  </CSVLink>
+               </Button>
+            </Flex>
+
             <Flex
                className={cx(classes.tableActions, { [classes.borderBottom]: paginatedData.length === 0 })}
                p="lg"
@@ -178,6 +191,7 @@ const PosTable: React.FC<TableProps> = ({
             >
                <Flex gap="sm" direction={{ base: 'column', xs: 'row' }} w="100%" sx={{ flex: 1 }}>
                   <DateRangePicker
+                     allowSingleDateInRange
                      placeholder="Pick dates range"
                      value={dateValue}
                      maxDate={new Date()}
